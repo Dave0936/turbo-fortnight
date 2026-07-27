@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A bright classic double room overlooking the grounds">
+  <defs>
+    <linearGradient id="cWall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eceadf"/><stop offset="100%" stop-color="#d8d3c2"/>
+    </linearGradient>
+    <linearGradient id="cWin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#cfe1e4"/><stop offset="55%" stop-color="#e6e6d2"/><stop offset="100%" stop-color="#9db08c"/>
+    </linearGradient>
+    <linearGradient id="cLight" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff8e4" stop-opacity="0.8"/><stop offset="100%" stop-color="#fff8e4" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="cBlur" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="24"/></filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#cWall)"/>
+  <rect x="0" y="0" width="1200" height="30" fill="#f6f2e6"/>
+  <rect x="0" y="30" width="1200" height="7" fill="#c9c1ad"/>
+  <rect x="0" y="620" width="1200" height="14" fill="#f6f2e6"/>
+
+  <!-- Window on the left, garden beyond -->
+  <g transform="translate(90 150)">
+    <rect x="-16" y="-16" width="312" height="412" fill="#f6f2e6"/>
+    <rect x="0" y="0" width="280" height="380" fill="url(#cWin)"/>
+    <path d="M0 262 q60 -40 122 -12 q64 -36 158 -8 L280 380 L0 380Z" fill="#7f9670" opacity="0.85"/>
+    <ellipse cx="72" cy="212" rx="58" ry="46" fill="#5d7a52" opacity="0.8"/>
+    <ellipse cx="206" cy="232" rx="46" ry="38" fill="#5d7a52" opacity="0.7"/>
+    <g stroke="#fbf8ee" stroke-width="9" fill="none">
+      <path d="M140 0 V380 M0 126 H280 M0 252 H280"/><rect x="0" y="0" width="280" height="380"/>
+    </g>
+    <path d="M-16 -16 h72 q-26 210 -4 412 h-68 Z" fill="#b9c2ae"/>
+    <path d="M312 -16 h-72 q26 210 4 412 h68 Z" fill="#b9c2ae"/>
+  </g>
+  <path d="M90 150 L370 150 L640 720 L-40 720Z" fill="url(#cLight)" opacity="0.5" filter="url(#cBlur)"/>
+
+  <!-- Floor and rug -->
+  <rect x="0" y="634" width="1200" height="266" fill="#9a7c58"/>
+  <g opacity="0.2" stroke="#6d5335" stroke-width="2"><path d="M0 668 H1200 M0 716 H1200 M0 772 H1200 M0 836 H1200"/></g>
+  <rect x="120" y="700" width="1000" height="200" fill="#5c6a56" opacity="0.55"/>
+  <rect x="152" y="720" width="936" height="160" fill="none" stroke="#c2a06a" stroke-width="3" opacity="0.6"/>
+
+  <!-- Bed against the right wall -->
+  <g transform="translate(560 250)">
+    <!-- Upholstered headboard -->
+    <rect x="0" y="0" width="470" height="240" rx="10" fill="#5c6a56"/>
+    <g fill="none" stroke="#78876f" stroke-width="3">
+      <path d="M78 22 V218 M156 22 V218 M234 22 V218 M312 22 V218 M390 22 V218"/>
+    </g>
+    <!-- Pillows -->
+    <g fill="#fffdf6">
+      <rect x="30" y="196" width="190" height="68" rx="14"/>
+      <rect x="250" y="196" width="190" height="68" rx="14"/>
+      <rect x="66" y="158" width="152" height="52" rx="12" opacity="0.9"/>
+      <rect x="252" y="158" width="152" height="52" rx="12" opacity="0.9"/>
+    </g>
+    <!-- Bed -->
+    <rect x="-10" y="254" width="490" height="50" fill="#fdfaf1"/>
+    <rect x="-10" y="304" width="490" height="120" fill="#efeade"/>
+    <rect x="-10" y="254" width="490" height="16" fill="#ffffff"/>
+    <!-- Wool runner -->
+    <rect x="-10" y="356" width="490" height="56" fill="#8a6f92" opacity="0.65"/>
+    <g opacity="0.4" stroke="#f0e8d6" stroke-width="2" fill="none"><path d="M-10 370 H480 M-10 398 H480"/></g>
+    <rect x="-10" y="424" width="490" height="20" fill="#7a5c39"/>
+  </g>
+
+  <!-- Bedside tables -->
+  <g fill="#7a5c39">
+    <g transform="translate(500 600)">
+      <rect x="0" y="0" width="60" height="10"/><rect x="6" y="10" width="48" height="56"/>
+      <rect x="16" y="24" width="28" height="14" fill="#63492c"/>
+      <path d="M14 0 h32 l6 -30 h-44 Z" fill="#e8dcbc"/>
+    </g>
+    <g transform="translate(1040 600)">
+      <rect x="0" y="0" width="60" height="10"/><rect x="6" y="10" width="48" height="56"/>
+      <rect x="16" y="24" width="28" height="14" fill="#63492c"/>
+      <path d="M14 0 h32 l6 -30 h-44 Z" fill="#e8dcbc"/>
+    </g>
+  </g>
+
+  <!-- Writing desk and chair -->
+  <g transform="translate(150 590)">
+    <rect x="0" y="0" width="230" height="12" fill="#7a5c39"/>
+    <rect x="10" y="12" width="12" height="96" fill="#7a5c39"/>
+    <rect x="208" y="12" width="12" height="96" fill="#7a5c39"/>
+    <rect x="40" y="-40" width="60" height="40" fill="#f4efe2"/>
+    <g transform="translate(170 -34)">
+      <path d="M-22 0 h44 l6 34 h-56 Z" fill="#e8dcbc"/><rect x="-3" y="34" width="6" height="6" fill="#8a6a48"/>
+    </g>
+    <g transform="translate(112 60)">
+      <rect x="-44" y="-4" width="88" height="10" rx="3" fill="#5c6a56"/>
+      <rect x="-44" y="-60" width="88" height="56" rx="8" fill="#5c6a56"/>
+      <rect x="-38" y="6" width="8" height="46" fill="#4a5647"/><rect x="30" y="6" width="8" height="46" fill="#4a5647"/>
+    </g>
+  </g>
+
+  <!-- Framed prints -->
+  <g fill="#8f6f3e">
+    <g transform="translate(760 92)"><rect x="0" y="0" width="120" height="90"/><rect x="8" y="8" width="104" height="74" fill="#c8cfc2"/></g>
+    <g transform="translate(900 92)"><rect x="0" y="0" width="120" height="90"/><rect x="8" y="8" width="104" height="74" fill="#d4cbb6"/></g>
+  </g>
+</svg>
