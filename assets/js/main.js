@@ -151,12 +151,16 @@
   if (statStrip) {
     var counters = Array.prototype.slice.call(statStrip.querySelectorAll('[data-count]'));
 
+    // Years count from a nearby figure rather than from zero — watching a
+    // date spin up from 0 looks like a bug, not a flourish.
+    var startValue = function (target, el) {
+      return el.hasAttribute('data-plain') ? target - 40 : 0;
+    };
+
     var runCount = function (el) {
       var target = parseInt(el.getAttribute('data-count'), 10);
       if (isNaN(target)) return;
-      // Years count from a nearby figure rather than from zero — watching a
-      // date spin up from 0 looks like a bug, not a flourish.
-      var from = el.hasAttribute('data-plain') ? target - 40 : 0;
+      var from = startValue(target, el);
       var duration = 1100;
       var started = null;
 
@@ -178,7 +182,16 @@
           runCount(entry.target);
         });
       }, { threshold: 0.6 });
-      counters.forEach(function (el) { countIo.observe(el); });
+
+      counters.forEach(function (el) {
+        // Park each counter at its start value straight away. Without this the
+        // markup value is on screen as the strip scrolls in, and the counter
+        // visibly jumps backwards before it runs. The HTML keeps the real
+        // figure, so a script that never loads still shows the right number.
+        var target = parseInt(el.getAttribute('data-count'), 10);
+        if (!isNaN(target)) el.textContent = String(startValue(target, el));
+        countIo.observe(el);
+      });
     }
   }
 
