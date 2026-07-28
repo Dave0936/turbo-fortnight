@@ -19,6 +19,19 @@ containing core modules only. Divi 5 converts it to native D5 blocks on
 import, and because nothing here is third-party, the page stays fully native
 afterwards with no compatibility-framework penalty.
 
+Module policy
+-------------
+Content lives in native Text modules. A Code module is used in exactly two
+places, both because nothing else will do the job:
+
+  1. The stylesheet and icon sprite — Divi requires CSS to be inside <style>
+     tags, and only a Code module leaves them intact.
+  2. The strata cross-section — a 1400x700 diagram whose markup the rich-text
+     editor would mangle the first time someone opened the module.
+
+Everything else — cards, stats, spec lists, illustrations, chrome — is a Text
+module, editable in the builder like any other.
+
 Run:  python3 build-divi-layout.py
 Out:  phoenix-drilling-divi.json
 """
@@ -30,10 +43,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
 BUILDER_VERSION = '4.27.4'
 
-# Divi's shortcode parser treats square brackets as shortcode delimiters, so
-# any brackets inside module content — CSS attribute selectors, for instance —
-# must be encoded. This is the same encoding Divi itself writes.
+
 def enc(content):
+    """Divi's shortcode parser treats square brackets as delimiters, so any
+    bracket inside module content must be encoded. Divi writes the same
+    encoding itself and decodes it on output."""
     return content.replace('[', '%91').replace(']', '%93')
 
 
@@ -49,11 +63,22 @@ def attrs(**kw):
     return ' '.join(out)
 
 
-def section(inner, *, classes='phx', bg=None, padding='0px||0px||true|false'):
+def anim(delay=0):
+    """Divi's native scroll animation, standing in for the static site's
+    IntersectionObserver reveals. Divi honours prefers-reduced-motion itself."""
+    return dict(animation_style='fade', animation_direction='bottom',
+                animation_duration='650ms', animation_delay=f'{delay}ms',
+                animation_intensity_fade='6%')
+
+
+def section(inner, *, classes='phx', bg=None, padding='0px||0px||true|false', anchor=None):
+    """anchor becomes the section's CSS ID, so the nav and hero links resolve
+    the moment the layout is imported."""
     a = attrs(fb_built='1', _builder_version=BUILDER_VERSION,
               **({'background_color': bg} if bg else {}),
-              custom_padding=padding, module_class=classes,
-              global_colors_info='{}')
+              custom_padding=padding,
+              **({'module_id': anchor} if anchor else {}),
+              module_class=classes, global_colors_info='{}')
     return f'[et_pb_section {a}]{inner}[/et_pb_section]'
 
 
@@ -70,18 +95,26 @@ def column(inner, *, ctype='4_4'):
     return f'[et_pb_column {a}]{inner}[/et_pb_column]'
 
 
-def text(content, *, classes=''):
-    a = attrs(_builder_version=BUILDER_VERSION,
-              **({'module_class': classes} if classes else {}),
-              global_colors_info='{}')
-    return f'[et_pb_text {a}]{enc(content)}[/et_pb_text]'
+def text(content, *, classes='', animate=None):
+    """A native Divi Text module. This is the default for all content."""
+    kw = dict(_builder_version=BUILDER_VERSION)
+    if classes:
+        kw['module_class'] = classes
+    if animate is not None:
+        kw.update(anim(animate))
+    kw['global_colors_info'] = '{}'
+    return f'[et_pb_text {attrs(**kw)}]{enc(content)}[/et_pb_text]'
 
 
-def code(content, *, classes=''):
-    a = attrs(_builder_version=BUILDER_VERSION,
-              **({'module_class': classes} if classes else {}),
-              global_colors_info='{}')
-    return f'[et_pb_code {a}]{enc(content)}[/et_pb_code]'
+def code(content, *, classes='', animate=None):
+    """Reserved for the stylesheet and the strata diagram. See module policy."""
+    kw = dict(_builder_version=BUILDER_VERSION)
+    if classes:
+        kw['module_class'] = classes
+    if animate is not None:
+        kw.update(anim(animate))
+    kw['global_colors_info'] = '{}'
+    return f'[et_pb_code {attrs(**kw)}]{enc(content)}[/et_pb_code]'
 
 
 def button(label, url, *, classes):
@@ -100,14 +133,12 @@ def svg_body(name):
     return raw.strip()
 
 
-# ---------------------------------------------------------------- assets ---
-# One code module carries the stylesheet and the icon sprite. Divi requires
-# CSS in a Code Module to be wrapped in <style> tags.
-
 SPRITE = '''<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+<symbol id="phx-mark" viewBox="0 0 40 48" fill="none"><path d="M20 3c6 9 12 14 12 21a12 12 0 0 1-24 0c0-7 6-12 12-21Z" fill="currentColor"/><path d="M20 17c3 4.5 5.5 7 5.5 10.5a5.5 5.5 0 0 1-11 0C14.5 24 17 21.5 20 17Z" fill="#0e1113" opacity=".55"/><path d="M20 34v11M14 45h12" stroke="#eceef0" stroke-width="2.6" stroke-linecap="square"/></symbol>
 <symbol id="phx-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
 <symbol id="phx-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.4 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></symbol>
 <symbol id="phx-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="1"/><path d="m2 6.5 10 6.5 10-6.5"/></symbol>
+<symbol id="phx-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
 <symbol id="phx-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2.5 20 5.5v6.2c0 5-3.6 8.9-8 10.3-4.4-1.4-8-5.3-8-10.3V5.5Z"/><path d="m8.4 12 2.6 2.6L16 9.6" stroke-linecap="round"/></symbol>
 <symbol id="phx-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.8 14.2 7 22l5-2.6 5 2.6-1.8-7.8" stroke-linecap="round"/></symbol>
 <symbol id="phx-ground" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 12h28M2 20h28M2 27h28"/><path d="M16 3v22"/><path d="m12.5 6.5 3.5-3.5 3.5 3.5"/><path d="M11 25h10"/></symbol>
@@ -126,12 +157,13 @@ SPRITE = '''<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hi
 
 
 def ico(name, cls='phx-ico'):
-    return f'<svg class="{cls}" aria-hidden="true"><use href="#phx-{name}"/></svg>'
+    c = f' class="{cls}"' if cls else ''
+    return f'<svg{c} aria-hidden="true"><use href="#phx-{name}"/></svg>'
 
 
 def head(num, eyebrow, title, lede=None):
-    """Section head. The index numerals are kept because the sections do run
-    in a deliberate order the reader follows; they are not decoration."""
+    """Section head. The index numerals stay because the sections do run in a
+    deliberate order the reader follows; they are not decoration."""
     out = [f'<p class="phx-eyebrow"><span class="num">{num}</span> {eyebrow}</p>',
            f'<h2>{title}</h2>']
     if lede:
@@ -139,17 +171,53 @@ def head(num, eyebrow, title, lede=None):
     return ''.join(out)
 
 
-# =========================================================== the layout ===
 parts = []
 
-# --- assets: stylesheet + icon sprite --------------------------------------
+# ============================================================== assets =====
+# The one unavoidable Code module: Divi requires CSS inside <style> tags, and
+# only a Code module preserves them.
 stylesheet = open(os.path.join(HERE, 'style.css')).read()
-parts.append(section(
-    row(column(code(f'<style>\n{stylesheet}\n</style>\n{SPRITE}'))),
-    classes='phx phx-assets', padding='0px||0px||true|false'))
+parts.append(section(row(column(code(f'<style>\n{stylesheet}\n</style>\n{SPRITE}'))),
+                     classes='phx phx-assets'))
 
-# --- hero -------------------------------------------------------------------
-hero_bg = svg_body('hero-rig.svg')
+# ============================================================== topbar =====
+topbar = (
+    '<div class="phx-topbar">'
+    f'<span>{ico("pin", "")} Livingston &middot; Inverness &middot; Aberdeen</span>'
+    '<span class="sep hide-sm">/</span>'
+    f'<a href="tel:+441506411448">{ico("phone", "")} 01506 411448</a>'
+    '<span class="certs">ISO 9001 &middot; 14001 &middot; 45001</span>'
+    '</div>'
+)
+parts.append(section(row(column(text(topbar))),
+                     anchor='phx-top', classes='phx phx--deep phx-topbar-band', bg='#0e1113',
+                     padding='6px||6px||true|false'))
+
+# ============================================================== header =====
+header_html = (
+    '<div class="phx-headbar">'
+    f'<a class="phx-brand" href="#phx-top">{ico("mark", "")}'
+    '<span><span class="name">Phoenix</span>'
+    '<span class="sub">Drilling &middot; Est. 2010</span></span></a>'
+    '<nav class="phx-nav">'
+    '<a href="#phx-services">Services</a>'
+    '<a href="#phx-capability">Capability</a>'
+    '<a href="#phx-sectors">Sectors</a>'
+    '<a href="#phx-process">Process</a>'
+    '<a href="#phx-projects">Projects</a>'
+    '<a href="#phx-about">About</a>'
+    '</nav></div>'
+)
+parts.append(section(
+    row(column(text(header_html), ctype='3_4')
+        + column(button('Request a Quote', '#phx-quote',
+                        classes='phx-btn phx-btn--primary phx-btn--sm'), ctype='1_4'),
+        layout='3_4,1_4', classes='phx-row phx-header-row',
+        padding='10px||10px||false|false'),
+    classes='phx phx--deep phx-header', bg='#0e1113',
+    padding='0px||0px||true|false'))
+
+# ================================================================ hero =====
 hero_copy = (
     '<p class="phx-eyebrow">Specialist drilling contractor &middot; West Lothian</p>'
     '<h1 class="phx-hero__title">Ground investigation, water and <em>geothermal</em> drilling.</h1>'
@@ -166,19 +234,18 @@ stats = (
     '</div>'
 )
 parts.append(section(
-    row(column(
-        code(f'<div class="phx-hero__bg" aria-hidden="true">{hero_bg}</div>')
-        + text(hero_copy)
-        + code('<div class="phx-hero__actions">')
-        + button('Request a Quote', '#phx-quote', classes='phx-btn phx-btn--primary')
-        + button('01506 411448', 'tel:+441506411448', classes='phx-btn phx-btn--ghost')
-        + code('</div>')
-        + code(stats)
-    ), padding='0px||0px||false|false'),
+    row(column(text(f'<div class="phx-hero__bg" aria-hidden="true">{svg_body("hero-rig.svg")}</div>',
+                    classes='phx-hero-bg-module')),
+        classes='phx-row phx-hero-bg-row')
+    + row(column(text(hero_copy, animate=0)))
+    + row(column(button('Request a Quote', '#phx-quote', classes='phx-btn phx-btn--primary')
+                 + button('01506 411448', 'tel:+441506411448', classes='phx-btn phx-btn--ghost')),
+          classes='phx-row phx-hero-actions', padding='28px||0px||false|false')
+    + row(column(text(stats, animate=200))),
     classes='phx phx--deep phx-hero', bg='#0e1113',
     padding='150px||0px||true|false'))
 
-# --- credentials ------------------------------------------------------------
+# ========================================================= credentials =====
 creds = (
     '<div class="phx-creds">'
     '<p class="phx-creds__intro">Certified &amp; accredited</p>'
@@ -188,11 +255,11 @@ creds = (
     f'<span class="phx-cred">{ico("badge")} Well Drillers <small>Association member</small></span>'
     '</div>'
 )
-parts.append(section(row(column(code(creds))),
+parts.append(section(row(column(text(creds))),
                      classes='phx phx--deep phx-creds-band', bg='#0e1113',
                      padding='28px||28px||true|false'))
 
-# --- services ---------------------------------------------------------------
+# ============================================================ services =====
 SERVICES = [
     ('ground', 'Ground Investigation',
      'Geotechnical and geoenvironmental investigation for design, remediation and due diligence.',
@@ -228,20 +295,23 @@ def service_card(icon, title, blurb, bullets):
 
 svc_rows = []
 for i in range(0, 6, 3):
-    cols = ''.join(column(code(service_card(*s)), ctype='1_3') for s in SERVICES[i:i + 3])
-    svc_rows.append(row(cols, layout='1_3,1_3,1_3',
-                        padding='0px||28px||false|false'))
+    cols = ''.join(column(text(service_card(*s), animate=n * 100), ctype='1_3')
+                   for n, s in enumerate(SERVICES[i:i + 3]))
+    svc_rows.append(row(cols, layout='1_3,1_3,1_3', padding='0px||28px||false|false'))
 parts.append(section(
     row(column(text(head('01', 'Services', 'Six ways we get you an answer out of the ground.',
                          'Whether the question is a foundation design, a mine shaft, a farm&rsquo;s water '
-                         'supply or a heat pump array, the method changes but the standard does not.'))),
+                         'supply or a heat pump array, the method changes but the standard does not.'),
+                    animate=0)),
         padding='0px||70px||false|false')
     + ''.join(svc_rows),
-    classes='phx phx--light phx-services phx-equal', bg='#eceef0',
+    anchor='phx-services', classes='phx phx--light phx-services phx-equal', bg='#eceef0',
     padding='110px||110px||true|false'))
 
-# --- depth cross-section ----------------------------------------------------
-# Lifted verbatim from the static site so the diagram stays identical.
+# =============================================================== depth =====
+# The second and last Code module: a 1400x700 diagram the rich-text editor
+# would mangle on first open. Lifted verbatim so it stays identical to the
+# static site.
 site = open(os.path.join(REPO, 'index.html')).read()
 figure = re.search(r'(<svg viewBox="0 0 1400 700".*?</svg>)', site, re.S).group(1)
 figure = figure.replace('class="depth-anno"', 'class="phx-anno"')
@@ -256,13 +326,13 @@ parts.append(section(
     row(column(text(head('02', 'Down the hole', 'Every metre asks for a different technique.',
                          'A single borehole can pass through five kinds of ground before it finishes. '
                          'Choosing the wrong method at the wrong depth is how programmes slip. This is '
-                         'the sequence we plan for.'))),
+                         'the sequence we plan for.'), animate=0)),
         padding='0px||70px||false|false')
-    + row(column(code(f'<div class="phx-depth">{figure}{legend}</div>'))),
+    + row(column(code(f'<div class="phx-depth">{figure}{legend}</div>', animate=100))),
     classes='phx phx-depth-band', bg='#16191c',
     padding='110px||110px||true|false'))
 
-# --- capability -------------------------------------------------------------
+# ========================================================== capability =====
 SPEC = [
     ('Cable percussive', 'Dando 4000, 2000 &amp; 150, Edeco-Pilcon 2000'),
     ('Rotary', 'Open hole, conventional and triple-tube coring'),
@@ -282,13 +352,13 @@ cap_copy = (
       'on your site from set-up to demobilisation.</p>'
 )
 parts.append(section(
-    row(column(code(f'<div class="phx-figure">{svg_body("rig-rotary.svg")}</div>'), ctype='1_2')
-        + column(text(cap_copy) + code(spec_html), ctype='1_2'),
+    row(column(text(f'<div class="phx-figure">{svg_body("rig-rotary.svg")}</div>', animate=0), ctype='1_2')
+        + column(text(cap_copy, animate=100) + text(spec_html, animate=150), ctype='1_2'),
         layout='1_2,1_2'),
-    classes='phx phx--light phx-capability', bg='#eceef0',
+    anchor='phx-capability', classes='phx phx--light phx-capability', bg='#eceef0',
     padding='110px||110px||true|false'))
 
-# --- sectors ----------------------------------------------------------------
+# ============================================================= sectors =====
 SECTORS = [
     ('crane', 'Construction &amp; Civils',
      'Site investigation for foundation design, earthworks and remediation, from single plots to major schemes.'),
@@ -306,20 +376,21 @@ SECTORS = [
 sec_rows = []
 for i in range(0, 6, 3):
     cols = ''.join(
-        column(code(f'<div class="phx-sector">{ico(ic)}<div><h3>{t}</h3><p>{d}</p></div></div>'),
-               ctype='1_3')
-        for ic, t, d in SECTORS[i:i + 3])
+        column(text(f'<div class="phx-sector">{ico(ic)}<div><h3>{t}</h3><p>{d}</p></div></div>',
+                    animate=n * 100), ctype='1_3')
+        for n, (ic, t, d) in enumerate(SECTORS[i:i + 3]))
     sec_rows.append(row(cols, layout='1_3,1_3,1_3'))
 parts.append(section(
     row(column(text(head('04', 'Sectors', 'Who we drill for.',
                          'Most of our work comes through geotechnical consultants and main contractors, '
-                         'but the rig does not care who is paying &mdash; only that the hole is right.'))),
+                         'but the rig does not care who is paying &mdash; only that the hole is right.'),
+                    animate=0)),
         padding='0px||70px||false|false')
     + ''.join(sec_rows),
-    classes='phx phx-sectors', bg='#16191c',
+    anchor='phx-sectors', classes='phx phx-sectors', bg='#16191c',
     padding='110px||110px||true|false'))
 
-# --- process ----------------------------------------------------------------
+# ============================================================= process =====
 STEPS = [
     ('Enquiry &amp; scope', 'You send the specification, or a sketch and a postcode. We come back with method, duration and price.'),
     ('Desk study &amp; permits', 'Services search, access review, and the consents the site needs before a rig turns a wheel.'),
@@ -328,16 +399,18 @@ STEPS = [
     ('Records &amp; handover', "Driller's logs, installation details and photographs issued in the format your engineer works in."),
 ]
 step_cols = ''.join(
-    column(code(f'<div class="phx-step"><b>0{n}</b><h3>{t}</h3><p>{d}</p></div>'), ctype='1_5')
+    column(text(f'<div class="phx-step"><b>0{n}</b><h3>{t}</h3><p>{d}</p></div>',
+                animate=(n - 1) * 80), ctype='1_5')
     for n, (t, d) in enumerate(STEPS, 1))
 parts.append(section(
-    row(column(text(head('05', 'How we work', 'Five steps, and no surprises in the middle of them.'))),
+    row(column(text(head('05', 'How we work', 'Five steps, and no surprises in the middle of them.'),
+                    animate=0)),
         padding='0px||70px||false|false')
     + row(step_cols, layout='1_5,1_5,1_5,1_5,1_5'),
-    classes='phx phx--light phx-process', bg='#eceef0',
+    anchor='phx-process', classes='phx phx--light phx-process', bg='#eceef0',
     padding='110px||110px||true|false'))
 
-# --- projects ---------------------------------------------------------------
+# ============================================================ projects =====
 # PLACEHOLDER PROJECTS — representative of the type of work described in the
 # company's public material, not specific jobs, and carrying no client names.
 # Replace with real, client-approved projects before launch.
@@ -355,27 +428,28 @@ PROJECTS = [
     ('geothermal.svg', 'Geothermal', 'Closed-loop array for a new-build scheme',
      ['East of Scotland', 'Commercial'],
      'A grid of vertical boreholes drilled, loops installed and grouted, then headed up to a '
-     "manifold for the incoming heat pump plant — sequenced around the main contractor's "
+     "manifold for the incoming heat pump plant &mdash; sequenced around the main contractor's "
      'groundworks programme.'),
 ]
 proj_cols = ''.join(
-    column(code(
+    column(text(
         f'<div class="phx-project"><div class="phx-project__media">{svg_body(img)}'
         f'<span class="phx-project__tag">{tag}</span></div>'
         f'<div class="phx-project__body"><h3>{title}</h3>'
         f'<p class="phx-project__meta">{"".join(f"<span>{m}</span>" for m in meta)}</p>'
-        f'<p>{body}</p></div></div>'), ctype='1_3')
-    for img, tag, title, meta, body in PROJECTS)
+        f'<p>{body}</p></div></div>', animate=n * 100), ctype='1_3')
+    for n, (img, tag, title, meta, body) in enumerate(PROJECTS))
 parts.append(section(
     row(column(text(head('06', 'Selected work', 'Representative projects.',
                          'A cross-section of the work: a brownfield investigation over old workings, '
-                         'a private water supply, and a closed-loop array under a new building.'))),
+                         'a private water supply, and a closed-loop array under a new building.'),
+                    animate=0)),
         padding='0px||70px||false|false')
     + row(proj_cols, layout='1_3,1_3,1_3'),
-    classes='phx phx--deep phx-projects phx-equal', bg='#0e1113',
+    anchor='phx-projects', classes='phx phx--deep phx-projects phx-equal', bg='#0e1113',
     padding='110px||110px||true|false'))
 
-# --- coverage ---------------------------------------------------------------
+# ============================================================ coverage =====
 OFFICES = [
     ('Livingston', 'Head office',
      '2 Nairn Road, Livingston, West Lothian EH54 8AY<br>'
@@ -393,15 +467,16 @@ parts.append(section(
     row(column(text(head('07', 'Where we work', 'Livingston at the centre of it.',
                          'Our head office and yard sit in West Lothian, halfway between Edinburgh and '
                          'Glasgow and inside an hour of most of the Central Belt. Offices in Inverness '
-                         'and Aberdeen cover the north and north-east, and we mobilise UK-wide.'))),
+                         'and Aberdeen cover the north and north-east, and we mobilise UK-wide.'),
+                    animate=0)),
         padding='0px||70px||false|false')
-    + row(column(code(f'<div class="phx-figure">{svg_body("coverage-map.svg")}</div>'), ctype='1_2')
-          + column(code(offices_html), ctype='1_2'),
+    + row(column(text(f'<div class="phx-figure">{svg_body("coverage-map.svg")}</div>', animate=0), ctype='1_2')
+          + column(text(offices_html, animate=100), ctype='1_2'),
           layout='1_2,1_2'),
-    classes='phx phx-coverage', bg='#16191c',
+    anchor='phx-about', classes='phx phx-coverage', bg='#16191c',
     padding='110px||110px||true|false'))
 
-# --- FAQ — a real Divi accordion so the client can edit it in the builder ---
+# ================================================================= FAQ =====
 FAQ = [
     ('How quickly can you get a rig on site?',
      'It depends on the rig and the season &mdash; cable percussion in the Central Belt is usually a '
@@ -438,20 +513,20 @@ accordion = ('[et_pb_accordion ' + attrs(_builder_version=BUILDER_VERSION,
                                          module_class='phx-faq', global_colors_info='{}')
              + ']' + faq_items + '[/et_pb_accordion]')
 parts.append(section(
-    row(column(text(head('08', 'Common questions', 'Before you send the enquiry.'))),
+    row(column(text(head('08', 'Common questions', 'Before you send the enquiry.'), animate=0)),
         padding='0px||70px||false|false')
-    + row(column(accordion), padding='0px||0px||false|false'),
+    + row(column(accordion)),
     classes='phx phx--light phx-faq-band', bg='#eceef0',
     padding='110px||110px||true|false'))
 
-# --- quote form — a real Divi contact form ---------------------------------
+# =============================================================== quote =====
 def field(fid, title, *, ftype='input', required='on', fullwidth='off', options=None):
     kw = dict(field_id=fid, field_title=title, field_type=ftype,
               required_mark=required, fullwidth_field=fullwidth,
               _builder_version=BUILDER_VERSION, global_colors_info='{}')
     if options:
-        # Divi stores repeatable field options percent-encoded: [ ] and " are
-        # escaped so the shortcode parser leaves them alone.
+        # Divi stores repeatable field options percent-encoded so the shortcode
+        # parser leaves the brackets and quotes alone.
         payload = ','.join(
             '{%22value%22:%22' + o + '%22,%22checked%22:0,%22dragID%22:%22-1%22}'
             for o in options)
@@ -493,16 +568,58 @@ contact_direct = (
     'Monday to Friday, 8am &ndash; 5pm</p></div>'
 )
 parts.append(section(
-    row(column(text(quote_aside) + code(contact_direct), ctype='1_2')
+    row(column(text(quote_aside, animate=0) + text(contact_direct, animate=80), ctype='1_2')
         + column(form, ctype='1_2'),
         layout='1_2,1_2'),
-    classes='phx phx--deep phx-quote', bg='#0e1113',
+    anchor='phx-quote', classes='phx phx--deep phx-quote', bg='#0e1113',
     padding='110px||110px||true|false'))
+
+# ============================================================== footer =====
+FOOT_SERVICES = ['Ground investigation', 'Rotary &amp; core drilling', 'Cable percussion',
+                 'Water boreholes', 'Geothermal']
+FOOT_COMPANY = [('Capability', '#phx-capability'), ('Sectors', '#phx-sectors'),
+                ('How we work', '#phx-process'), ('Projects', '#phx-projects'),
+                ('Coverage', '#phx-about')]
+foot_brand = (
+    '<div class="phx-footer-brand">'
+    f'<a class="phx-brand" href="#phx-top">{ico("mark", "")}'
+    '<span><span class="name">Phoenix</span>'
+    '<span class="sub">Drilling &middot; Est. 2010</span></span></a>'
+    '<p>Ground investigation, water extraction and geothermal drilling, delivered UK-wide '
+    'with our own rigs and crews from Livingston, West Lothian.</p></div>'
+)
+foot_services = ('<div class="phx-footcol"><h4>Services</h4><ul>'
+                 + ''.join(f'<li><a href="#phx-services">{s}</a></li>' for s in FOOT_SERVICES)
+                 + '</ul></div>')
+foot_company = ('<div class="phx-footcol"><h4>Company</h4><ul>'
+                + ''.join(f'<li><a href="{h}">{t}</a></li>' for t, h in FOOT_COMPANY)
+                + '</ul></div>')
+foot_contact = (
+    '<div class="phx-footcol"><h4>Contact</h4><ul>'
+    '<li>2 Nairn Road, Livingston<br>West Lothian EH54 8AY</li>'
+    '<li><a href="tel:+441506411448">01506 411448</a></li>'
+    '<li><a href="mailto:info@phoenixdrilling.co.uk">info@phoenixdrilling.co.uk</a></li>'
+    '<li><a href="#phx-quote">Request a quote</a></li></ul></div>'
+)
+foot_bottom = (
+    '<div class="phx-footbottom">'
+    '<span>&copy; 2026 Phoenix Drilling Ltd &middot; Registered in Scotland SC370985</span>'
+    '<span>ISO 9001 &middot; ISO 14001 &middot; ISO 45001</span>'
+    '<span><a href="#phx-top">Back to top</a></span></div>'
+)
+parts.append(section(
+    # Four equal columns: 4 x 20.875% plus 3 x 5.5% gutters is exactly 100%.
+    # A 2_5,1_5,1_5,1_5 mix overflows once Divi's gutters are added and wraps
+    # the last column onto its own line.
+    row(column(text(foot_brand), ctype='1_4') + column(text(foot_services), ctype='1_4')
+        + column(text(foot_company), ctype='1_4') + column(text(foot_contact), ctype='1_4'),
+        layout='1_4,1_4,1_4,1_4', padding='0px||28px||false|false')
+    + row(column(text(foot_bottom))),
+    classes='phx phx--deep phx-footer', bg='#0e1113',
+    padding='90px||40px||true|false'))
 
 shortcode = ''.join(parts)
 
-# The long-standing Divi portability envelope. Divi 5 reads this, converts the
-# core modules to native D5 blocks, and drops the shortcodes.
 payload = {
     'context': 'et_builder',
     'data': {'1': shortcode},
@@ -516,8 +633,8 @@ out_path = os.path.join(HERE, 'phoenix-drilling-divi.json')
 with open(out_path, 'w') as fh:
     json.dump(payload, fh, ensure_ascii=False)
 
-# Sanity checks worth failing loudly on.
-opens = len(re.findall(r'\[et_pb_(\w+)(?=[\s\]])', shortcode))
-closes = len(re.findall(r'\[/et_pb_(\w+)\]', shortcode))
+from collections import Counter
+mix = Counter(re.findall(r'\[et_pb_([a-z_0-9]+)(?=[\s\]])', shortcode))
 print(f'written {out_path} — {round(os.path.getsize(out_path)/1024)} KB')
-print(f'shortcode {round(len(shortcode)/1024)} KB, {opens} module opens, {closes} closes')
+print(f'shortcode {round(len(shortcode)/1024)} KB')
+print('module mix:', dict(sorted(mix.items(), key=lambda kv: -kv[1])))

@@ -65,44 +65,54 @@ layer. It also imports directly into Divi 4 if you are not on 5 yet.
 
 ## What is a real Divi module, and what is not
 
-Honest accounting, because it affects what your client can edit without touching code.
+The layout is **45 Text modules and 2 Code modules**. Everything a client would edit
+is native and opens in the builder like any other module.
 
-**Native modules — editable in the builder as normal:**
+**Native modules:**
 
-| Module | Used for |
+| Module | Count | Used for |
+| --- | --- | --- |
+| Section / Row / Column | 15 / 28 / 49 | Structure, per-section background, padding and CSS ID |
+| Text | 45 | All copy, cards, stats, spec lists, offices, illustrations, chrome |
+| Button | 3 | Header CTA plus the two hero calls to action |
+| Accordion + items | 1 + 6 | The FAQ |
+| Contact Form + fields | 1 + 8 | The quote enquiry, including the service dropdown |
+
+**Code modules — two, both unavoidable:**
+
+| Component | Why nothing else works |
 | --- | --- |
-| Section / Row / Column | The whole page structure, with per-section background and padding |
-| Text | Every section heading, eyebrow and lede |
-| Button | The two hero calls to action |
-| Accordion | The six FAQ items |
-| Contact Form | The quote enquiry, including the service dropdown |
+| Stylesheet + icon sprite | Divi requires CSS to sit inside `<style>` tags, and only a Code module leaves them intact |
+| The strata cross-section | A 1400×700 diagram whose markup the rich-text editor would mangle the first time anyone opened the module |
 
-**Code modules — designed components, edited as markup:**
+Illustrations are inlined as SVG **inside Text modules**, so the layout imports with
+no media-library dependency — nothing to upload, no broken image URLs. The trade-off:
+if you open one of those Text modules and switch to the *Visual* tab, TinyMCE may
+reformat the SVG. Edit those on the **Text** tab, or leave them alone.
 
-| Component | Why not a native module |
-| --- | --- |
-| Stylesheet + icon sprite | One module at the top of the page carries both |
-| Service and sector cards | Custom SVG icons the Blurb module cannot hold |
-| The strata cross-section | A bespoke 1400×700 SVG diagram with no module equivalent |
-| Stat strip, process steps, spec list, project cards, office list | Bespoke layouts built on hairline rules and a shared grid |
-| The illustrations | Inlined as SVG, so the layout imports with **no media library dependency** — nothing to upload, no broken image URLs |
-
-Blurb modules were the obvious native choice for the service cards, but Divi's Blurb
-takes either an ETmodules font icon or an uploaded image, and neither can carry the
-line-drawn SVG icons this design uses. Text over fidelity was the wrong trade here.
+Blurb was the obvious native choice for the service cards, but Divi's Blurb takes
+either an ETmodules font icon or an uploaded image, and neither can carry the
+line-drawn SVG icons this design uses.
 
 ---
 
 ## Differences from the static site
 
-- **No header or footer.** Those belong in the Divi **Theme Builder**, not in a page
-  layout — importing them here would double up with your theme's own chrome.
-- **No scroll animations.** The static site reveals sections on scroll, counts the hero
-  stats up, and lights the strata labels in sequence. None of that is in this layout.
-  Divi has its own Animation options per module if you want a version of it; the design
-  reads fine static.
-- **Section anchors.** The hero button points at `#phx-quote`. Set that CSS ID on the
-  quote section (Section → Advanced → CSS ID) after import, or edit the button URL.
+- **Header and footer are included**, so the import matches the original out of the
+  box. If you build them in Divi's **Theme Builder** instead, delete the *topbar*,
+  *header* and *footer* sections after importing so they do not double up.
+- **The nav is a Text module of anchor links**, not a Divi Menu module — so it works
+  immediately without you first creating a WordPress menu. Swap in a Menu module if
+  you would rather manage it under Appearance → Menus.
+- **Section anchors are already set.** Each section carries its CSS ID
+  (`phx-services`, `phx-quote` and so on), so the nav and hero buttons work the moment
+  it is imported. Nothing to wire up.
+- **Scroll reveals use Divi's native Animation options** — fade up, staggered 100ms
+  across cards — rather than the static site's IntersectionObserver. Divi honours
+  `prefers-reduced-motion` itself.
+- **No hero stat count-up and no strata label sequencing.** Both are bespoke
+  JavaScript on the static site with no module equivalent, and both read fine static.
+- **No sticky mobile call bar**, for the same reason.
 
 ## The stylesheet
 

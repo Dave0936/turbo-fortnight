@@ -594,3 +594,150 @@ body .phx textarea:focus-visible {
 body .phx-equal .et_pb_column { display: flex; }
 body .phx-equal .et_pb_column > .et_pb_module { display: flex; flex: 1 1 auto; min-width: 0; }
 body .phx-equal .et_pb_code_inner { display: flex; flex-direction: column; flex: 1 1 auto; width: 100%; }
+
+/* ==========================================================================
+   Page chrome — utility bar, header and footer
+
+   These live in the page layout so the import matches the original design out
+   of the box. If you build the header and footer in Divi's Theme Builder
+   instead, delete those three sections after importing.
+   ========================================================================== */
+
+.phx-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.1rem;
+  font-size: var(--step--2);
+  letter-spacing: 0.06em;
+  color: var(--graphite-400);
+  min-height: 42px;
+}
+.phx-topbar a { color: inherit; text-decoration: none; }
+.phx-topbar a:hover { color: var(--graphite-100); }
+.phx-topbar svg { width: 0.95em; height: 0.95em; color: var(--orange); vertical-align: -0.1em; }
+.phx-topbar .sep { color: var(--graphite-600); }
+.phx-topbar .certs { margin-left: auto; letter-spacing: 0.14em; text-transform: uppercase; }
+@media (max-width: 767px) { .phx-topbar .hide-sm { display: none; } }
+
+.phx-headbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  flex-wrap: wrap;
+  min-height: 78px;
+}
+.phx-brand { display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+.phx-brand svg { width: 34px; height: 42px; color: var(--red); flex: none; }
+.phx-brand .name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.16rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--graphite-100);
+  line-height: 1.15;
+}
+.phx-brand .sub {
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--graphite-400);
+}
+.phx-nav { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(1rem, 2vw, 1.9rem); }
+.phx-nav a {
+  position: relative;
+  font-size: var(--step--2);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--graphite-100);
+  text-decoration: none;
+  padding: 0.4rem 0;
+}
+.phx-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease);
+}
+.phx-nav a:hover::after { transform: scaleX(1); }
+
+/* Hero: the illustration sits behind the copy, with a scrim heavy enough on
+   the left — where the type is — to hold contrast. */
+.phx-hero { position: relative; overflow: hidden; }
+.phx-hero__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.phx-hero__bg svg { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
+.phx-hero__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(14,17,19,0.8) 0%, rgba(14,17,19,0.2) 45%, rgba(14,17,19,0.88) 100%),
+    linear-gradient(90deg, rgba(14,17,19,0.92) 0%, rgba(14,17,19,0.66) 45%, rgba(14,17,19,0.2) 100%);
+}
+body .phx-hero .et_pb_row { position: relative; z-index: 1; }
+/* The background row must NOT be a positioned ancestor, or the absolutely
+   positioned illustration inside it resolves against that row's small box
+   instead of filling the section. */
+body .phx-hero .phx-hero-bg-row,
+body .phx-hero .phx-hero-bg-row .et_pb_column,
+body .phx-hero .phx-hero-bg-row .et_pb_module {
+  position: static !important;
+  z-index: auto;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* The two hero buttons sit side by side with a gap, not Divi's default stack. */
+body .phx-hero-actions .et_pb_button { margin: 0 var(--space-s) 0 0 !important; }
+
+/* Footer */
+.phx-footer-brand p { font-size: var(--step--1); color: var(--text-muted); max-width: 34ch; }
+.phx-footcol h4 {
+  font-family: var(--font-body);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--graphite-100);
+  margin: 0 0 var(--space-s);
+}
+.phx-footcol ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.phx-footcol li { font-size: var(--step--1); color: var(--graphite-400); margin: 0; }
+.phx-footcol a { color: var(--graphite-400); text-decoration: none; }
+.phx-footcol a:hover { color: var(--orange); }
+.phx-footbottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s) var(--space-m);
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--graphite-600);
+  font-size: var(--step--2);
+  letter-spacing: 0.06em;
+  color: var(--graphite-400);
+}
+.phx-footbottom a { color: var(--graphite-400); text-decoration: none; }
+.phx-footbottom a:hover { color: var(--orange); }
+
+/* Small button variant, used by the header CTA. */
+body .phx .et_pb_button.phx-btn--sm {
+  padding: 0.75rem 1.35rem !important;
+  font-size: var(--step--2) !important;
+}
+/* The header CTA sits hard right against the nav. */
+body .phx-header-row .et_pb_column:last-child { text-align: right; }
+@media (max-width: 980px) {
+  body .phx-header-row .et_pb_column:last-child { text-align: left; }
+}
