@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="A closed-loop ground source heat pump array of vertical boreholes connected to a manifold and plant room">
+  <defs>
+    <linearGradient id="gtSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1d2429"/>
+      <stop offset="1" stop-color="#333c42"/>
+    </linearGradient>
+    <linearGradient id="gtHeat" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#e8112d"/>
+      <stop offset="0.55" stop-color="#ff6a13"/>
+      <stop offset="1" stop-color="#ff8f45"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="230" fill="url(#gtSky)"/>
+
+  <!-- Ground -->
+  <rect y="230" width="800" height="80" fill="#3b3a33"/>
+  <rect y="310" width="800" height="120" fill="#494336"/>
+  <rect y="430" width="800" height="170" fill="#3f3a33"/>
+  <g stroke="#0e1113" stroke-width="2" opacity="0.4">
+    <path d="M0 310 H800 M0 430 H800"/>
+  </g>
+  <!-- Rising heat gradient from depth -->
+  <rect y="430" width="800" height="170" fill="url(#gtHeat)" opacity="0.16"/>
+
+  <!-- Building and plant room -->
+  <g>
+    <path d="M96 230 V120 h150 v110 z" fill="#22282c" stroke="#4a5157" stroke-width="3"/>
+    <path d="M86 120 L171 70 L256 120 z" fill="#2b3237" stroke="#4a5157" stroke-width="3"/>
+    <rect x="122" y="152" width="42" height="38" fill="#ff8f45" opacity="0.32"/>
+    <rect x="180" y="152" width="42" height="38" fill="#ff8f45" opacity="0.2"/>
+    <rect x="150" y="196" width="44" height="34" fill="#12161a"/>
+  </g>
+
+  <!-- Horizontal manifold run -->
+  <path d="M171 254 H660" stroke="#98a0a6" stroke-width="8"/>
+  <path d="M171 272 H660" stroke="#6b7378" stroke-width="6"/>
+  <rect x="640" y="240" width="44" height="44" fill="#4a5157" stroke="#7d868c" stroke-width="2"/>
+
+  <!-- Four vertical loops -->
+  <g fill="none" stroke-width="6" stroke-linecap="round">
+    <g stroke="#ff6a13">
+      <path d="M300 258 V520 a20 20 0 0 0 40 0 V258"/>
+      <path d="M400 258 V560 a20 20 0 0 0 40 0 V258"/>
+      <path d="M500 258 V500 a20 20 0 0 0 40 0 V258"/>
+      <path d="M600 258 V540 a20 20 0 0 0 40 0 V258"/>
+    </g>
+  </g>
+  <!-- Borehole annuli -->
+  <g fill="none" stroke="#12161a" stroke-width="2.5" opacity="0.7">
+    <rect x="292" y="258" width="56" height="286"/>
+    <rect x="392" y="258" width="56" height="326"/>
+    <rect x="492" y="258" width="56" height="266"/>
+    <rect x="592" y="258" width="56" height="306"/>
+  </g>
+
+  <!-- Flow arrows -->
+  <g fill="#ff8f45">
+    <path d="M300 320 l-8 -14 h16 z"/>
+    <path d="M340 380 l8 14 h-16 z"/>
+    <path d="M500 320 l-8 -14 h16 z"/>
+    <path d="M540 380 l8 14 h-16 z"/>
+  </g>
+
+  <!-- Depth annotation -->
+  <g stroke="#7d868c" stroke-width="2">
+    <path d="M736 258 v320"/>
+    <path d="M730 258 h12 M730 578 h12"/>
+  </g>
+  <text x="700" y="612" fill="#7d868c" font-family="'Space Grotesk',Helvetica,Arial,sans-serif" font-size="17" text-anchor="middle">100–200 m</text>
+</svg>

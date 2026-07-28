@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Phoenix Drilling — ground investigation, water and geothermal drilling, UK-wide since 2010">
+  <defs>
+    <linearGradient id="ogBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e1113"/>
+      <stop offset="1" stop-color="#1c2226"/>
+    </linearGradient>
+    <linearGradient id="ogHeat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff8f45"/>
+      <stop offset="0.5" stop-color="#ff6a13"/>
+      <stop offset="1" stop-color="#e8112d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#ogBg)"/>
+
+  <!-- Rig silhouette, right -->
+  <g fill="none" stroke="#22272b" stroke-width="8" opacity="0.9">
+    <path d="M900 560 V120 M1040 560 V120 M900 120 H1040"/>
+    <path d="M900 500 H1040 M900 420 H1040 M900 340 H1040 M900 260 H1040 M900 180 H1040"/>
+    <path d="M900 500 L1040 420 M900 420 L1040 340 M900 340 L1040 260 M900 260 L1040 180"/>
+  </g>
+  <path d="M970 560 V620" stroke="#e8112d" stroke-width="5" stroke-dasharray="12 9"/>
+
+  <!-- Heat rule -->
+  <rect x="80" y="150" width="4" height="120" fill="url(#ogHeat)"/>
+
+  <g font-family="'Space Grotesk',Helvetica,Arial,sans-serif" fill="#eceef0">
+    <text x="120" y="196" font-size="34" font-weight="600" letter-spacing="9">PHOENIX DRILLING</text>
+    <text x="120" y="300" font-size="66" font-weight="500" letter-spacing="-2">Ground investigation,</text>
+    <text x="120" y="372" font-size="66" font-weight="500" letter-spacing="-2">water and <tspan fill="#ff6a13">geothermal</tspan></text>
+    <text x="120" y="444" font-size="66" font-weight="500" letter-spacing="-2">drilling. UK-wide.</text>
+  </g>
+
+  <path d="M120 500 H700" stroke="#333a3f" stroke-width="1.5"/>
+  <g font-family="'Space Grotesk',Helvetica,Arial,sans-serif" fill="#7d868c" font-size="22" letter-spacing="4">
+    <text x="120" y="546">LIVINGSTON · INVERNESS · ABERDEEN</text>
+    <text x="120" y="584" fill="#ff6a13">ISO 9001 · ISO 14001 · ISO 45001</text>
+  </g>
+</svg>

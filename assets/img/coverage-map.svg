@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 640" width="520" height="640" role="img" aria-label="A stylised map of Scotland marking the Livingston head office and the Inverness and Aberdeen offices">
+  <defs>
+    <linearGradient id="mapFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#282f34"/>
+      <stop offset="1" stop-color="#1b2024"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Survey grid -->
+  <g stroke="#22272b" stroke-width="1">
+    <path d="M60 0 V640 M140 0 V640 M220 0 V640 M300 0 V640 M380 0 V640 M460 0 V640"/>
+    <path d="M0 60 H520 M0 140 H520 M0 220 H520 M0 300 H520 M0 380 H520 M0 460 H520 M0 540 H520"/>
+  </g>
+
+  <!-- Mainland, clockwise from Cape Wrath. Simplified, but the features that
+       make Scotland legible are kept: the north coast, the Moray Firth, the
+       Aberdeenshire shoulder, the Forth and Tay, the Solway, Kintyre and the
+       deeply cut western seaboard. -->
+  <path d="M156 74 L196 66 L232 72 L268 62 L300 66 L330 58
+           L342 76 L348 100 L336 118 L320 138
+           L300 152 L282 164 L306 166 L320 172
+           L300 184 L276 196 L300 196 L330 190 L360 180 L386 176
+           L398 190 L396 212 L390 236 L386 254
+           L374 274 L366 288 L348 296 L330 302 L344 310 L358 318
+           L338 330 L312 336 L296 344 L316 350 L340 352
+           L352 372 L350 392 L320 404 L288 414 L256 424
+           L228 428 L210 436 L196 440 L182 452
+           L174 440 L184 424 L196 412 L190 392 L192 372 L180 356
+           L172 372 L166 396 L158 414 L150 396 L152 372 L148 350
+           L138 332 L134 312 L126 296 L130 278 L116 268 L100 252
+           L112 240 L108 222 L118 208 L114 192 L126 182 L114 168
+           L126 152 L124 136 L114 120 L122 104 L138 92 Z"
+        fill="url(#mapFill)" stroke="#5a636a" stroke-width="2" stroke-linejoin="round"/>
+
+  <!-- Islands: Outer Hebrides chain, Skye, Mull, Islay and Jura, Arran, Orkney -->
+  <g fill="#232a2e" stroke="#454e54" stroke-width="1.6">
+    <path d="M74 100 L92 96 L100 118 L88 136 L74 128 Z"/>
+    <path d="M78 142 L92 140 L94 158 L80 162 Z"/>
+    <path d="M66 168 L78 166 L80 192 L68 196 Z"/>
+    <path d="M62 202 L72 200 L74 216 L62 218 Z"/>
+    <path d="M92 196 L106 190 L100 204 L114 208 L104 222 L88 216 L96 206 Z"/>
+    <path d="M98 272 L118 268 L122 286 L104 292 Z"/>
+    <path d="M112 330 L124 326 L128 356 L116 358 Z"/>
+    <path d="M96 344 L108 342 L110 362 L98 364 Z"/>
+    <path d="M170 380 L182 378 L184 396 L172 398 Z"/>
+    <path d="M336 26 L356 20 L362 38 L342 44 Z"/>
+    <path d="M310 24 L326 18 L330 32 L314 38 Z"/>
+  </g>
+
+  <!-- Connection lines between offices -->
+  <g stroke="#ff6a13" stroke-width="1.5" stroke-dasharray="5 7" opacity="0.6" fill="none">
+    <path d="M292 346 L282 194"/>
+    <path d="M292 346 L384 252"/>
+    <path d="M282 194 L384 252"/>
+  </g>
+
+  <!-- Offices -->
+  <g>
+    <!-- Inverness -->
+    <circle cx="282" cy="194" r="11" fill="none" stroke="#ff6a13" stroke-width="2"/>
+    <circle cx="282" cy="194" r="4.5" fill="#ff6a13"/>
+    <!-- Aberdeen -->
+    <circle cx="384" cy="252" r="11" fill="none" stroke="#ff6a13" stroke-width="2"/>
+    <circle cx="384" cy="252" r="4.5" fill="#ff6a13"/>
+    <!-- Livingston, head office -->
+    <circle cx="292" cy="346" r="26" fill="#e8112d" opacity="0.14"/>
+    <circle cx="292" cy="346" r="15" fill="none" stroke="#e8112d" stroke-width="2"/>
+    <circle cx="292" cy="346" r="6.5" fill="#e8112d"/>
+  </g>
+
+  <!-- Labels -->
+  <g font-family="'Space Grotesk',Helvetica,Arial,sans-serif" font-size="17" font-weight="500">
+    <text x="300" y="188" fill="#eceef0">Inverness</text>
+    <text x="402" y="246" fill="#eceef0">Aberdeen</text>
+    <text x="248" y="418" fill="#eceef0" text-anchor="end">Livingston</text>
+    <text x="248" y="438" fill="#e8112d" font-size="12" letter-spacing="2.4" text-anchor="end">HEAD OFFICE</text>
+  </g>
+  <path d="M254 412 L280 358" stroke="#5a636a" stroke-width="1.5"/>
+
+  <!-- Scale and compass -->
+  <g stroke="#5a636a" stroke-width="1.5" fill="none">
+    <path d="M40 596 H140 M40 590 v12 M90 592 v8 M140 590 v12"/>
+  </g>
+  <text x="40" y="622" fill="#939ba1" font-family="'Space Grotesk',Helvetica,Arial,sans-serif" font-size="13" letter-spacing="1.6">100 KM</text>
+  <g transform="translate(462 580)">
+    <path d="M0 -22 L7 6 L0 0 L-7 6 Z" fill="#ff6a13"/>
+    <text x="0" y="26" fill="#939ba1" font-family="'Space Grotesk',Helvetica,Arial,sans-serif" font-size="13" text-anchor="middle">N</text>
+  </g>
+</svg>

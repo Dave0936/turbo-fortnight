@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 640" width="800" height="640" role="img" aria-label="A drilling crew in full protective equipment working a rig on site">
+  <defs>
+    <linearGradient id="cwBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#161b1f"/>
+      <stop offset="0.7" stop-color="#252c31"/>
+      <stop offset="1" stop-color="#2f373d"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="640" fill="url(#cwBg)"/>
+
+  <!-- Rig structure behind -->
+  <g fill="none" stroke="#1a1f23" stroke-width="9">
+    <path d="M520 500 V60 M660 500 V60 M520 60 H660"/>
+    <path d="M520 440 H660 M520 360 H660 M520 280 H660 M520 200 H660 M520 120 H660"/>
+    <path d="M520 440 L660 360 M520 360 L660 280 M520 280 L660 200 M520 200 L660 120"/>
+  </g>
+  <rect x="560" y="240" width="60" height="46" fill="#39424a"/>
+  <path d="M590 286 V500" stroke="#39424a" stroke-width="7"/>
+
+  <!-- Ground -->
+  <rect y="500" width="800" height="140" fill="#12161a"/>
+  <path d="M0 500 H800" stroke="#3d454a" stroke-width="2.5"/>
+  <path d="M60 546 H340 M420 588 H760" stroke="#1c2226" stroke-width="4"/>
+
+  <!-- Crew member, foreground -->
+  <g>
+    <!-- body -->
+    <path d="M232 500 V352 a52 52 0 0 1 104 0 V500 z" fill="#ff6a13"/>
+    <path d="M232 500 V440 h104 v60 z" fill="#e8112d" opacity="0.35"/>
+    <!-- hi-vis bands -->
+    <path d="M232 396 h104" stroke="#f2f3f3" stroke-width="10" opacity="0.75"/>
+    <path d="M232 424 h104" stroke="#f2f3f3" stroke-width="6" opacity="0.5"/>
+    <!-- arms -->
+    <path d="M236 366 L188 442 l26 14 44 -66 z" fill="#ff6a13"/>
+    <path d="M332 366 L392 428 l-24 18 -50 -56 z" fill="#ff6a13"/>
+    <!-- gloves -->
+    <circle cx="198" cy="452" r="16" fill="#2b3237"/>
+    <circle cx="386" cy="440" r="16" fill="#2b3237"/>
+    <!-- head and helmet -->
+    <circle cx="284" cy="300" r="34" fill="#c8ccd0"/>
+    <path d="M240 292 a44 44 0 0 1 88 0 z" fill="#f2f3f3"/>
+    <path d="M232 292 h104 v12 h-104 z" fill="#e8e9ea"/>
+    <!-- ear defenders and glasses -->
+    <rect x="236" y="288" width="18" height="26" rx="6" fill="#2b3237"/>
+    <rect x="314" y="288" width="18" height="26" rx="6" fill="#2b3237"/>
+    <path d="M256 312 h56 v10 h-56 z" fill="#39424a" opacity="0.85"/>
+  </g>
+
+  <!-- Second crew member, further back -->
+  <g opacity="0.9">
+    <path d="M400 500 V400 a38 38 0 0 1 76 0 V500 z" fill="#ff8f45"/>
+    <path d="M400 434 h76" stroke="#f2f3f3" stroke-width="8" opacity="0.7"/>
+    <circle cx="438" cy="362" r="25" fill="#c8ccd0"/>
+    <path d="M406 356 a32 32 0 0 1 64 0 z" fill="#f2f3f3"/>
+  </g>
+
+  <!-- Drill rod being handled -->
+  <path d="M198 452 L560 386" stroke="#98a0a6" stroke-width="11" stroke-linecap="round"/>
+  <path d="M198 452 L560 386" stroke="#4a5157" stroke-width="3" stroke-linecap="round"/>
+</svg>

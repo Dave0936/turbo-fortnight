@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 675" width="900" height="675" role="img" aria-label="A tracked rotary drilling rig coring on a prepared site platform">
+  <defs>
+    <linearGradient id="rrSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#171b1f"/>
+      <stop offset="1" stop-color="#2b3237"/>
+    </linearGradient>
+    <linearGradient id="rrBody" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a4247"/>
+      <stop offset="1" stop-color="#22272b"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="675" fill="url(#rrSky)"/>
+
+  <!-- Site platform -->
+  <rect x="0" y="500" width="900" height="175" fill="#12161a"/>
+  <path d="M0 500 H900" stroke="#333a3f" stroke-width="2"/>
+  <path d="M60 540 H360 M420 574 H820 M120 612 H600" stroke="#1c2125" stroke-width="3"/>
+
+  <!-- Mast -->
+  <g fill="none" stroke="#4b545a" stroke-width="6" stroke-linecap="square">
+    <path d="M330 500 V120"/>
+    <path d="M398 500 V120"/>
+    <path d="M330 120 H398"/>
+    <path d="M330 440 H398 M330 380 H398 M330 320 H398 M330 260 H398 M330 200 H398"/>
+    <path d="M330 440 L398 380 M330 380 L398 320 M330 320 L398 260 M330 260 L398 200"/>
+  </g>
+  <rect x="344" y="150" width="40" height="230" fill="#ff6a13" opacity="0.14"/>
+  <!-- Rotary head -->
+  <rect x="326" y="286" width="76" height="42" fill="#5d666c"/>
+  <path d="M364 328 V520" stroke="#7d868c" stroke-width="6"/>
+  <circle cx="364" cy="140" r="8" fill="#e8112d"/>
+
+  <!-- Body and tracks -->
+  <path d="M404 500 v-96 h206 l26 40 v56 z" fill="url(#rrBody)"/>
+  <rect x="430" y="424" width="58" height="40" fill="#0e1113"/>
+  <rect x="436" y="430" width="46" height="28" fill="#ff8f45" opacity="0.28"/>
+  <rect x="512" y="424" width="96" height="18" fill="#0e1113" opacity="0.6"/>
+  <g fill="#1a1f23">
+    <rect x="392" y="500" width="270" height="40" rx="20"/>
+  </g>
+  <g fill="#333a3f">
+    <circle cx="418" cy="520" r="12"/><circle cx="484" cy="520" r="12"/>
+    <circle cx="550" cy="520" r="12"/><circle cx="628" cy="520" r="12"/>
+  </g>
+
+  <!-- Borehole and cross-section hint -->
+  <path d="M364 520 V660" stroke="#e8112d" stroke-width="3" stroke-dasharray="10 8"/>
+  <circle cx="364" cy="520" r="14" fill="none" stroke="#ff6a13" stroke-width="2.5"/>
+
+  <!-- Core boxes -->
+  <g fill="#22272b" stroke="#3d454a" stroke-width="2">
+    <rect x="700" y="446" width="140" height="26"/>
+    <rect x="700" y="474" width="140" height="26"/>
+  </g>
+  <g fill="#7d868c">
+    <rect x="708" y="454" width="122" height="10"/>
+    <rect x="708" y="482" width="90" height="10"/>
+  </g>
+
+  <!-- Crew figure -->
+  <g fill="#0e1113">
+    <path d="M244 500 v-52 a11 11 0 0 1 22 0 v52 z"/>
+    <circle cx="255" cy="434" r="11"/>
+    <path d="M244 446 h-16 v-4 h16 z"/>
+  </g>
+  <path d="M244 424 h22" stroke="#ff6a13" stroke-width="5"/>
+</svg>

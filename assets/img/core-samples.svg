@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Rock core recovered into core boxes and logged on site">
+  <defs>
+    <linearGradient id="csBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c2125"/>
+      <stop offset="1" stop-color="#0f1316"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#csBg)"/>
+
+  <!-- Core boxes stacked in perspective -->
+  <g stroke="#3d454a" stroke-width="2.5">
+    <rect x="80" y="120" width="640" height="104" fill="#242a2e"/>
+    <rect x="80" y="238" width="640" height="104" fill="#20262a"/>
+    <rect x="80" y="356" width="640" height="104" fill="#1c2226"/>
+  </g>
+
+  <!-- Dividers -->
+  <g stroke="#3d454a" stroke-width="2">
+    <path d="M80 146 H720 M80 172 H720 M80 198 H720"/>
+    <path d="M80 264 H720 M80 290 H720 M80 316 H720"/>
+    <path d="M80 382 H720 M80 408 H720 M80 434 H720"/>
+  </g>
+
+  <!-- Core runs: colour tells depth, greys to warm browns -->
+  <g>
+    <rect x="86" y="126" width="520" height="14" fill="#6f7378"/>
+    <rect x="612" y="126" width="70" height="14" fill="#5c6165"/>
+    <rect x="86" y="152" width="600" height="14" fill="#787c80"/>
+    <rect x="86" y="178" width="470" height="14" fill="#6a6e72"/>
+    <rect x="562" y="178" width="120" height="14" fill="#5a5f63"/>
+    <rect x="86" y="204" width="628" height="14" fill="#82868a"/>
+
+    <rect x="86" y="244" width="560" height="14" fill="#7d766c"/>
+    <rect x="86" y="270" width="614" height="14" fill="#8a8074"/>
+    <rect x="86" y="296" width="500" height="14" fill="#746c62"/>
+    <rect x="592" y="296" width="96" height="14" fill="#655e56"/>
+    <rect x="86" y="322" width="590" height="14" fill="#877d70"/>
+
+    <rect x="86" y="362" width="606" height="14" fill="#5f5952"/>
+    <rect x="86" y="388" width="520" height="14" fill="#6b645b"/>
+    <rect x="612" y="388" width="74" height="14" fill="#544e48"/>
+    <rect x="86" y="414" width="576" height="14" fill="#4e4944"/>
+    <rect x="86" y="440" width="620" height="14" fill="#5a544d"/>
+  </g>
+
+  <!-- Depth labels -->
+  <g fill="#ff6a13" font-family="'Space Grotesk',Helvetica,Arial,sans-serif" font-size="17" font-weight="500">
+    <text x="80" y="106">0.00 – 6.20 m</text>
+    <text x="80" y="224" fill="#7d868c">6.20 – 12.40 m</text>
+    <text x="80" y="342" fill="#7d868c">12.40 – 18.60 m</text>
+  </g>
+
+  <!-- Logging clipboard -->
+  <g>
+    <rect x="520" y="474" width="200" height="106" fill="#f2f3f3" opacity="0.92"/>
+    <rect x="588" y="466" width="64" height="16" fill="#333a3f"/>
+    <g stroke="#98a0a6" stroke-width="3">
+      <path d="M540 508 H700 M540 526 H700 M540 544 H660"/>
+    </g>
+    <path d="M540 490 H620" stroke="#e8112d" stroke-width="4"/>
+  </g>
+
+  <!-- Scale rule -->
+  <g stroke="#ff6a13" stroke-width="2.5">
+    <path d="M80 500 H440"/>
+    <path d="M80 494 v12 M170 496 v8 M260 494 v12 M350 496 v8 M440 494 v12"/>
+  </g>
+</svg>

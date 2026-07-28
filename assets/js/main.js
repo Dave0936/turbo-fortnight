@@ -1,25 +1,23 @@
 /* ==========================================================================
-   Coul House — site behaviour
-   Progressive enhancement only: every page works with JavaScript disabled.
+   Phoenix Drilling — site behaviour
+
+   Progressive enhancement only. With JavaScript off: the nav is a plain list,
+   every section is visible, the strata diagram is fully annotated, all FAQ
+   answers are open, and the form submits normally. Nothing here is load
+   bearing.
    ========================================================================== */
 
 (function () {
   'use strict';
 
   /* ------------------------------------------------------------------ Config
-     Every availability form on the site posts here. To hand booking over to a
-     real reservations engine (SiteMinder, Guestline, ResDiary, Little Hotelier
-     and friends all accept dates as query parameters), change this one value to
-     the engine's deep-link base and, if its parameter names differ from ours,
-     map them in BOOKING_PARAM_MAP below. Nothing else needs to change. */
-  var BOOKING_URL = 'book.html';
-  var BOOKING_PARAM_MAP = {
-    // ours    : theirs
-    arrive: 'arrive',
-    depart: 'depart',
-    guests: 'guests',
-    rooms:  'rooms'
-  };
+     The quote form currently shows a message pointing the visitor at the phone
+     and the office email — it does not send anything. To connect it to a real
+     endpoint (Formspree, Netlify Forms, or a script on the host), set the
+     action and method on the <form> and remove its data-demo-form attribute.
+     Validation and the honeypot below keep working either way. */
+  var OFFICE_PHONE = '01506 411448';
+  var OFFICE_EMAIL = 'info@phoenixdrilling.co.uk';
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -65,17 +63,10 @@
     });
 
     // Reset the panel if the viewport grows past the mobile breakpoint
-    window.matchMedia('(min-width: 1121px)').addEventListener('change', function (e) {
+    window.matchMedia('(min-width: 1061px)').addEventListener('change', function (e) {
       if (e.matches) closeNav();
     });
   }
-
-  /* --------------------------------------------------- Current page in nav */
-
-  var here = location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav__link').forEach(function (link) {
-    if (link.getAttribute('href') === here) link.setAttribute('aria-current', 'page');
-  });
 
   /* -------------------------------------------------------- Scroll reveals */
 
@@ -121,6 +112,110 @@
     }
   }
 
+  /* ------------------------------------------------- Current section in nav */
+
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav__link'));
+  var sections = navLinks
+    .map(function (link) { return document.querySelector(link.getAttribute('href')); })
+    .filter(Boolean);
+
+  if (sections.length && 'IntersectionObserver' in window) {
+    var markCurrent = function (id) {
+      navLinks.forEach(function (link) {
+        if (link.getAttribute('href') === '#' + id) link.setAttribute('aria-current', 'true');
+        else link.removeAttribute('aria-current');
+      });
+    };
+
+    var visible = {};
+    var spy = new IntersectionObserver(function (entries) {
+      // Whichever tracked section is nearest the top of the viewport wins.
+      var best = null;
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) visible[entry.target.id] = entry.intersectionRatio;
+        else delete visible[entry.target.id];
+      });
+      Object.keys(visible).forEach(function (id) {
+        var top = document.getElementById(id).getBoundingClientRect().top;
+        if (!best || top < best.top) best = { id: id, top: top };
+      });
+      if (best) markCurrent(best.id);
+    }, { rootMargin: '-30% 0px -55% 0px', threshold: 0 });
+
+    sections.forEach(function (section) { spy.observe(section); });
+  }
+
+  /* ------------------------------------------------------------ Stat count */
+
+  var statStrip = document.querySelector('[data-stats]');
+  if (statStrip) {
+    var counters = Array.prototype.slice.call(statStrip.querySelectorAll('[data-count]'));
+
+    var runCount = function (el) {
+      var target = parseInt(el.getAttribute('data-count'), 10);
+      if (isNaN(target)) return;
+      // Years count from a nearby figure rather than from zero — watching a
+      // date spin up from 0 looks like a bug, not a flourish.
+      var from = el.hasAttribute('data-plain') ? target - 40 : 0;
+      var duration = 1100;
+      var started = null;
+
+      var frame = function (now) {
+        if (started === null) started = now;
+        var progress = Math.min((now - started) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = String(Math.round(from + (target - from) * eased));
+        if (progress < 1) window.requestAnimationFrame(frame);
+      };
+      window.requestAnimationFrame(frame);
+    };
+
+    if (!reduceMotion && counters.length && 'IntersectionObserver' in window) {
+      var countIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          countIo.unobserve(entry.target);
+          runCount(entry.target);
+        });
+      }, { threshold: 0.6 });
+      counters.forEach(function (el) { countIo.observe(el); });
+    }
+  }
+
+  /* ------------------------------------------- Strata diagram annotations */
+
+  var depthFigure = document.querySelector('[data-depth-figure]');
+  if (depthFigure) {
+    var annos = Array.prototype.slice.call(depthFigure.querySelectorAll('.depth-anno'));
+
+    if (annos.length && !reduceMotion && 'IntersectionObserver' in window) {
+      // Only hide the labels once we know we can bring them back. Priming
+      // here rather than in the stylesheet means a script that fails to load
+      // leaves a fully readable diagram.
+      annos.forEach(function (el) { el.classList.add('is-primed'); });
+
+      var depthIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          depthIo.unobserve(entry.target);
+          annos.forEach(function (el, i) {
+            window.setTimeout(function () { el.classList.add('is-lit'); }, i * 220);
+          });
+        });
+      }, { threshold: 0.25 });
+      depthIo.observe(depthFigure);
+
+      // Same safety net as the reveals: if the figure is scrolled past before
+      // the observer fires, light the labels rather than lose them.
+      window.addEventListener('load', function () {
+        var box = depthFigure.getBoundingClientRect();
+        if (box.top < window.innerHeight && box.bottom > 0) {
+          annos.forEach(function (el) { el.classList.add('is-lit'); });
+        }
+      });
+    }
+  }
+
   /* ---------------------------------------------------------- Sticky CTA */
 
   var stickyCta = document.querySelector('[data-sticky-cta]');
@@ -132,214 +227,99 @@
     window.addEventListener('scroll', toggleCta, { passive: true });
   }
 
-  /* ------------------------------------------------------ Guest testimonials */
-
-  var quotesRoot = document.querySelector('[data-quotes]');
-  if (quotesRoot) {
-    var quotes = Array.prototype.slice.call(quotesRoot.querySelectorAll('[data-quote]'));
-    var dots = Array.prototype.slice.call(quotesRoot.querySelectorAll('[data-quote-dot]'));
-    var index = 0;
-    var timer = null;
-
-    var show = function (next) {
-      index = (next + quotes.length) % quotes.length;
-      quotes.forEach(function (q, i) { q.classList.toggle('is-active', i === index); });
-      dots.forEach(function (d, i) { d.setAttribute('aria-selected', String(i === index)); });
-    };
-
-    var start = function () {
-      if (reduceMotion || quotes.length < 2) return;
-      stop();
-      timer = window.setInterval(function () { show(index + 1); }, 8000);
-    };
-    var stop = function () { if (timer) window.clearInterval(timer); timer = null; };
-
-    dots.forEach(function (dot, i) {
-      dot.addEventListener('click', function () { show(i); start(); });
-    });
-    quotesRoot.addEventListener('mouseenter', stop);
-    quotesRoot.addEventListener('mouseleave', start);
-    quotesRoot.addEventListener('focusin', stop);
-    quotesRoot.addEventListener('focusout', start);
-
-    start();
-  }
-
-  /* --------------------------------------------------------- Date handling */
-
-  var toISO = function (date) { return date.toISOString().slice(0, 10); };
-  var addDays = function (date, n) {
-    var d = new Date(date.getTime());
-    d.setDate(d.getDate() + n);
-    return d;
-  };
-
-  document.querySelectorAll('[data-booking-form]').forEach(function (form) {
-    var arrive = form.querySelector('input[name="arrive"]');
-    var depart = form.querySelector('input[name="depart"]');
-    if (!arrive || !depart) return;
-
-    var today = new Date();
-    var params = new URLSearchParams(location.search);
-
-    arrive.min = toISO(today);
-    depart.min = toISO(addDays(today, 1));
-
-    // Prefill from the URL when a form on another page sent us here,
-    // otherwise offer a sensible default of tomorrow for two nights.
-    arrive.value = params.get('arrive') || toISO(addDays(today, 1));
-    depart.value = params.get('depart') || toISO(addDays(today, 3));
-
-    // Carry across every other field the sending page named — room type, guest
-    // and room counts, dogs, dinner — so "Check Dates" links from the rooms
-    // page arrive with the right room already chosen.
-    params.forEach(function (value, key) {
-      if (key === 'arrive' || key === 'depart' || !value) return;
-      var field = form.querySelector('[name="' + key + '"]');
-      if (!field) return;
-      if (field.tagName === 'SELECT') {
-        var match = Array.prototype.some.call(field.options, function (o) { return o.value === value; });
-        if (match) field.value = value;
-      } else {
-        field.value = value;
-      }
-    });
-
-    // Offer links carry no matching field, so note the offer for whoever picks
-    // up the enquiry rather than dropping it silently.
-    var offer = params.get('offer');
-    var notes = form.querySelector('textarea[name="notes"]');
-    if (offer && notes && !notes.value) {
-      notes.value = 'I would like to book the "' +
-        offer.replace(/-/g, ' ').replace(/\b\w/g, function (ch) { return ch.toUpperCase(); }) +
-        '" offer.';
-    }
-
-    // Departure must always follow arrival
-    var syncDepart = function () {
-      if (!arrive.value) return;
-      var minDepart = toISO(addDays(new Date(arrive.value), 1));
-      depart.min = minDepart;
-      if (!depart.value || depart.value <= arrive.value) depart.value = minDepart;
-      updateNights();
-    };
-
-    var nightsOut = form.querySelector('[data-nights]');
-    var updateNights = function () {
-      if (!nightsOut || !arrive.value || !depart.value) return;
-      var ms = new Date(depart.value) - new Date(arrive.value);
-      var nights = Math.max(0, Math.round(ms / 86400000));
-      nightsOut.textContent = nights + (nights === 1 ? ' night' : ' nights');
-    };
-
-    arrive.addEventListener('change', syncDepart);
-    depart.addEventListener('change', updateNights);
-    updateNights();
-
-    // Route the form at whatever BOOKING_URL points to, renaming fields if the
-    // configured engine expects different parameter names. Skipped on the
-    // booking page's own form, which is the destination rather than a sender.
-    if (!form.hasAttribute('data-demo-form')) {
-      form.setAttribute('action', BOOKING_URL);
-      form.addEventListener('submit', function () {
-        Object.keys(BOOKING_PARAM_MAP).forEach(function (ours) {
-          var field = form.querySelector('[name="' + ours + '"]');
-          if (field) field.name = BOOKING_PARAM_MAP[ours];
-        });
-      });
-    }
-  });
-
   /* ------------------------------------------------------------- Accordion */
 
   document.querySelectorAll('[data-accordion]').forEach(function (accordion) {
     accordion.querySelectorAll('.accordion__btn').forEach(function (btn) {
+      var panel = document.getElementById(btn.getAttribute('aria-controls'));
+      if (!panel) return;
+
+      // Closed on load, but only under script — the answers are readable
+      // without it.
+      panel.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+
       btn.addEventListener('click', function () {
-        var item = btn.closest('.accordion__item');
         var open = btn.getAttribute('aria-expanded') === 'true';
         btn.setAttribute('aria-expanded', String(!open));
-        item.classList.toggle('is-open', !open);
+        panel.hidden = open;
       });
     });
   });
 
-  /* -------------------------------------------------------------- Lightbox */
+  /* ----------------------------------------------------------- Quote form */
 
-  var galleryItems = document.querySelectorAll('[data-lightbox]');
-  if (galleryItems.length) {
-    var box = document.createElement('div');
-    box.className = 'lightbox';
-    box.setAttribute('role', 'dialog');
-    box.setAttribute('aria-modal', 'true');
-    box.setAttribute('aria-label', 'Gallery image');
-    box.innerHTML =
-      '<button class="lightbox__close" type="button" aria-label="Close gallery">&times;</button>' +
-      '<figure class="lightbox__figure"><img alt=""><figcaption class="lightbox__caption"></figcaption></figure>';
-    document.body.appendChild(box);
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-    var boxImg = box.querySelector('img');
-    var boxCap = box.querySelector('figcaption');
-    var closeBtn = box.querySelector('.lightbox__close');
-    var lastFocus = null;
+  document.querySelectorAll('[data-quote-form]').forEach(function (form) {
+    var fields = Array.prototype.slice.call(
+      form.querySelectorAll('input[required], select[required], textarea[required]')
+    );
 
-    var openBox = function (src, alt, caption) {
-      lastFocus = document.activeElement;
-      boxImg.src = src;
-      boxImg.alt = alt || '';
-      boxCap.textContent = caption || '';
-      box.classList.add('is-open');
-      document.body.classList.add('is-locked');
-      closeBtn.focus();
-    };
-    var closeBox = function () {
-      box.classList.remove('is-open');
-      document.body.classList.remove('is-locked');
-      if (lastFocus) lastFocus.focus();
+    var errorFor = function (field) {
+      return form.querySelector('[data-error-for="' + field.id + '"]');
     };
 
-    var openFrom = function (item) {
-      var img = item.querySelector('img');
-      var cap = item.querySelector('figcaption');
-      if (img) openBox(img.currentSrc || img.src, img.alt, cap ? cap.textContent.trim() : '');
+    var validate = function (field) {
+      var value = (field.value || '').trim();
+      var message = '';
+
+      if (!value) {
+        message = field.tagName === 'SELECT' ? 'Please choose an option.' : 'This field is required.';
+      } else if (field.type === 'email' && !EMAIL_RE.test(value)) {
+        message = 'Please enter a valid email address.';
+      }
+
+      var slot = errorFor(field);
+      var wrap = field.closest('.field');
+      if (slot) slot.textContent = message;
+      if (wrap) wrap.classList.toggle('is-invalid', Boolean(message));
+      field.setAttribute('aria-invalid', message ? 'true' : 'false');
+      return !message;
     };
 
-    galleryItems.forEach(function (item) {
-      item.addEventListener('click', function () { openFrom(item); });
-      // The gallery figures carry role="button", so they must answer to the
-      // keyboard the way a button does.
-      item.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
-          e.preventDefault();
-          openFrom(item);
-        }
+    fields.forEach(function (field) {
+      field.addEventListener('blur', function () { validate(field); });
+      // Clear an error as soon as the visitor fixes it, but never introduce
+      // one mid-keystroke.
+      field.addEventListener('input', function () {
+        if (field.closest('.field').classList.contains('is-invalid')) validate(field);
       });
     });
 
-    closeBtn.addEventListener('click', closeBox);
-    box.addEventListener('click', function (e) { if (e.target === box) closeBox(); });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && box.classList.contains('is-open')) closeBox();
-      // Keep focus inside the dialog while it is open
-      if (e.key === 'Tab' && box.classList.contains('is-open')) {
-        e.preventDefault();
-        closeBtn.focus();
-      }
-    });
-  }
-
-  /* ------------------------------------------------------- Enquiry forms */
-
-  document.querySelectorAll('[data-demo-form]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
+      var firstBad = null;
+      fields.forEach(function (field) {
+        if (!validate(field) && !firstBad) firstBad = field;
+      });
+
+      if (firstBad) {
+        e.preventDefault();
+        firstBad.focus();
+        firstBad.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+        return;
+      }
+
+      // Honeypot: a real visitor never sees this field, so anything in it is a
+      // bot. Fail silently rather than telling it why.
+      var trap = form.querySelector('.hp input');
+      if (trap && trap.value) {
+        e.preventDefault();
+        return;
+      }
+
+      if (!form.hasAttribute('data-demo-form')) return;
+
       e.preventDefault();
       var status = form.querySelector('[data-form-status]');
       if (!status) return;
       status.hidden = false;
-      status.textContent =
-        'Thank you — your enquiry has been noted. This site is not yet connected to a live ' +
-        'reservations system, so please call +44 (0)1997 421487 or email stay@coulhousehotel.com ' +
-        'and we will reply the same day.';
       status.setAttribute('role', 'status');
+      status.innerHTML =
+        '<p><strong>Thank you — your enquiry has been noted.</strong> This site is not yet ' +
+        'connected to a live mail handler, so please call <a href="tel:+441506411448">' +
+        OFFICE_PHONE + '</a> or email <a href="mailto:' + OFFICE_EMAIL + '">' + OFFICE_EMAIL +
+        '</a> and we will come back to you the same working day.</p>';
       status.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
     });
   });

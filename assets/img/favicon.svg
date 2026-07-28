@@ -1,9 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Coul House">
-  <rect width="64" height="64" rx="10" fill="#22301f"/>
-  <g transform="translate(32 33) scale(1.18) translate(-17 -22)"
-     fill="none" stroke="#c9a86a" stroke-width="1.8" stroke-linejoin="round">
-    <path d="M17 1.5 32 7v17c0 9.5-7.4 16-15 18.5C9.4 40 2 33.5 2 24V7Z"/>
-    <path d="M17 11v20M12 31c0-5 2-8 5-9.5M22 31c0-5-2-8-5-9.5" stroke-linecap="round"/>
-    <path d="M13.4 10.4a3.6 3.6 0 0 1 7.2 0c0 2-1.6 2.8-3.6 2.8s-3.6-.8-3.6-2.8Z"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Phoenix Drilling">
+  <defs>
+    <linearGradient id="fvHeat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff8f45"/>
+      <stop offset="0.5" stop-color="#ff6a13"/>
+      <stop offset="1" stop-color="#e8112d"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" fill="#0e1113"/>
+  <!-- Rising plume: the phoenix, kept abstract enough to read at 16px -->
+  <path d="M32 6 C40 18 46 24 46 33 a14 14 0 0 1 -28 0 c0 -9 6 -15 14 -27 Z" fill="url(#fvHeat)"/>
+  <path d="M32 20 c4 6 7 9 7 14 a7 7 0 0 1 -14 0 c0 -5 3 -8 7 -14 Z" fill="#0e1113" opacity="0.55"/>
+  <!-- Borehole -->
+  <rect x="30" y="44" width="4" height="16" fill="#eceef0"/>
+  <rect x="24" y="56" width="16" height="4" fill="#eceef0"/>
 </svg>

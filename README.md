@@ -1,10 +1,11 @@
-# Coul House Hotel — website
+# Phoenix Drilling — landing page
 
-A marketing website for Coul House, a family-run Georgian country house hotel in Contin,
-by Strathpeffer, Ross-shire. The site is designed to feel calm, refined and traditional,
-and to move visitors toward one action: booking a stay, a table, or an event.
+A single-page marketing site for Phoenix Drilling Ltd, a specialist drilling contractor in
+Livingston, West Lothian. Ground investigation, water extraction boreholes and geothermal
+drilling, UK-wide. The page exists to do one thing: turn a consultant, contractor or
+developer into a quote enquiry.
 
-Plain HTML, CSS and JavaScript. No build step, no dependencies, no npm install.
+Plain HTML, CSS and JavaScript. No build step, no dependencies, no `npm install`.
 
 ---
 
@@ -14,8 +15,8 @@ Plain HTML, CSS and JavaScript. No build step, no dependencies, no npm install.
 python3 -m http.server 8000
 ```
 
-Then open <http://localhost:8000>. Opening `index.html` directly from disk also works —
-the icon sprite is inlined in every page precisely so it does.
+Then open <http://localhost:8000>. Opening `index.html` straight from disk also works —
+the icon sprite is inlined in the page precisely so it does.
 
 ## Deploy
 
@@ -30,155 +31,174 @@ Copy the repository contents to any static host:
 ## Structure
 
 ```
-index.html          Home
-rooms.html          Rooms & suites
-dining.html         The Octagonal Restaurant, menus, afternoon tea, the bar
-weddings.html       Weddings, plus #events for private and corporate
-experiences.html    Rogie Falls, the hills, distilleries, the NC500
-offers.html         Breaks and gift vouchers
-our-story.html      History since 1821, plus the gallery
-contact.html        Contact, directions, #enquiry form, #faq
-book.html           Reservation request, prefilled from any availability bar
-
-assets/css/style.css   Whole design system in one file
+index.html             The whole site
+assets/css/style.css   Design system in one file
 assets/js/main.js      All behaviour; progressive enhancement only
 assets/img/*.svg       Illustrations (see "Photography" below)
+robots.txt sitemap.xml
 ```
 
 ### Design system
 
 `assets/css/style.css` is organised top to bottom: tokens → reset → layout → type →
-buttons → header → hero → booking bar → cards → splits → gallery → testimonials →
-accordion → forms → footer → sticky CTA → reveals → utilities.
+buttons → utility bar → header → hero → credentials → services → depth → splits →
+sectors → process → projects → coverage → forms → accordion → footer → sticky CTA →
+reveals → utilities.
 
-Colours and type live as custom properties in `:root`. Changing the brand means editing
-those tokens, not hunting through rules.
+The brand lives entirely in the custom properties at the top. Rebranding means editing
+tokens, not hunting through rules.
+
+**Core is a single graphite ramp.** It carries every surface, rule and run of body text.
 
 | Token | Value | Used for |
 | --- | --- | --- |
-| `--forest` | `#2c3f2e` | Primary brand green |
-| `--pine` | `#22301f` | Footer, dark overlays |
-| `--gold` | `#b08d57` | The single accent — buttons, rules, prices |
-| `--parchment` | `#faf7f1` | Page background |
-| `--stone` | `#f1ece2` | Alternating band background |
+| `--graphite-900` | `#0e1113` | Hero, footer, quote band |
+| `--graphite-800` | `#16191c` | Page base on dark sections |
+| `--graphite-700` | `#22272b` | Raised surfaces, cards on dark |
+| `--graphite-600` | `#333a3f` | Hairlines on dark |
+| `--graphite-400` | `#7d868c` | Muted text, both modes |
+| `--graphite-100` | `#eceef0` | Light band background |
+| `--paper` | `#f9fafa` | Light surfaces, form fields |
 
-Type is Cormorant Garamond (display) and Inter (body), loaded from Google Fonts with
-system fallbacks in the stack.
+**Accents are red and orange, and nothing else.**
+
+| Token | Value | Used for |
+| --- | --- | --- |
+| `--red` | `#e8112d` | **Action** — primary CTAs, the one thing to click |
+| `--orange` | `#ff6a13` | **Emphasis** — rules, numerals, eyebrows, annotations |
+| `--heat` | orange → red gradient | The depth scale, the hero ruler, card edges |
+
+The rule the page is built on: **red means _do this_, orange means _look here_.** Never
+both on the same element, and never as a filled background panel — they appear as type,
+1–2px rules, small marks and one button. On a page this grey, two hot colours at about
+5% coverage is what makes it read as expensive rather than loud.
+
+**Contrast, if you change these values.** `--red` on `--graphite-900` sits around 4.3:1,
+so it is fine for display type, rules and white-on-red buttons but must not carry body
+copy on dark — `--orange` does that job there. Inverted on the light bands: red passes
+for normal text, orange does not, so orange stays large-only. Sections set
+`--accent-text` to whichever of the two passes on their background; components read that
+token rather than naming a colour.
+
+Type is Space Grotesk (display) and Inter (body), from Google Fonts with system
+fallbacks in the stack.
 
 ### JavaScript
 
-Everything degrades without it: the nav is a plain list, forms submit normally, images
-show. `main.js` adds the sticky header state, mobile nav, scroll reveals, date logic,
-accordions, the gallery lightbox and the enquiry-form handler. It honours
-`prefers-reduced-motion` throughout.
+Everything degrades. With scripts off the nav is a plain list, every section is visible,
+the strata diagram is fully annotated, all FAQ answers are open, and the form submits
+normally.
+
+`main.js` adds the sticky header state, mobile nav, scroll reveals, the anchor-nav
+scrollspy, the hero stat count-up, the strata annotation reveal, the accordion, the
+sticky mobile CTA and the quote-form validation. It honours `prefers-reduced-motion`
+throughout.
+
+Two details worth not "tidying away":
+
+- The reveal observer has a `requestAnimationFrame` **sweep safety net**. A fast fling or
+  a jump to an anchor can move an element through the viewport between rendered frames,
+  so the observer never sees it intersect and the content would stay invisible forever.
+- The strata annotations and the FAQ panels are **hidden by the script, not the
+  stylesheet**. If `main.js` fails to load, the diagram stays labelled and the answers
+  stay readable.
 
 ---
 
 ## Two things to wire up before launch
 
-### 1. Booking engine
+### 1. The quote form
 
-Every availability form currently posts to `book.html`, which captures a reservation
-request and shows the phone number and email. To hand booking over to a real engine,
-edit the two constants at the top of `assets/js/main.js`:
+The enquiry form is marked `data-demo-form` and currently shows a message directing the
+visitor to phone or email — **it does not send anything.** To connect it, set an `action`
+and `method` on the `<form>` and remove the `data-demo-form` attribute. Client-side
+validation and the honeypot keep working either way.
 
-```js
-var BOOKING_URL = 'book.html';           // ← your engine's deep-link base
-var BOOKING_PARAM_MAP = {                 // ← rename our fields to theirs
-  arrive: 'arrive', depart: 'depart', guests: 'guests', rooms: 'rooms'
-};
-```
+Formspree, Netlify Forms, or a mail script on the host will all take it as-is. The
+honeypot is the `.hp` field named `website`; configure your handler to drop any
+submission where it is filled in.
 
-Nothing else needs to change. SiteMinder, Guestline, ResDiary and Little Hotelier all
-accept dates as query parameters; check your provider's documentation for the exact
-parameter names and put them on the right-hand side of the map.
+### 2. The domain
 
-### 2. Form submissions
-
-The enquiry forms on `contact.html`, `weddings.html` and `book.html` are marked
-`data-demo-form` and currently show a message directing the visitor to phone or email —
-they do not send anything. Point them at whatever handles mail for the hotel (Formspree,
-Netlify Forms, or a script on the host) and remove the `data-demo-form` attribute.
+Canonical tag, Open Graph URL, structured data and the sitemap all assume
+`https://www.phoenixdrilling.co.uk/`. Update all four if that is wrong.
 
 ---
 
 ## Photography
 
 The illustrations in `assets/img/` are hand-built SVG scenes, made so the site looks
-finished before a photographer has been near it. They are self-contained — no external
-requests, about 100 KB for the lot.
+finished before a photographer has been near a rig. They are self-contained — no external
+requests, and the lot is well under 100 KB.
 
 **To swap in real photography**, replace the `src` on the relevant `<img>`. Nothing else
 needs to change; the CSS handles cropping through `object-fit`.
 
 | File | Where it appears | Ideal replacement |
 | --- | --- | --- |
-| `hero-highland.svg` | Home hero | The house or glen at dawn, landscape, very wide |
-| `octagonal-restaurant.svg` | Dining hero, home, weddings | **The Octagonal room — the single most valuable photo on this site** |
-| `house-exterior.svg` | Home, our story, contact | The frontage across the lawn |
-| `suite.svg` | Rooms hero, four-poster | The Four-Poster Master Bedroom |
-| `room-classic.svg` | Rooms, home | A classic double |
-| `drawing-room.svg` | Offers, our story | The drawing room with the fire lit |
-| `wedding.svg` | Weddings hero, home | A real wedding on the lawn |
-| `grounds.svg` | Several | The grounds in summer |
-| `glen.svg` | Experiences, contact | Strathconon or the hills |
-| `falls.svg` | Experiences, home | Rogie Falls |
-| `whisky.svg` | Dining, experiences | The bar |
-| `favicon.svg` | Browser tab | Keep, or use the hotel's own mark |
+| `hero-rig.svg` | Hero | **The most valuable photo on this site** — a rig on site at first light, landscape, very wide. Must still read when cropped tall on a phone. |
+| `rig-rotary.svg` | Capability | A rotary rig coring on a prepared platform |
+| `core-samples.svg` | Projects | Core boxes laid out and being logged |
+| `water-borehole.svg` | Projects | Completed borehole headworks |
+| `geothermal.svg` | Projects | Loop installation on a GSHP job |
+| `crew.svg` | Spare — not currently placed | Crew in full PPE working a rig |
+| `coverage-map.svg` | Coverage | Keep — it is a diagram, not a photo |
+| `favicon.svg` | Browser tab | Keep, or use the company's own mark |
+| `og-image.svg` | Link sharing | A photo version, 1200×630 |
 
-Hero images want to be at least 2000px wide and should read well when cropped tall on a
-phone. Keep the `alt` text descriptive when you swap.
+The strata cross-section is inline in `index.html` rather than a separate file, because
+the script needs to reach its annotation groups. Keep it as a diagram.
+
+Hero images want to be at least 2000px wide. Keep the `alt` text descriptive when you
+swap.
 
 ---
 
 ## Verify before going live
 
-Content on this site was assembled from publicly available sources, because the live site
-blocks automated access. **Everything below should be confirmed by the hotel before
-launch.**
+Content on this site was assembled from public directory and search sources, because the
+live site blocks automated access. **Everything below should be confirmed by Phoenix
+Drilling before launch.**
 
-### Confirmed against public sources
+### Taken from public sources
 
-- Built 1821 for the Mackenzies of Coul; run by Stuart and Susannah Macpherson
-- 21 en suite bedrooms, no two alike — *one source says 22; please confirm*
-- Eight acres of mature woodland
-- The Octagonal Restaurant: ornate ceiling ~18ft, fireplace, three ceiling-to-floor
-  windows onto Strathconon; **one AA Rosette**
-- Weddings: licensed for civil ceremonies, up to 80 through the day, 140 in the evening;
-  approx. 1,400 sq ft across three rooms
-- Dogs welcome in all bedrooms and public areas **except the restaurant**, £7.50 per dog
-  per night
-- Rooms include a 32-inch flat-screen TV, tea and coffee, a seating area, free toiletries;
-  Superior rooms have a roll-top bath and walk-in rainforest shower
-- Contin, Ross-shire IV14 9ES · +44 (0)1997 421487 · stay@coulhouse.com
-- Around 25 minutes north of Inverness; Achilty Forest and Rogie Falls 2 miles;
-  Strathpeffer 3 miles; Brahan Estate 3 miles; on the North Coast 500
+- Phoenix Drilling Ltd, incorporated 11 January 2010, company number **SC370985**
+- 2 Nairn Road, Livingston, West Lothian **EH54 8AY**
+- **01506 411448** · **info@phoenixdrilling.co.uk**
+- Offices in Livingston (head office), Inverness and Aberdeen; work delivered UK-wide
+- Certified to **ISO 9001, ISO 14001 and ISO 45001**; listed with the Well Drillers
+  Association
+- Cable percussive fleet: **Dando 4000, 2000 and 150, Edeco-Pilcon 2000**
+- Conventional and triple-tube coring using **air, water, polymer and mud flush**
+- Services referenced: trial pitting, window sampling, rotary borehole drilling, mineral
+  investigation, disused mineral workings and mine shafts, de-watering wells, quarry
+  development, geothermal and water extraction boreholes, nearshore over-water drilling
 
-### Needs the hotel's input
+### Needs the company's input
 
-- [ ] **Rates.** `rooms.html` quotes "small doubles from £183" and "Four-Poster Master
-      £165–£325", both from public listings and possibly out of date. Replace with current
-      figures, or switch to "rates on request" throughout.
-- [ ] **Menus.** The dishes on `dining.html` are labelled *sample* and are illustrative,
-      not the real menu. Replace with the current one.
-- [ ] **Offers.** The three breaks on `offers.html` are plausible constructions, not real
-      packages. Replace with what the hotel actually sells, including prices and terms.
-- [ ] **Guest reviews.** There are deliberately **no testimonials on this site.** The home
-      page shows verified accolades instead, with an HTML comment marking where approved
-      quotes should go. Choose real reviews, get permission, and attribute them.
-- [ ] **Check-in and check-out times** — stated as "confirm with us"; put the real times in.
-- [ ] **Deposit and cancellation policy** — currently described in general terms only.
-- [ ] **Social links.** Footer Facebook and Instagram links are `#` placeholders.
-- [ ] **Privacy and Terms pages** — linked in the footer, not yet written.
-- [ ] **Domain.** Canonical tags and the sitemap assume `https://www.coulhousehotel.com/`.
-      Update if that is wrong.
+- [ ] **Projects.** The three case studies in `#projects` are *representative*, not real
+      jobs — no client names, no specific sites. An HTML comment marks the swap point.
+      Replace them with real projects, with client approval.
+- [ ] **Plant list.** The capability table reflects publicly described kit. Confirm the
+      fleet as it stands today, including rig counts and any restricted-access or
+      over-water plant worth naming.
+- [ ] **Accreditations.** Confirm certificate numbers and certifying bodies, and whether
+      there are memberships not listed here (BDA, CHAS, Constructionline, SafeContractor).
+- [ ] **Testimonials.** There are deliberately **none on this site**. If you want them,
+      choose real clients, get written permission, and attribute them.
+- [ ] **Inverness and Aberdeen offices.** Full addresses and direct numbers, if they
+      should be published.
+- [ ] **Office hours** — stated as Monday to Friday, 8am–5pm. Confirm.
+- [ ] **The SEPA / CAR answer in the FAQ** — accurate in general terms, but have someone
+      confirm the wording before it advises a customer.
+- [ ] **Social links** — none are in the footer yet. Add them, or leave it clean.
+- [ ] **Privacy and cookie notice** — not yet written. Needed before the form goes live.
 
 ---
 
-## Editing pages
+## Editing
 
-Each page is a complete, standalone HTML file — open it and edit the text. The header,
-footer and icon sprite are repeated in each file, so **a change to the navigation must be
-made in all nine pages.** If that becomes tiresome, move the site to a static site
-generator (Eleventy or Astro) with the chrome in a layout; the CSS and JS will carry over
-unchanged.
+`index.html` is one standalone file — open it and edit the text. Section order, the icon
+sprite and the structured data all live in there. If the site grows past a single page,
+move it to a static site generator (Eleventy or Astro) with the header and footer in a
+layout; the CSS and JS carry over unchanged.
