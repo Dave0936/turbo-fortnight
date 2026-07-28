@@ -1,0 +1,596 @@
+/* ==========================================================================
+   Phoenix Drilling — stylesheet for the Divi build
+
+   This is the static site's design system, narrowed to what the Divi layout
+   needs and scoped under .phx so it cannot leak into the theme's header,
+   footer or any other page.
+
+   Everything Divi paints itself — section padding, row width, module type —
+   is reset in the compatibility layer at the bottom rather than fought with
+   !important further up.
+   ========================================================================== */
+
+:root {
+  /* Core — graphite ramp */
+  --graphite-900: #0e1113;
+  --graphite-800: #16191c;
+  --graphite-700: #22272b;
+  --graphite-600: #333a3f;
+  --graphite-400: #939ba1;
+  --graphite-200: #d6dade;
+  --graphite-100: #eceef0;
+  --paper: #f9fafa;
+  --ink: #0e1113;
+
+  /* Accent — red is "do this", orange is "look here" */
+  --red: #e8112d;
+  --red-deep: #b60d23;
+  --orange: #ff6a13;
+  --orange-light: #ff8f45;
+  --heat: linear-gradient(180deg, var(--orange-light), var(--orange) 45%, var(--red));
+
+  /* Semantic — reassigned wholesale by .phx--light */
+  --bg: var(--graphite-800);
+  --surface: var(--graphite-700);
+  --text: var(--graphite-100);
+  --text-muted: var(--graphite-400);
+  --rule: var(--graphite-600);
+  --accent-text: var(--orange);
+
+  --font-display: "Space Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --step--2: clamp(0.69rem, 0.67rem + 0.09vw, 0.75rem);
+  --step--1: clamp(0.81rem, 0.79rem + 0.12vw, 0.88rem);
+  --step-0: clamp(1rem, 0.97rem + 0.16vw, 1.06rem);
+  --step-1: clamp(1.19rem, 1.12rem + 0.34vw, 1.4rem);
+  --step-2: clamp(1.45rem, 1.3rem + 0.74vw, 2rem);
+  --step-3: clamp(1.85rem, 1.55rem + 1.5vw, 2.9rem);
+  --step-4: clamp(2.4rem, 1.8rem + 2.9vw, 4.4rem);
+  --step-5: clamp(3rem, 1.9rem + 5.2vw, 6.6rem);
+
+  --space-xs: 0.625rem;
+  --space-s: 1rem;
+  --space-m: 1.75rem;
+  --space-l: 3rem;
+  --space-xl: clamp(4rem, 8vw, 7rem);
+  --space-2xl: clamp(5.5rem, 11vw, 9.5rem);
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.phx {
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.68;
+}
+
+/* Light bands swap the tokens rather than restating every rule. --accent-text
+   picks whichever of red/orange clears AA on the current ground: red fails on
+   dark at body sizes, orange fails on light. */
+.phx--light {
+  --bg: var(--graphite-100);
+  --surface: var(--paper);
+  --text: var(--ink);
+  --text-muted: #5c6469;
+  --rule: var(--graphite-200);
+  --accent-text: var(--red);
+}
+.phx--deep { --bg: var(--graphite-900); }
+
+.phx h1, .phx h2, .phx h3, .phx h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  text-wrap: balance;
+  padding: 0;
+}
+.phx h2 { font-size: var(--step-4); margin: 0 0 var(--space-s); }
+.phx h3 { font-size: var(--step-2); margin: 0 0 var(--space-s); }
+.phx p { color: var(--text); margin: 0 0 var(--space-s); }
+.phx p:last-child { margin-bottom: 0; }
+.phx a { color: var(--accent-text); }
+
+/* Sprite icons point at a <symbol> and carry no viewBox of their own, so with
+   no intrinsic aspect ratio they fall back to the 300x150 default size for
+   replaced elements. :where() keeps this at zero specificity so it is only a
+   floor — every explicit icon size below still wins. */
+.phx :where(svg:not([viewBox])) {
+  width: 1em;
+  height: 1em;
+  flex: none;
+}
+
+/* --------------------------------------------------------------- Eyebrows */
+
+.phx-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--font-body);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  max-width: none;
+  margin: 0 0 var(--space-s);
+}
+.phx-eyebrow::before {
+  content: "";
+  width: 26px;
+  height: 2px;
+  background: var(--orange);
+  flex: none;
+}
+.phx-eyebrow .num { color: var(--orange); font-family: var(--font-display); }
+
+.phx-lede {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--text-muted);
+  font-weight: 300;
+  max-width: 58ch;
+}
+.phx-muted { color: var(--text-muted); }
+.phx-small { font-size: var(--step--1); color: var(--text-muted); }
+
+/* ------------------------------------------------------------- Hero block */
+
+.phx-hero__title {
+  font-size: var(--step-5);
+  max-width: 17ch;
+  margin: 0 0 var(--space-m);
+}
+.phx-hero__title em { font-style: normal; color: var(--orange); }
+.phx-hero__lede {
+  font-size: var(--step-1);
+  font-weight: 300;
+  line-height: 1.5;
+  color: #c6ccd0;
+  max-width: 54ch;
+}
+
+.phx-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  margin-top: var(--space-xl);
+}
+@media (min-width: 900px) { .phx-stats { grid-template-columns: repeat(4, 1fr); } }
+.phx-stat {
+  padding: var(--space-m) var(--space-s) var(--space-m) 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.09);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+.phx-stat:last-child { border-right: 0; }
+@media (min-width: 900px) {
+  .phx-stat { border-bottom: 0; padding-inline: var(--space-m); }
+  .phx-stat:first-child { padding-left: 0; }
+}
+.phx-stat b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.45rem;
+}
+.phx-stat b span { color: var(--orange); }
+.phx-stat i {
+  font-style: normal;
+  font-size: var(--step--2);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--graphite-400);
+}
+
+/* ----------------------------------------------------------- Credentials */
+
+.phx-creds {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-m) var(--space-l);
+}
+.phx-creds__intro {
+  font-size: var(--step--2);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--graphite-400);
+  margin: 0;
+}
+.phx-cred {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--graphite-100);
+}
+.phx-cred svg { width: 22px; height: 22px; color: var(--orange); flex: none; }
+.phx-cred small {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--graphite-400);
+  font-weight: 400;
+}
+
+/* --------------------------------------------------------- Service cards */
+
+.phx-service {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  height: 100%;
+  padding: var(--space-m);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  transition: border-color 0.3s var(--ease), transform 0.35s var(--ease);
+}
+.phx-service::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  width: 3px;
+  height: 46px;
+  background: var(--heat);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.4s var(--ease);
+}
+.phx-service:hover { border-color: var(--graphite-400); transform: translateY(-4px); }
+.phx-service:hover::before { transform: scaleY(1); }
+.phx-service svg.phx-ico { width: 34px; height: 34px; color: var(--orange); }
+.phx-service h3 { font-size: var(--step-1); margin: 0; }
+.phx-service p { font-size: var(--step--1); color: var(--text-muted); }
+.phx-service ul {
+  list-style: none;
+  margin: auto 0 0;
+  padding: var(--space-s) 0 0;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  gap: 0.4rem;
+}
+.phx-service li {
+  position: relative;
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.phx-service li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 1px;
+  background: var(--orange);
+}
+
+/* ------------------------------------------------- Depth cross-section */
+
+.phx-depth svg { width: 100%; height: auto; display: block; }
+.phx-legend {
+  list-style: none;
+  display: grid;
+  gap: 0;
+  margin: var(--space-l) 0 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+@media (min-width: 800px) { .phx-legend { grid-template-columns: repeat(5, 1fr); } }
+.phx-legend li {
+  margin: 0;
+  padding: var(--space-s) var(--space-s) var(--space-s) 0;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  gap: 0.3rem;
+  align-content: start;
+}
+@media (min-width: 800px) {
+  .phx-legend li { border-bottom: 0; border-right: 1px solid var(--rule); padding-inline: var(--space-s); }
+  .phx-legend li:first-child { padding-left: 0; }
+  .phx-legend li:last-child { border-right: 0; }
+}
+.phx-legend b {
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 500;
+  color: var(--orange);
+  font-variant-numeric: tabular-nums;
+}
+.phx-legend strong { font-family: var(--font-display); font-size: var(--step-0); font-weight: 500; color: var(--text); }
+.phx-legend span { font-size: var(--step--1); color: var(--text-muted); line-height: 1.5; }
+
+/* --------------------------------------------------------- Spec list */
+
+.phx-spec { list-style: none; margin: var(--space-m) 0 0; padding: 0; border-top: 1px solid var(--rule); }
+.phx-spec li {
+  margin: 0;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem var(--space-s);
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: var(--step--1);
+}
+.phx-spec b { font-weight: 600; letter-spacing: 0.06em; color: var(--text); }
+.phx-spec span { color: var(--text-muted); text-align: right; flex: 1 1 12rem; }
+@media (max-width: 520px) { .phx-spec span { text-align: left; } }
+
+/* ------------------------------------------------------------- Sectors */
+
+.phx-sector {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-s);
+  padding: var(--space-m) 0;
+  border-top: 1px solid var(--rule);
+}
+.phx-sector svg.phx-ico { width: 26px; height: 26px; color: var(--orange); flex: none; margin-top: 0.15rem; }
+.phx-sector h3 { font-size: var(--step-0); margin: 0 0 0.25rem; letter-spacing: 0.01em; }
+.phx-sector p { font-size: var(--step--1); color: var(--text-muted); margin: 0; }
+
+/* ------------------------------------------------------------- Process
+   Numbered because the content genuinely is a sequence — the reader needs
+   the order. The tick turns the row into a measured rule. */
+
+.phx-step { position: relative; padding: var(--space-m) var(--space-s) var(--space-m) 0; border-top: 1px solid var(--rule); }
+.phx-step::before { content: ""; position: absolute; top: -1px; left: 0; width: 34px; height: 3px; background: var(--orange); }
+.phx-step b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--orange);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: var(--space-s);
+}
+.phx-step h3 { font-size: var(--step-1); margin: 0 0 0.4rem; }
+.phx-step p { font-size: var(--step--1); color: var(--text-muted); margin: 0; }
+
+/* ------------------------------------------------------------ Projects */
+
+.phx-project { display: flex; flex-direction: column; height: 100%; background: var(--surface); border: 1px solid var(--rule); }
+.phx-project__media { position: relative; overflow: hidden; line-height: 0; }
+.phx-project__media svg { width: 100%; height: auto; display: block; transition: transform 0.7s var(--ease); }
+.phx-project:hover .phx-project__media svg { transform: scale(1.04); }
+.phx-project__tag {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: var(--graphite-900);
+  color: var(--orange);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.9rem;
+  line-height: 1.4;
+}
+.phx-project__body { padding: var(--space-m); display: grid; gap: 0.6rem; }
+.phx-project__body h3 { font-size: var(--step-1); margin: 0; }
+.phx-project__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  font-size: var(--step--2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0;
+}
+.phx-project__body p { font-size: var(--step--1); color: var(--text-muted); margin: 0; }
+
+/* ------------------------------------------------------------- Offices */
+
+.phx-office { padding: var(--space-m) 0; border-top: 1px solid var(--rule); display: grid; gap: 0.3rem; }
+.phx-office h3 { font-size: var(--step-1); margin: 0; display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; }
+.phx-office h3 span {
+  font-family: var(--font-body);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.phx-office p { font-size: var(--step--1); color: var(--text-muted); margin: 0; }
+
+.phx-contact-direct { display: grid; gap: var(--space-s); padding-top: var(--space-m); border-top: 1px solid var(--rule); }
+.phx-contact-direct a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: none;
+}
+.phx-contact-direct a svg { width: 20px; height: 20px; color: var(--orange); flex: none; }
+.phx-contact-direct a:hover { color: var(--orange); }
+
+/* ==========================================================================
+   Divi compatibility layer
+
+   Divi's cached-inline-styles load after most custom CSS, so anything that
+   collides with a Divi module style needs the documented override pattern:
+   a `body` prefix for weight, and !important on every property. Component
+   styles above target our own markup and need neither.
+
+   Selectors verified against the Divi 5 reference: D5 renders standard DOM
+   with the same et_pb_* class names, no Shadow DOM.
+   ========================================================================== */
+
+/* Vertical rhythm is set per section via Divi's own custom_padding field, so
+   never reset `padding` wholesale here — the shorthand would wipe those values
+   and collapse every band. Only the horizontal gutter is ours. */
+body .phx .et_pb_row.phx-row {
+  width: 100% !important;
+  max-width: 1280px !important;
+  padding-left: clamp(1.25rem, 4vw, 3.5rem) !important;
+  padding-right: clamp(1.25rem, 4vw, 3.5rem) !important;
+}
+body .phx .et_pb_column { margin-bottom: 0 !important; }
+body .phx .et_pb_module { margin-bottom: 0 !important; }
+body .phx .et_pb_text_inner > *:first-child { margin-top: 0; }
+body .phx .et_pb_text_inner > *:last-child { margin-bottom: 0; }
+
+/* Divi sets module heading fonts from Theme Options; ours has to win. */
+body .phx .et_pb_module h1,
+body .phx .et_pb_module h2,
+body .phx .et_pb_module h3,
+body .phx .et_pb_module h4 {
+  font-family: var(--font-display) !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.025em !important;
+  line-height: 1.06 !important;
+  color: var(--text) !important;
+}
+body .phx .et_pb_module p,
+body .phx .et_pb_module li { font-family: var(--font-body) !important; }
+
+/* Buttons — Rule 1: body prefix plus !important on every property, or Divi
+   wins. Red is the only filled colour on the page; white on red clears
+   contrast where red type on graphite would not. */
+body .phx .et_pb_button.phx-btn {
+  font-family: var(--font-body) !important;
+  font-size: var(--step--1) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  border-radius: 0 !important;
+  padding: 1.05rem 1.9rem !important;
+  transition: background 0.25s var(--ease), border-color 0.25s var(--ease), color 0.25s var(--ease) !important;
+}
+body .phx .et_pb_button.phx-btn::after { display: none !important; }
+body .phx .et_pb_button.phx-btn--primary {
+  background-color: var(--red) !important;
+  color: #fff !important;
+  border: 1px solid var(--red) !important;
+}
+body .phx .et_pb_button.phx-btn--primary:hover {
+  background-color: var(--red-deep) !important;
+  border-color: var(--red-deep) !important;
+  color: #fff !important;
+}
+body .phx .et_pb_button.phx-btn--ghost {
+  background-color: transparent !important;
+  color: var(--graphite-100) !important;
+  border: 1px solid var(--graphite-600) !important;
+}
+body .phx .et_pb_button.phx-btn--ghost:hover {
+  border-color: var(--orange) !important;
+  color: #fff !important;
+}
+
+/* Accordion (FAQ) — .et_pb_toggle_title / .et_pb_toggle_content per the D5
+   selector reference. */
+body .phx .et_pb_accordion .et_pb_toggle {
+  background-color: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--rule) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+body .phx .et_pb_accordion .et_pb_toggle:first-child { border-top: 1px solid var(--rule) !important; }
+body .phx .et_pb_accordion h3.et_pb_toggle_title,
+body .phx .et_pb_accordion .et_pb_toggle_title {
+  font-family: var(--font-display) !important;
+  font-size: var(--step-1) !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.01em !important;
+  color: var(--text) !important;
+  padding: var(--space-m) 3rem var(--space-m) 0 !important;
+}
+body .phx .et_pb_accordion .et_pb_toggle_content {
+  padding: 0 0 var(--space-m) !important;
+  font-size: var(--step--1) !important;
+  color: var(--text-muted) !important;
+}
+body .phx .et_pb_accordion .et_pb_toggle_title::before,
+body .phx .et_pb_accordion .et_pb_toggle_title::after {
+  color: var(--orange) !important;
+  right: 0 !important;
+}
+
+/* Contact form */
+body .phx .et_pb_contact p input,
+body .phx .et_pb_contact p textarea,
+body .phx .et_pb_contact p select {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid var(--rule) !important;
+  border-radius: 0 !important;
+  color: var(--text) !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--step-0) !important;
+  padding: 0.85rem 1rem !important;
+}
+body .phx .et_pb_contact p input::placeholder,
+body .phx .et_pb_contact p textarea::placeholder { color: var(--text-muted) !important; opacity: 0.75 !important; }
+body .phx .et_pb_contact p input:focus,
+body .phx .et_pb_contact p textarea:focus,
+body .phx .et_pb_contact p select:focus { border-color: var(--orange) !important; outline: none !important; }
+body .phx .et_pb_contact_form_label { display: none !important; }
+body .phx .et_pb_contact_submit.et_pb_button {
+  background-color: var(--red) !important;
+  color: #fff !important;
+  border: 1px solid var(--red) !important;
+  border-radius: 0 !important;
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+body .phx .et_pb_contact_submit.et_pb_button:hover {
+  background-color: var(--red-deep) !important;
+  border-color: var(--red-deep) !important;
+}
+body .phx .et_pb_contact_submit.et_pb_button::after { display: none !important; }
+
+/* Keyboard focus must stay visible everywhere. */
+body .phx a:focus-visible,
+body .phx button:focus-visible,
+body .phx input:focus-visible,
+body .phx select:focus-visible,
+body .phx textarea:focus-visible {
+  outline: 2px solid var(--orange) !important;
+  outline-offset: 3px !important;
+}
+
+/* Divi's active breakpoints are 767 (phone) and 980 (tablet). */
+@media (max-width: 980px) {
+  body .phx .et_pb_column { margin-bottom: 0 !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .phx *, .phx *::before, .phx *::after {
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+  }
+}
+
+/* Cards in a row must match height. Divi's row is flex, but neither the module
+   nor its inner wrapper stretches without being told to. */
+body .phx-equal .et_pb_column { display: flex; }
+body .phx-equal .et_pb_column > .et_pb_module { display: flex; flex: 1 1 auto; min-width: 0; }
+body .phx-equal .et_pb_code_inner { display: flex; flex-direction: column; flex: 1 1 auto; width: 100%; }
