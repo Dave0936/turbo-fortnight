@@ -1,0 +1,515 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600&display=swap">
+  <style>
+    body { margin: 0; background: #0A0B0D; color: #E8E6E1;
+           font-family: 'Manrope', 'Segoe UI', system-ui, sans-serif;
+           -webkit-font-smoothing: antialiased; }
+    a { color: #E8E6E1; text-decoration: none; }
+    a:hover { color: #FF7A2F; }
+    .dsp { font-family: 'Archivo', 'Segoe UI', system-ui, sans-serif; letter-spacing: -0.03em; }
+    .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; letter-spacing: 0.06em; }
+    .navlink { padding: 8px 0; border-bottom: 1px solid transparent;
+               transition: all 600ms cubic-bezier(0.32,0.72,0,1); }
+    .navlink:hover { border-bottom-color: #FF7A2F; }
+    .btn { transition: all 600ms cubic-bezier(0.32,0.72,0,1); }
+    .btn:hover { background: #FF7A2F; color: #0A0B0D; }
+    .btn:active { transform: translateY(1px); }
+    .row { transition: all 600ms cubic-bezier(0.32,0.72,0,1); }
+    .row:hover { background: #14161A; padding-left: 24px; }
+    .rev { opacity: 0.28; animation: rev 700ms cubic-bezier(0.32,0.72,0,1) forwards; }
+    @keyframes rev { to { opacity: 1; } }
+    .plate { transition: all 700ms cubic-bezier(0.32,0.72,0,1); filter: grayscale(1); }
+    .plate:hover { filter: grayscale(0); transform: translateY(-8px); }
+  </style>
+</helmet>
+
+<div style="width: 1440px; background: #0A0B0D; overflow: hidden">
+
+  <!-- ================= NAV ================= -->
+  <div style="display: flex; align-items: center; gap: 48px; padding: 24px 80px; border-bottom: 1px solid #1C1F24; position: relative; z-index: 5">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <svg width="26" height="30" viewBox="0 0 26 30" fill="none" aria-hidden="true">
+        <path d="M13 1 L25 8 L25 22 L13 29 L1 22 L1 8 Z" stroke="#FF7A2F" stroke-width="1.5"/>
+        <path d="M13 8 L13 29" stroke="#FF7A2F" stroke-width="1.5"/>
+        <path d="M13 8 L25 8 M13 8 L1 8" stroke="#5C6570" stroke-width="1.5"/>
+      </svg>
+      <div style="line-height: 1.1">
+        <div class="dsp" style="font-size: 17px; font-weight: 600">PHOENIX DRILLING</div>
+        <div class="mono" style="font-size: 9px; color: #6E7580; margin-top: 2px">WEST LOTHIAN</div>
+      </div>
+    </div>
+    <div style="display: flex; gap: 28px; font-size: 14px; color: #B4B8BE; flex-grow: 1">
+      <a class="navlink" href="#about">About us</a>
+      <a class="navlink" href="#services" style="color: #E8E6E1; border-bottom-color: #FF7A2F">Services</a>
+      <a class="navlink" href="#team">Meet the team</a>
+      <a class="navlink" href="#cases">Case studies</a>
+      <a class="navlink" href="#news">News</a>
+      <a class="navlink" href="#contact">Contact us</a>
+    </div>
+    <div style="display: flex; align-items: center; gap: 24px">
+      <a class="mono" href="tel:" style="font-size: 12px; color: #8A8F98">[PHONE NUMBER]</a>
+      <a class="btn" href="#contact" style="background: #FF7A2F; color: #0A0B0D; font-size: 14px; font-weight: 600; padding: 12px 20px">Book a site survey</a>
+    </div>
+  </div>
+
+  <!-- ================= HERO ================= -->
+  <div style="position: relative; height: 720px; overflow: hidden; border-bottom: 1px solid #1C1F24">
+
+    <!-- strata backdrop -->
+    <div style="position: absolute; inset: 0">
+      <div style="position: absolute; left: 0; right: 0; top: 340px; height: 60px; background: #101318"></div>
+      <div style="position: absolute; left: 0; right: 0; top: 400px; height: 90px; background: #14181E"></div>
+      <div style="position: absolute; left: 0; right: 0; top: 490px; height: 70px; background: #191D24"></div>
+      <div style="position: absolute; left: 0; right: 0; top: 560px; height: 160px; background: #1E232B"></div>
+      <div style="position: absolute; left: 0; right: 0; top: 340px; height: 1px; background: #2B3038"></div>
+      <div style="position: absolute; left: 0; right: 0; top: 400px; height: 1px; background: #2B3038"></div>
+      <div style="position: absolute; left: 0; right: 0; top: 490px; height: 1px; background: #2B3038"></div>
+      <div style="position: absolute; left: 0; right: 0; top: 560px; height: 1px; background: #2B3038"></div>
+    </div>
+
+    <!-- rig, right of centre, deliberately off axis -->
+    <div style="position: absolute; right: 130px; top: 0; bottom: 0; width: 420px">
+      <svg width="420" height="720" viewBox="0 0 420 720" fill="none" aria-hidden="true">
+        <path d="M210 60 L120 340 M210 60 L300 340" stroke="#3A4048" stroke-width="2"/>
+        <path d="M160 210 L260 210 M143 265 L277 265 M177 155 L243 155" stroke="#3A4048" stroke-width="1.5"/>
+        <path d="M160 210 L243 155 M260 210 L177 155 M143 265 L260 210 M277 265 L160 210" stroke="#2E343B" stroke-width="1"/>
+        <path d="M120 340 L300 340" stroke="#4A515A" stroke-width="3"/>
+        <path d="M210 60 L210 700" stroke="#FF7A2F" stroke-width="2"/>
+        <circle cx="210" cy="700" r="6" fill="#FF7A2F"/>
+        <circle cx="210" cy="700" r="16" stroke="#FF7A2F" stroke-width="1" opacity="0.4"/>
+        <circle cx="210" cy="700" r="30" stroke="#FF7A2F" stroke-width="1" opacity="0.18"/>
+      </svg>
+    </div>
+
+    <!-- copy block: left, not centred -->
+    <div style="position: relative; padding: 96px 0 0 80px; max-width: 680px">
+      <div class="mono" style="font-size: 11px; color: #FF7A2F; margin-bottom: 24px">01 &nbsp;/&nbsp; GROUND INVESTIGATION &amp; DRILLING &nbsp;/&nbsp; SCOTLAND</div>
+      <h1 class="dsp" style="font-size: 72px; line-height: 1.02; font-weight: 600; margin: 0; text-wrap: balance">
+        Know what is under<br>the site before<br>you build on it.
+      </h1>
+      <p style="font-size: 18px; line-height: 1.6; color: #A8ADB5; margin: 32px 0 0; max-width: 560px; text-wrap: pretty">
+        Rotary drilling, soil boring and environmental assessment across the central belt.
+        Rigs on site from West Lothian, logs and factual reports back in your hands fast.
+      </p>
+      <div style="display: flex; align-items: center; gap: 16px; margin-top: 40px">
+        <a class="btn" href="#contact" style="background: #FF7A2F; color: #0A0B0D; font-size: 16px; font-weight: 600; padding: 16px 28px">Book a site survey</a>
+        <a class="btn" href="#cases" style="border: 1px solid #3A4048; color: #E8E6E1; font-size: 16px; font-weight: 600; padding: 16px 28px">See case studies</a>
+      </div>
+      <div style="display: flex; gap: 48px; margin-top: 64px; padding-top: 32px; border-top: 1px solid #1C1F24">
+        <div>
+          <div class="dsp" style="font-size: 30px; font-weight: 600">[XX] yrs</div>
+          <div class="mono" style="font-size: 10px; color: #6E7580; margin-top: 6px">DRILLING IN SCOTLAND</div>
+        </div>
+        <div>
+          <div class="dsp" style="font-size: 30px; font-weight: 600">[X,XXX] m</div>
+          <div class="mono" style="font-size: 10px; color: #6E7580; margin-top: 6px">DRILLED LAST YEAR</div>
+        </div>
+        <div>
+          <div class="dsp" style="font-size: 30px; font-weight: 600">[X] rigs</div>
+          <div class="mono" style="font-size: 10px; color: #6E7580; margin-top: 6px">OWNED AND OPERATED</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SERVICES: DEPTH LEDGER ================= -->
+  <div id="services" style="display: flex; padding: 0; border-bottom: 1px solid #1C1F24">
+
+    <!-- depth rail -->
+    <div style="width: 260px; flex-shrink: 0; padding: 80px 0 80px 80px; border-right: 1px solid #1C1F24">
+      <div class="mono" style="font-size: 10px; color: #6E7580; margin-bottom: 40px">DEPTH / METRES</div>
+      <div style="position: relative; height: 900px; border-left: 1px solid #2B3038; padding-left: 20px">
+        <div style="position: absolute; left: -1px; top: 0; width: 3px; height: 900px; background: #FF7A2F"></div>
+        <div class="mono" style="position: absolute; top: 0; left: 20px; font-size: 11px; color: #8A8F98">0</div>
+        <div class="mono" style="position: absolute; top: 180px; left: 20px; font-size: 11px; color: #8A8F98">15</div>
+        <div class="mono" style="position: absolute; top: 360px; left: 20px; font-size: 11px; color: #8A8F98">60</div>
+        <div class="mono" style="position: absolute; top: 540px; left: 20px; font-size: 11px; color: #8A8F98">120</div>
+        <div class="mono" style="position: absolute; top: 720px; left: 20px; font-size: 11px; color: #8A8F98">200</div>
+        <div class="mono" style="position: absolute; top: 880px; left: 20px; font-size: 11px; color: #8A8F98">250+</div>
+      </div>
+    </div>
+
+    <!-- ledger rows, not cards -->
+    <div style="flex-grow: 1; padding: 80px 80px 80px 0">
+      <div style="max-width: 620px; padding-left: 64px">
+        <h2 class="dsp" style="font-size: 44px; font-weight: 600; margin: 0; line-height: 1.1">What we put in the ground</h2>
+        <p style="font-size: 17px; line-height: 1.6; color: #A8ADB5; margin: 20px 0 0; text-wrap: pretty">
+          Five services, one crew, one point of contact. Ordered by the depth they usually work at.
+        </p>
+      </div>
+
+      <div style="margin-top: 56px; border-top: 1px solid #1C1F24">
+        <a class="row" href="#contact" style="display: flex; align-items: flex-start; gap: 40px; padding: 32px 0 32px 64px; border-bottom: 1px solid #1C1F24">
+          <div class="mono" style="font-size: 11px; color: #FF7A2F; width: 90px; flex-shrink: 0; padding-top: 8px">0 &ndash; 10 m</div>
+          <div style="flex-grow: 1">
+            <div class="dsp" style="font-size: 26px; font-weight: 500">Environmental assessments</div>
+            <div style="font-size: 15px; line-height: 1.6; color: #8A8F98; margin-top: 8px; max-width: 520px; text-wrap: pretty">Contaminated land sampling, gas and groundwater monitoring wells, Phase 1 and Phase 2 site investigation for planning conditions.</div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="margin-top: 12px; flex-shrink: 0"><path d="M5 12h14M13 6l6 6-6 6" stroke="#5C6570" stroke-width="1.5"/></svg>
+        </a>
+        <a class="row" href="#contact" style="display: flex; align-items: flex-start; gap: 40px; padding: 32px 0 32px 64px; border-bottom: 1px solid #1C1F24">
+          <div class="mono" style="font-size: 11px; color: #FF7A2F; width: 90px; flex-shrink: 0; padding-top: 8px">0 &ndash; 15 m</div>
+          <div style="flex-grow: 1">
+            <div class="dsp" style="font-size: 26px; font-weight: 500">Soil boring</div>
+            <div style="font-size: 15px; line-height: 1.6; color: #8A8F98; margin-top: 8px; max-width: 520px; text-wrap: pretty">Window sampling and cable percussion for made ground, glacial till and the soft stuff above rockhead. In situ testing as we go.</div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="margin-top: 12px; flex-shrink: 0"><path d="M5 12h14M13 6l6 6-6 6" stroke="#5C6570" stroke-width="1.5"/></svg>
+        </a>
+        <a class="row" href="#contact" style="display: flex; align-items: flex-start; gap: 40px; padding: 32px 0 32px 64px; border-bottom: 1px solid #1C1F24">
+          <div class="mono" style="font-size: 11px; color: #FF7A2F; width: 90px; flex-shrink: 0; padding-top: 8px">5 &ndash; 60 m</div>
+          <div style="flex-grow: 1">
+            <div class="dsp" style="font-size: 26px; font-weight: 500">Geotechnical appraisals</div>
+            <div style="font-size: 15px; line-height: 1.6; color: #8A8F98; margin-top: 8px; max-width: 520px; text-wrap: pretty">Boreholes, logging and lab scheduling that answer the foundation question: what will bear the load, and at what depth.</div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="margin-top: 12px; flex-shrink: 0"><path d="M5 12h14M13 6l6 6-6 6" stroke="#5C6570" stroke-width="1.5"/></svg>
+        </a>
+        <a class="row" href="#contact" style="display: flex; align-items: flex-start; gap: 40px; padding: 32px 0 32px 64px; border-bottom: 1px solid #1C1F24">
+          <div class="mono" style="font-size: 11px; color: #FF7A2F; width: 90px; flex-shrink: 0; padding-top: 8px">80 &ndash; 200 m</div>
+          <div style="flex-grow: 1">
+            <div class="dsp" style="font-size: 26px; font-weight: 500">Geothermal installations</div>
+            <div style="font-size: 15px; line-height: 1.6; color: #8A8F98; margin-top: 8px; max-width: 520px; text-wrap: pretty">Closed loop ground source boreholes, grouted and pressure tested, sized with your M&amp;E designer before the rig arrives.</div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="margin-top: 12px; flex-shrink: 0"><path d="M5 12h14M13 6l6 6-6 6" stroke="#5C6570" stroke-width="1.5"/></svg>
+        </a>
+        <a class="row" href="#contact" style="display: flex; align-items: flex-start; gap: 40px; padding: 32px 0 32px 64px; border-bottom: 1px solid #1C1F24">
+          <div class="mono" style="font-size: 11px; color: #FF7A2F; width: 90px; flex-shrink: 0; padding-top: 8px">to 250 m</div>
+          <div style="flex-grow: 1">
+            <div class="dsp" style="font-size: 26px; font-weight: 500">Rotary drilling</div>
+            <div style="font-size: 15px; line-height: 1.6; color: #8A8F98; margin-top: 8px; max-width: 520px; text-wrap: pretty">Open hole and rotary core through rock, on tracked and lorry mounted rigs that get into restricted access sites.</div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="margin-top: 12px; flex-shrink: 0"><path d="M5 12h14M13 6l6 6-6 6" stroke="#5C6570" stroke-width="1.5"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TAGLINE MOMENT ================= -->
+  <div style="padding: 140px 80px 140px 340px; border-bottom: 1px solid #1C1F24">
+    <div class="dsp" style="font-size: 56px; line-height: 1.15; font-weight: 500; max-width: 900px; text-wrap: balance">
+      <span class="rev" style="animation-delay: 0ms">Every</span>
+      <span class="rev" style="animation-delay: 90ms">delay</span>
+      <span class="rev" style="animation-delay: 180ms">on</span>
+      <span class="rev" style="animation-delay: 270ms">a</span>
+      <span class="rev" style="animation-delay: 360ms">build</span>
+      <span class="rev" style="animation-delay: 450ms">starts</span>
+      <span class="rev" style="animation-delay: 540ms">as</span>
+      <span class="rev" style="animation-delay: 630ms">a</span>
+      <span class="rev" style="animation-delay: 720ms">surprise</span>
+      <span class="rev" style="animation-delay: 810ms">underground.</span>
+      <span class="rev" style="animation-delay: 940ms; color: #FF7A2F">We</span>
+      <span class="rev" style="animation-delay: 1030ms; color: #FF7A2F">find</span>
+      <span class="rev" style="animation-delay: 1120ms; color: #FF7A2F">it</span>
+      <span class="rev" style="animation-delay: 1210ms; color: #FF7A2F">first.</span>
+    </div>
+  </div>
+
+  <!-- ================= HIGHLIGHT: GEOTECHNICAL ================= -->
+  <div style="display: flex; align-items: stretch; border-bottom: 1px solid #1C1F24">
+    <div style="width: 640px; flex-shrink: 0; background: #101318; position: relative; overflow: hidden">
+      <svg width="640" height="520" viewBox="0 0 640 520" fill="none" aria-hidden="true">
+        <rect width="640" height="520" fill="#101318"/>
+        <rect y="120" width="640" height="80" fill="#161A20"/>
+        <rect y="200" width="640" height="120" fill="#1B2028"/>
+        <rect y="320" width="640" height="200" fill="#212831"/>
+        <path d="M0 120 H640 M0 200 H640 M0 320 H640" stroke="#2E353F"/>
+        <rect x="300" y="60" width="40" height="460" fill="#0A0B0D"/>
+        <rect x="308" y="120" width="24" height="80" fill="#4A515A"/>
+        <rect x="308" y="200" width="24" height="120" fill="#6B7480"/>
+        <rect x="308" y="320" width="24" height="200" fill="#FF7A2F"/>
+        <path d="M360 160 H420 M360 260 H440 M360 420 H400" stroke="#5C6570" stroke-width="1"/>
+        <text x="432" y="164" fill="#6E7580" font-family="IBM Plex Mono, monospace" font-size="11">MADE GROUND</text>
+        <text x="452" y="264" fill="#6E7580" font-family="IBM Plex Mono, monospace" font-size="11">GLACIAL TILL</text>
+        <text x="412" y="424" fill="#FF7A2F" font-family="IBM Plex Mono, monospace" font-size="11">ROCKHEAD 18.4 m</text>
+      </svg>
+    </div>
+    <div style="flex-grow: 1; padding: 96px 80px 96px 72px; display: flex; flex-direction: column; justify-content: center">
+      <div class="mono" style="font-size: 11px; color: #FF7A2F; margin-bottom: 20px">HIGHLIGHTED SERVICE &nbsp;/&nbsp; 01</div>
+      <h3 class="dsp" style="font-size: 40px; font-weight: 600; margin: 0; line-height: 1.1; max-width: 480px; text-wrap: balance">Geotechnical appraisals that survive the engineer's red pen</h3>
+      <p style="font-size: 17px; line-height: 1.65; color: #A8ADB5; margin: 24px 0 0; max-width: 520px; text-wrap: pretty">
+        We drill, log and sample to BS 5930, schedule the lab work, and hand over a factual report your structural engineer can design from. No second mobilisation because a test was missed.
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 32px">
+        <div style="display: flex; gap: 12px; align-items: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="#FF7A2F" stroke-width="2"/></svg><span style="font-size: 15px; color: #C8CCD2">SPT, U100 and rotary core in one visit</span></div>
+        <div style="display: flex; gap: 12px; align-items: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="#FF7A2F" stroke-width="2"/></svg><span style="font-size: 15px; color: #C8CCD2">UKAS accredited laboratory scheduling</span></div>
+        <div style="display: flex; gap: 12px; align-items: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="#FF7A2F" stroke-width="2"/></svg><span style="font-size: 15px; color: #C8CCD2">Preliminary logs within [X] working days</span></div>
+      </div>
+      <a class="btn" href="#contact" style="align-self: flex-start; margin-top: 36px; border: 1px solid #3A4048; color: #E8E6E1; font-size: 15px; font-weight: 600; padding: 14px 24px">Book a site survey</a>
+    </div>
+  </div>
+
+  <!-- ================= HIGHLIGHT: GEOTHERMAL (mirrored) ================= -->
+  <div style="display: flex; align-items: stretch; border-bottom: 1px solid #1C1F24">
+    <div style="flex-grow: 1; padding: 96px 72px 96px 80px; display: flex; flex-direction: column; justify-content: center">
+      <div class="mono" style="font-size: 11px; color: #FF7A2F; margin-bottom: 20px">HIGHLIGHTED SERVICE &nbsp;/&nbsp; 02</div>
+      <h3 class="dsp" style="font-size: 40px; font-weight: 600; margin: 0; line-height: 1.1; max-width: 480px; text-wrap: balance">Geothermal boreholes for buildings that have to hit net zero</h3>
+      <p style="font-size: 17px; line-height: 1.65; color: #A8ADB5; margin: 24px 0 0; max-width: 520px; text-wrap: pretty">
+        Closed loop ground arrays for schools, care homes and housing across the central belt. We size the loop with your heat pump designer, drill it, grout it, pressure test it and sign it off.
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 32px">
+        <div style="display: flex; gap: 12px; align-items: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="#FF7A2F" stroke-width="2"/></svg><span style="font-size: 15px; color: #C8CCD2">Thermal response testing before you commit</span></div>
+        <div style="display: flex; gap: 12px; align-items: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="#FF7A2F" stroke-width="2"/></svg><span style="font-size: 15px; color: #C8CCD2">MCS compatible installation records</span></div>
+        <div style="display: flex; gap: 12px; align-items: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="#FF7A2F" stroke-width="2"/></svg><span style="font-size: 15px; color: #C8CCD2">Restricted access rigs for occupied sites</span></div>
+      </div>
+      <a class="btn" href="#contact" style="align-self: flex-start; margin-top: 36px; border: 1px solid #3A4048; color: #E8E6E1; font-size: 15px; font-weight: 600; padding: 14px 24px">Book a site survey</a>
+    </div>
+    <div style="width: 640px; flex-shrink: 0; background: #101318">
+      <svg width="640" height="520" viewBox="0 0 640 520" fill="none" aria-hidden="true">
+        <rect width="640" height="520" fill="#101318"/>
+        <rect y="90" width="640" height="430" fill="#171B22"/>
+        <path d="M0 90 H640" stroke="#2E353F"/>
+        <g stroke="#FF7A2F" stroke-width="2" fill="none">
+          <path d="M160 90 V400 a26 26 0 0 0 52 0 V90"/>
+          <path d="M300 90 V440 a26 26 0 0 0 52 0 V90"/>
+          <path d="M440 90 V360 a26 26 0 0 0 52 0 V90"/>
+        </g>
+        <g fill="#0A0B0D">
+          <rect x="150" y="60" width="72" height="30"/>
+          <rect x="290" y="60" width="72" height="30"/>
+          <rect x="430" y="60" width="72" height="30"/>
+        </g>
+        <text x="150" y="48" fill="#6E7580" font-family="IBM Plex Mono, monospace" font-size="11">150 m</text>
+        <text x="290" y="48" fill="#6E7580" font-family="IBM Plex Mono, monospace" font-size="11">170 m</text>
+        <text x="430" y="48" fill="#6E7580" font-family="IBM Plex Mono, monospace" font-size="11">130 m</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ================= ABOUT ================= -->
+  <div id="about" style="display: flex; gap: 96px; padding: 120px 80px; border-bottom: 1px solid #1C1F24">
+    <div style="width: 380px; flex-shrink: 0">
+      <div class="mono" style="font-size: 11px; color: #FF7A2F; margin-bottom: 24px">ABOUT US</div>
+      <div class="dsp" style="font-size: 96px; font-weight: 600; line-height: 0.9; color: #1E232B">EH<br>WEST<br>LOTH<br>IAN</div>
+    </div>
+    <div style="flex-grow: 1; max-width: 680px">
+      <h2 class="dsp" style="font-size: 40px; font-weight: 600; margin: 0; line-height: 1.15; text-wrap: balance">A family run drilling contractor, not a call centre with subcontractors</h2>
+      <p style="font-size: 17px; line-height: 1.7; color: #A8ADB5; margin: 28px 0 0; text-wrap: pretty">
+        Phoenix Drilling works out of [TOWN], West Lothian. We own our rigs and we employ our drillers, which means the person who quotes your job is the person who answers the phone when the ground does something unexpected at 40 metres.
+      </p>
+      <p style="font-size: 17px; line-height: 1.7; color: #A8ADB5; margin: 20px 0 0; text-wrap: pretty">
+        Most of our work sits within an hour of the yard: Edinburgh, Glasgow, Fife and the Forth Valley. That is deliberate. Short travel means we can mobilise at short notice and stay until the job is finished properly.
+      </p>
+      <div style="display: flex; gap: 0; margin-top: 48px; border-top: 1px solid #1C1F24">
+        <div style="flex-grow: 1; padding: 24px 24px 0 0; border-right: 1px solid #1C1F24">
+          <div class="mono" style="font-size: 10px; color: #6E7580">ACCREDITATION</div>
+          <div style="font-size: 15px; color: #C8CCD2; margin-top: 8px">[SCHEME NAME]</div>
+        </div>
+        <div style="flex-grow: 1; padding: 24px 24px 0 24px; border-right: 1px solid #1C1F24">
+          <div class="mono" style="font-size: 10px; color: #6E7580">INSURANCE</div>
+          <div style="font-size: 15px; color: #C8CCD2; margin-top: 8px">&pound;[X]m public liability</div>
+        </div>
+        <div style="flex-grow: 1; padding: 24px 0 0 24px">
+          <div class="mono" style="font-size: 10px; color: #6E7580">COVERAGE</div>
+          <div style="font-size: 15px; color: #C8CCD2; margin-top: 8px">Central Scotland</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TEAM (filmstrip, offset) ================= -->
+  <div id="team" style="padding: 120px 0 120px 80px; border-bottom: 1px solid #1C1F24">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; padding-right: 80px">
+      <div style="max-width: 520px">
+        <div class="mono" style="font-size: 11px; color: #FF7A2F; margin-bottom: 20px">MEET THE TEAM</div>
+        <h2 class="dsp" style="font-size: 40px; font-weight: 600; margin: 0; line-height: 1.1; text-wrap: balance">The people who will actually be on your site</h2>
+      </div>
+      <a class="btn" href="#team" style="border: 1px solid #3A4048; color: #E8E6E1; font-size: 14px; font-weight: 600; padding: 12px 20px">Full team</a>
+    </div>
+    <div style="display: flex; gap: 24px; margin-top: 56px">
+      <div class="plate" style="width: 300px; flex-shrink: 0">
+        <div style="height: 360px; background: #171B22; position: relative; overflow: hidden">
+          <svg width="300" height="360" viewBox="0 0 300 360" aria-hidden="true"><rect width="300" height="360" fill="#171B22"/><circle cx="150" cy="140" r="56" fill="#232933"/><path d="M60 360 c0-70 40-110 90-110 s90 40 90 110" fill="#232933"/><rect x="0" y="300" width="300" height="4" fill="#FF7A2F"/></svg>
+        </div>
+        <div style="padding-top: 16px">
+          <div class="dsp" style="font-size: 19px; font-weight: 500">[NAME]</div>
+          <div class="mono" style="font-size: 10px; color: #6E7580; margin-top: 6px">MANAGING DIRECTOR</div>
+        </div>
+      </div>
+      <div class="plate" style="width: 300px; flex-shrink: 0">
+        <div style="height: 360px; background: #171B22">
+          <svg width="300" height="360" viewBox="0 0 300 360" aria-hidden="true"><rect width="300" height="360" fill="#171B22"/><circle cx="150" cy="140" r="56" fill="#232933"/><path d="M60 360 c0-70 40-110 90-110 s90 40 90 110" fill="#232933"/><rect x="0" y="300" width="300" height="4" fill="#FF7A2F"/></svg>
+        </div>
+        <div style="padding-top: 16px">
+          <div class="dsp" style="font-size: 19px; font-weight: 500">[NAME]</div>
+          <div class="mono" style="font-size: 10px; color: #6E7580; margin-top: 6px">SENIOR DRILLER</div>
+        </div>
+      </div>
+      <div class="plate" style="width: 300px; flex-shrink: 0">
+        <div style="height: 360px; background: #171B22">
+          <svg width="300" height="360" viewBox="0 0 300 360" aria-hidden="true"><rect width="300" height="360" fill="#171B22"/><circle cx="150" cy="140" r="56" fill="#232933"/><path d="M60 360 c0-70 40-110 90-110 s90 40 90 110" fill="#232933"/><rect x="0" y="300" width="300" height="4" fill="#FF7A2F"/></svg>
+        </div>
+        <div style="padding-top: 16px">
+          <div class="dsp" style="font-size: 19px; font-weight: 500">[NAME]</div>
+          <div class="mono" style="font-size: 10px; color: #6E7580; margin-top: 6px">GEO&#45;ENVIRONMENTAL LEAD</div>
+        </div>
+      </div>
+      <div class="plate" style="width: 300px; flex-shrink: 0">
+        <div style="height: 360px; background: #171B22">
+          <svg width="300" height="360" viewBox="0 0 300 360" aria-hidden="true"><rect width="300" height="360" fill="#171B22"/><circle cx="150" cy="140" r="56" fill="#232933"/><path d="M60 360 c0-70 40-110 90-110 s90 40 90 110" fill="#232933"/><rect x="0" y="300" width="300" height="4" fill="#FF7A2F"/></svg>
+        </div>
+        <div style="padding-top: 16px">
+          <div class="dsp" style="font-size: 19px; font-weight: 500">[NAME]</div>
+          <div class="mono" style="font-size: 10px; color: #6E7580; margin-top: 6px">CONTRACTS MANAGER</div>
+        </div>
+      </div>
+      <div style="width: 220px; flex-shrink: 0; display: flex; align-items: center; padding-left: 8px">
+        <div class="mono" style="font-size: 11px; color: #4A515A; line-height: 1.8">[ADD REAL<br>PHOTOGRAPHY<br>AND NAMES]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CASE STUDIES ================= -->
+  <div id="cases" style="padding: 120px 80px; border-bottom: 1px solid #1C1F24">
+    <div style="display: flex; gap: 96px; align-items: flex-start">
+      <div style="width: 300px; flex-shrink: 0; padding-top: 8px">
+        <div class="mono" style="font-size: 11px; color: #FF7A2F; margin-bottom: 20px">CASE STUDIES</div>
+        <p style="font-size: 15px; line-height: 1.7; color: #8A8F98; margin: 0; text-wrap: pretty">Three jobs that show the range: a tight urban plot, a rural energy scheme and a remediation site with a planning condition attached.</p>
+      </div>
+      <div style="flex-grow: 1; border-top: 1px solid #2B3038">
+        <a class="row" href="#cases" style="display: flex; align-items: baseline; gap: 32px; padding: 40px 0; border-bottom: 1px solid #1C1F24">
+          <div class="dsp" style="font-size: 44px; font-weight: 600; color: #2B3038; width: 80px; flex-shrink: 0">01</div>
+          <div style="flex-grow: 1">
+            <div class="dsp" style="font-size: 28px; font-weight: 500">[PROJECT NAME], Livingston</div>
+            <div style="font-size: 15px; line-height: 1.6; color: #8A8F98; margin-top: 10px; max-width: 560px; text-wrap: pretty">Rotary cored boreholes through former mineworkings on a restricted access town centre plot, with grouting design handed to the engineer.</div>
+          </div>
+          <div class="mono" style="font-size: 11px; color: #6E7580; flex-shrink: 0">ROTARY DRILLING</div>
+        </a>
+        <a class="row" href="#cases" style="display: flex; align-items: baseline; gap: 32px; padding: 40px 0; border-bottom: 1px solid #1C1F24">
+          <div class="dsp" style="font-size: 44px; font-weight: 600; color: #2B3038; width: 80px; flex-shrink: 0">02</div>
+          <div style="flex-grow: 1">
+            <div class="dsp" style="font-size: 28px; font-weight: 500">[PROJECT NAME], Falkirk</div>
+            <div style="font-size: 15px; line-height: 1.6; color: #8A8F98; margin-top: 10px; max-width: 560px; text-wrap: pretty">A closed loop geothermal array for a new build primary school, drilled and tested inside the summer holidays.</div>
+          </div>
+          <div class="mono" style="font-size: 11px; color: #6E7580; flex-shrink: 0">GEOTHERMAL</div>
+        </a>
+        <a class="row" href="#cases" style="display: flex; align-items: baseline; gap: 32px; padding: 40px 0; border-bottom: 1px solid #1C1F24">
+          <div class="dsp" style="font-size: 44px; font-weight: 600; color: #2B3038; width: 80px; flex-shrink: 0">03</div>
+          <div style="flex-grow: 1">
+            <div class="dsp" style="font-size: 28px; font-weight: 500">[PROJECT NAME], Bathgate</div>
+            <div style="font-size: 15px; line-height: 1.6; color: #8A8F98; margin-top: 10px; max-width: 560px; text-wrap: pretty">Phase 2 investigation and gas monitoring on a former industrial site, discharging the contaminated land condition first time.</div>
+          </div>
+          <div class="mono" style="font-size: 11px; color: #6E7580; flex-shrink: 0">ENVIRONMENTAL</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TESTIMONIALS ================= -->
+  <div style="padding: 120px 80px 120px 340px; background: #101318; border-bottom: 1px solid #1C1F24">
+    <div class="mono" style="font-size: 11px; color: #FF7A2F; margin-bottom: 40px">WHAT CLIENTS SAY &nbsp;/&nbsp; [DRAFT QUOTES, REPLACE WITH REAL ONES]</div>
+    <blockquote class="dsp" style="font-size: 38px; line-height: 1.3; font-weight: 500; margin: 0; max-width: 860px; text-wrap: balance">
+      &ldquo;They turned up when they said they would, drilled through worse ground than the desk study suggested, and still had preliminary logs with us that week.&rdquo;
+    </blockquote>
+    <div class="mono" style="font-size: 11px; color: #8A8F98; margin-top: 32px">[NAME], [ROLE] &nbsp;&mdash;&nbsp; [CLIENT COMPANY]</div>
+    <div style="display: flex; gap: 64px; margin-top: 80px; padding-top: 48px; border-top: 1px solid #1C1F24">
+      <div style="max-width: 420px">
+        <p style="font-size: 16px; line-height: 1.7; color: #C8CCD2; margin: 0; text-wrap: pretty">&ldquo;The only ground investigation contractor we use in the central belt. Straight answers, and the report reads like it was written by someone who was on site.&rdquo;</p>
+        <div class="mono" style="font-size: 10px; color: #6E7580; margin-top: 20px">[NAME] &nbsp;&mdash;&nbsp; [CLIENT COMPANY]</div>
+      </div>
+      <div style="max-width: 420px">
+        <p style="font-size: 16px; line-height: 1.7; color: #C8CCD2; margin: 0; text-wrap: pretty">&ldquo;We had a live school site and a six week window. Phoenix worked around the trades, kept it clean and finished the array early.&rdquo;</p>
+        <div class="mono" style="font-size: 10px; color: #6E7580; margin-top: 20px">[NAME] &nbsp;&mdash;&nbsp; [CLIENT COMPANY]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= NEWS ================= -->
+  <div id="news" style="display: flex; gap: 96px; padding: 120px 80px; border-bottom: 1px solid #1C1F24">
+    <div style="width: 300px; flex-shrink: 0">
+      <div class="mono" style="font-size: 11px; color: #FF7A2F; margin-bottom: 20px">NEWS</div>
+      <h2 class="dsp" style="font-size: 32px; font-weight: 600; margin: 0; line-height: 1.15">From the yard</h2>
+    </div>
+    <div style="flex-grow: 1; max-width: 760px; border-top: 1px solid #1C1F24">
+      <a class="row" href="#news" style="display: flex; gap: 32px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid #1C1F24">
+        <div class="mono" style="font-size: 11px; color: #6E7580; width: 110px; flex-shrink: 0">[DD.MM.YY]</div>
+        <div style="font-size: 17px; color: #E8E6E1; flex-grow: 1">New tracked rotary rig added to the fleet for restricted access work</div>
+      </a>
+      <a class="row" href="#news" style="display: flex; gap: 32px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid #1C1F24">
+        <div class="mono" style="font-size: 11px; color: #6E7580; width: 110px; flex-shrink: 0">[DD.MM.YY]</div>
+        <div style="font-size: 17px; color: #E8E6E1; flex-grow: 1">What the new Scottish heat standards mean for ground source arrays</div>
+      </a>
+      <a class="row" href="#news" style="display: flex; gap: 32px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid #1C1F24">
+        <div class="mono" style="font-size: 11px; color: #6E7580; width: 110px; flex-shrink: 0">[DD.MM.YY]</div>
+        <div style="font-size: 17px; color: #E8E6E1; flex-grow: 1">Five things that slow a ground investigation down, and how to avoid them</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ================= CONTACT ================= -->
+  <div id="contact" style="display: flex; align-items: stretch; background: #FF7A2F; color: #0A0B0D">
+    <div style="flex-grow: 1; padding: 96px 72px 96px 80px">
+      <h2 class="dsp" style="font-size: 56px; font-weight: 600; margin: 0; line-height: 1.05; max-width: 560px; text-wrap: balance">Tell us the site. We will tell you what it needs.</h2>
+      <p style="font-size: 18px; line-height: 1.6; margin: 24px 0 0; max-width: 520px; color: #2A1A0E; text-wrap: pretty">
+        Send us a postcode and a rough programme. You get a fixed price and a mobilisation date back, usually the same day.
+      </p>
+      <div style="display: flex; gap: 12px; margin-top: 40px; max-width: 560px">
+        <input type="email" placeholder="Your email address" style="flex-grow: 1; padding: 16px; border: 1px solid #0A0B0D; background: transparent; color: #0A0B0D; font-family: 'Manrope', sans-serif; font-size: 16px">
+        <button class="btn" style="background: #0A0B0D; color: #FF7A2F; border: 1px solid #0A0B0D; font-family: 'Manrope', sans-serif; font-size: 16px; font-weight: 600; padding: 16px 28px; cursor: pointer">Book a site survey</button>
+      </div>
+      <div class="mono" style="font-size: 11px; color: #3A2412; margin-top: 16px">NO OBLIGATION &nbsp;/&nbsp; FIXED PRICE QUOTE &nbsp;/&nbsp; WE COVER CENTRAL SCOTLAND</div>
+    </div>
+    <div style="width: 420px; flex-shrink: 0; background: #0A0B0D; color: #E8E6E1; padding: 96px 80px 96px 56px">
+      <div class="mono" style="font-size: 10px; color: #FF7A2F; margin-bottom: 28px">OR CALL THE YARD</div>
+      <a class="dsp" href="tel:" style="font-size: 32px; font-weight: 600; display: block">[PHONE NUMBER]</a>
+      <a href="mailto:" style="font-size: 16px; color: #A8ADB5; display: block; margin-top: 12px">[EMAIL ADDRESS]</a>
+      <div style="margin-top: 40px; padding-top: 32px; border-top: 1px solid #1C1F24">
+        <div class="mono" style="font-size: 10px; color: #6E7580">OPENING HOURS</div>
+        <div style="font-size: 15px; line-height: 1.8; color: #C8CCD2; margin-top: 10px">Mon to Fri &nbsp;[07:00 &ndash; 17:30]<br>Saturday &nbsp;[08:00 &ndash; 12:00]<br>Sunday &nbsp;Closed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <div style="padding: 80px 80px 40px; background: #0A0B0D; border-top: 1px solid #1C1F24">
+    <div style="display: flex; gap: 80px; align-items: flex-start">
+      <div style="width: 300px; flex-shrink: 0">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px">
+          <svg width="22" height="26" viewBox="0 0 26 30" fill="none" aria-hidden="true">
+            <path d="M13 1 L25 8 L25 22 L13 29 L1 22 L1 8 Z" stroke="#FF7A2F" stroke-width="1.5"/>
+            <path d="M13 8 L13 29" stroke="#FF7A2F" stroke-width="1.5"/>
+            <path d="M13 8 L25 8 M13 8 L1 8" stroke="#5C6570" stroke-width="1.5"/>
+          </svg>
+          <div class="dsp" style="font-size: 15px; font-weight: 600">PHOENIX DRILLING</div>
+        </div>
+        <p style="font-size: 14px; line-height: 1.7; color: #6E7580; margin: 0; text-wrap: pretty">Ground investigation, rotary drilling and geothermal installation from West Lothian, across central Scotland.</p>
+      </div>
+      <div style="flex-grow: 1; display: flex; gap: 64px">
+        <div>
+          <div class="mono" style="font-size: 10px; color: #FF7A2F; margin-bottom: 18px">ADDRESS</div>
+          <div style="font-size: 14px; line-height: 1.8; color: #A8ADB5">[UNIT / YARD NAME]<br>[STREET]<br>[TOWN], West Lothian<br>[EH POSTCODE]</div>
+        </div>
+        <div>
+          <div class="mono" style="font-size: 10px; color: #FF7A2F; margin-bottom: 18px">OPENING HOURS</div>
+          <div style="font-size: 14px; line-height: 1.8; color: #A8ADB5">Monday to Friday &nbsp;[07:00 &ndash; 17:30]<br>Saturday &nbsp;[08:00 &ndash; 12:00]<br>Sunday &nbsp;Closed<br>Out of hours &nbsp;[BY ARRANGEMENT]</div>
+        </div>
+        <div>
+          <div class="mono" style="font-size: 10px; color: #FF7A2F; margin-bottom: 18px">CONTACT</div>
+          <div style="font-size: 14px; line-height: 1.8; color: #A8ADB5"><a href="tel:">[PHONE NUMBER]</a><br><a href="mailto:">[EMAIL ADDRESS]</a></div>
+        </div>
+        <div>
+          <div class="mono" style="font-size: 10px; color: #FF7A2F; margin-bottom: 18px">SITE</div>
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: #A8ADB5">
+            <a href="#about">About us</a><a href="#services">Services</a><a href="#team">Meet the team</a><a href="#cases">Case studies</a><a href="#news">News</a><a href="#contact">Contact us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 64px; padding-top: 24px; border-top: 1px solid #1C1F24">
+      <div class="mono" style="font-size: 10px; color: #4A515A">&copy; [YEAR] PHOENIX DRILLING LTD &nbsp;/&nbsp; REGISTERED IN SCOTLAND [SC NUMBER]</div>
+      <div style="display: flex; gap: 24px; font-size: 12px; color: #6E7580">
+        <a href="#privacy">Privacy policy</a><a href="#terms">Terms</a><a href="#cookies">Cookies</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

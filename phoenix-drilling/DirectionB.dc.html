@@ -1,0 +1,501 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+  <style>
+    body { margin: 0; background: #EDEEEB; color: #14181B;
+           font-family: 'Barlow', 'Segoe UI', system-ui, sans-serif;
+           -webkit-font-smoothing: antialiased; }
+    a { color: #14181B; text-decoration: none; }
+    a:hover { color: #1B4B7A; }
+    .cd { font-family: 'Barlow Semi Condensed', 'Segoe UI', system-ui, sans-serif; letter-spacing: 0.01em; }
+    .lbl { font-family: 'Barlow Semi Condensed', sans-serif; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 600; }
+    .btn { transition: all 600ms cubic-bezier(0.32,0.72,0,1); }
+    .btn-p:hover { background: #14181B; color: #E8A317; }
+    .btn-p:active { transform: translateY(1px); }
+    .btn-o:hover { background: #1B4B7A; color: #EDEEEB; border-color: #1B4B7A; }
+    .idx { transition: all 600ms cubic-bezier(0.32,0.72,0,1); }
+    .idx:hover { background: #1B4B7A; color: #EDEEEB; }
+    .idx:hover .idx-n { color: #E8A317; }
+    .idx:hover .idx-d { color: #C6D4E2; }
+    .navlink { transition: all 400ms cubic-bezier(0.32,0.72,0,1); padding: 6px 0; border-bottom: 2px solid transparent; }
+    .navlink:hover { border-bottom-color: #E8A317; }
+    .tile:hover { transform: translateY(-4px); }
+    .tile { transition: all 600ms cubic-bezier(0.32,0.72,0,1); }
+    .rv { opacity: 0.3; animation: rv 650ms cubic-bezier(0.32,0.72,0,1) forwards; }
+    @keyframes rv { to { opacity: 1; } }
+  </style>
+</helmet>
+
+<div style="width: 1440px; background: #EDEEEB">
+
+  <!-- ============ UTILITY BAR ============ -->
+  <div style="display: flex; justify-content: space-between; align-items: center; background: #14181B; color: #9AA3AA; padding: 8px 48px">
+    <div class="lbl" style="font-size: 11px">Ground investigation contractor &nbsp;&middot;&nbsp; West Lothian &nbsp;&middot;&nbsp; Central Scotland</div>
+    <div class="lbl" style="font-size: 11px; display: flex; gap: 24px">
+      <span style="color: #E8A317">[PHONE NUMBER]</span>
+      <span>Mon to Fri [07:00 &ndash; 17:30]</span>
+    </div>
+  </div>
+
+  <!-- ============ NAV ============ -->
+  <div style="display: flex; align-items: stretch; border-bottom: 2px solid #14181B; background: #EDEEEB">
+    <div style="display: flex; align-items: center; gap: 12px; padding: 18px 32px; border-right: 1px solid #C9CCC6">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="28" height="28" fill="#14181B"/>
+        <path d="M15 6 L15 24 M8 11 L15 6 L22 11" stroke="#E8A317" stroke-width="2"/>
+        <path d="M8 24 L22 24" stroke="#E8A317" stroke-width="2"/>
+      </svg>
+      <div class="cd" style="font-size: 21px; font-weight: 700; letter-spacing: 0.02em; line-height: 1">PHOENIX<br><span style="font-weight: 500; color: #5A646E">DRILLING</span></div>
+    </div>
+    <div style="flex-grow: 1; display: flex; align-items: center; gap: 32px; padding: 0 32px">
+      <a class="navlink lbl" href="#about" style="font-size: 12px">About us</a>
+      <a class="navlink lbl" href="#services" style="font-size: 12px; border-bottom-color: #E8A317">Services</a>
+      <a class="navlink lbl" href="#team" style="font-size: 12px">Meet the team</a>
+      <a class="navlink lbl" href="#cases" style="font-size: 12px">Case studies</a>
+      <a class="navlink lbl" href="#news" style="font-size: 12px">News</a>
+      <a class="navlink lbl" href="#contact" style="font-size: 12px">Contact us</a>
+    </div>
+    <a class="btn btn-p lbl" href="#contact" style="display: flex; align-items: center; background: #E8A317; color: #14181B; font-size: 13px; padding: 0 40px">Request a quote</a>
+  </div>
+
+  <!-- ============ HERO: 8/4 SPLIT, HARD EDGE ============ -->
+  <div style="display: flex; align-items: stretch; border-bottom: 2px solid #14181B">
+    <div style="width: 900px; flex-shrink: 0; background: #14181B; color: #EDEEEB; padding: 72px 64px 56px; position: relative; overflow: hidden">
+      <svg width="420" height="420" viewBox="0 0 420 420" fill="none" aria-hidden="true" style="position: absolute; right: -60px; bottom: -40px; opacity: 0.28">
+        <path d="M210 20 L120 300 M210 20 L300 300 M120 300 L300 300" stroke="#5A646E" stroke-width="3"/>
+        <path d="M155 180 L265 180 M138 240 L282 240" stroke="#5A646E" stroke-width="2"/>
+        <path d="M210 20 L210 420" stroke="#E8A317" stroke-width="4"/>
+      </svg>
+      <div class="lbl" style="font-size: 12px; color: #E8A317; margin-bottom: 24px">01 &nbsp;&mdash;&nbsp; Drilling &amp; ground investigation</div>
+      <h1 class="cd" style="font-size: 76px; line-height: 0.98; font-weight: 700; margin: 0; max-width: 680px; text-wrap: balance">
+        THE GROUND DECIDES<br>YOUR PROGRAMME.<br><span style="color: #E8A317">FIND OUT EARLY.</span>
+      </h1>
+      <p style="font-size: 18px; line-height: 1.6; color: #A9B2B9; margin: 32px 0 0; max-width: 560px; text-wrap: pretty">
+        Rotary drilling, soil boring and environmental assessment for contractors, engineers and developers across the central belt. Our rigs, our drillers, one point of contact.
+      </p>
+      <div style="display: flex; gap: 0; margin-top: 56px; border-top: 1px solid #2C3238; padding-top: 28px; max-width: 700px">
+        <div style="flex-grow: 1; border-right: 1px solid #2C3238; padding-right: 24px">
+          <div class="cd" style="font-size: 36px; font-weight: 700; line-height: 1">[XX]</div>
+          <div class="lbl" style="font-size: 10px; color: #6E7880; margin-top: 6px">Years operating</div>
+        </div>
+        <div style="flex-grow: 1; border-right: 1px solid #2C3238; padding: 0 24px">
+          <div class="cd" style="font-size: 36px; font-weight: 700; line-height: 1">[X]</div>
+          <div class="lbl" style="font-size: 10px; color: #6E7880; margin-top: 6px">Rigs in the fleet</div>
+        </div>
+        <div style="flex-grow: 1; border-right: 1px solid #2C3238; padding: 0 24px">
+          <div class="cd" style="font-size: 36px; font-weight: 700; line-height: 1">250 m</div>
+          <div class="lbl" style="font-size: 10px; color: #6E7880; margin-top: 6px">Maximum depth</div>
+        </div>
+        <div style="flex-grow: 1; padding-left: 24px">
+          <div class="cd" style="font-size: 36px; font-weight: 700; line-height: 1">[XX] hr</div>
+          <div class="lbl" style="font-size: 10px; color: #6E7880; margin-top: 6px">Quote turnaround</div>
+        </div>
+      </div>
+    </div>
+    <div style="flex-grow: 1; background: #E8A317; padding: 72px 48px 56px; display: flex; flex-direction: column">
+      <div class="lbl" style="font-size: 12px; color: #5A4207">Start here</div>
+      <h2 class="cd" style="font-size: 34px; font-weight: 700; line-height: 1.05; margin: 20px 0 0; text-wrap: balance">SEND US A POSTCODE AND A PROGRAMME</h2>
+      <p style="font-size: 15px; line-height: 1.6; color: #493607; margin: 16px 0 0; text-wrap: pretty">Fixed price and a mobilisation date back, usually the same working day.</p>
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 28px">
+        <input type="text" placeholder="Site postcode" style="padding: 14px; border: 2px solid #14181B; background: #EDEEEB; font-family: 'Barlow', sans-serif; font-size: 15px; color: #14181B">
+        <input type="email" placeholder="Your email address" style="padding: 14px; border: 2px solid #14181B; background: #EDEEEB; font-family: 'Barlow', sans-serif; font-size: 15px; color: #14181B">
+        <button class="btn btn-p lbl" style="padding: 16px; border: 2px solid #14181B; background: #14181B; color: #E8A317; font-size: 14px; cursor: pointer">Request a quote</button>
+      </div>
+      <div class="lbl" style="font-size: 10px; color: #5A4207; margin-top: 16px; line-height: 1.7">No obligation<br>We cover Edinburgh, Glasgow, Fife &amp; Forth Valley</div>
+      <div style="flex-grow: 1"></div>
+      <div style="border-top: 2px solid #14181B; padding-top: 16px; margin-top: 32px">
+        <div class="lbl" style="font-size: 10px; color: #5A4207">Or call the yard</div>
+        <a class="cd" href="tel:" style="font-size: 26px; font-weight: 700; display: block; margin-top: 4px">[PHONE NUMBER]</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SERVICES INDEX TABLE ============ -->
+  <div id="services" style="border-bottom: 2px solid #14181B">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; padding: 64px 48px 32px">
+      <div>
+        <div class="lbl" style="font-size: 12px; color: #1B4B7A; margin-bottom: 14px">02 &nbsp;&mdash;&nbsp; Capability index</div>
+        <h2 class="cd" style="font-size: 48px; font-weight: 700; line-height: 1; margin: 0">WHAT WE DRILL</h2>
+      </div>
+      <p style="font-size: 16px; line-height: 1.6; color: #4E565D; margin: 0; max-width: 420px; text-align: right; text-wrap: pretty">Every service below is delivered by our own crews on our own plant. Nothing is subcontracted out.</p>
+    </div>
+
+    <div style="border-top: 2px solid #14181B">
+      <div class="lbl idx" style="display: flex; align-items: center; gap: 24px; padding: 14px 48px; background: #14181B; color: #EDEEEB; font-size: 11px">
+        <div style="width: 48px; flex-shrink: 0">No.</div>
+        <div style="width: 300px; flex-shrink: 0">Service</div>
+        <div style="flex-grow: 1">Scope</div>
+        <div style="width: 130px; flex-shrink: 0">Typical depth</div>
+        <div style="width: 120px; flex-shrink: 0; text-align: right">Plant</div>
+      </div>
+
+      <a class="idx" href="#contact" style="display: flex; align-items: center; gap: 24px; padding: 26px 48px; border-bottom: 1px solid #C9CCC6">
+        <div class="cd idx-n" style="width: 48px; flex-shrink: 0; font-size: 20px; font-weight: 700; color: #1B4B7A">01</div>
+        <div class="cd" style="width: 300px; flex-shrink: 0; font-size: 24px; font-weight: 600">Rotary drilling</div>
+        <div class="idx-d" style="flex-grow: 1; font-size: 15px; line-height: 1.5; color: #4E565D; padding-right: 24px">Open hole and rotary core through rock, mineworkings and hard strata</div>
+        <div class="lbl" style="width: 130px; flex-shrink: 0; font-size: 12px">to 250 m</div>
+        <div class="lbl" style="width: 120px; flex-shrink: 0; font-size: 12px; text-align: right">Tracked / lorry</div>
+      </a>
+      <a class="idx" href="#contact" style="display: flex; align-items: center; gap: 24px; padding: 26px 48px; border-bottom: 1px solid #C9CCC6">
+        <div class="cd idx-n" style="width: 48px; flex-shrink: 0; font-size: 20px; font-weight: 700; color: #1B4B7A">02</div>
+        <div class="cd" style="width: 300px; flex-shrink: 0; font-size: 24px; font-weight: 600">Soil boring</div>
+        <div class="idx-d" style="flex-grow: 1; font-size: 15px; line-height: 1.5; color: #4E565D; padding-right: 24px">Window sampling and cable percussion with in situ testing through soils</div>
+        <div class="lbl" style="width: 130px; flex-shrink: 0; font-size: 12px">0 &ndash; 15 m</div>
+        <div class="lbl" style="width: 120px; flex-shrink: 0; font-size: 12px; text-align: right">Tracked</div>
+      </a>
+      <a class="idx" href="#contact" style="display: flex; align-items: center; gap: 24px; padding: 26px 48px; border-bottom: 1px solid #C9CCC6">
+        <div class="cd idx-n" style="width: 48px; flex-shrink: 0; font-size: 20px; font-weight: 700; color: #1B4B7A">03</div>
+        <div class="cd" style="width: 300px; flex-shrink: 0; font-size: 24px; font-weight: 600">Environmental assessments</div>
+        <div class="idx-d" style="flex-grow: 1; font-size: 15px; line-height: 1.5; color: #4E565D; padding-right: 24px">Phase 1 and Phase 2 investigation, gas and groundwater monitoring wells</div>
+        <div class="lbl" style="width: 130px; flex-shrink: 0; font-size: 12px">0 &ndash; 10 m</div>
+        <div class="lbl" style="width: 120px; flex-shrink: 0; font-size: 12px; text-align: right">Tracked</div>
+      </a>
+      <a class="idx" href="#contact" style="display: flex; align-items: center; gap: 24px; padding: 26px 48px; border-bottom: 1px solid #C9CCC6">
+        <div class="cd idx-n" style="width: 48px; flex-shrink: 0; font-size: 20px; font-weight: 700; color: #1B4B7A">04</div>
+        <div class="cd" style="width: 300px; flex-shrink: 0; font-size: 24px; font-weight: 600">Geotechnical appraisals</div>
+        <div class="idx-d" style="flex-grow: 1; font-size: 15px; line-height: 1.5; color: #4E565D; padding-right: 24px">Boreholes, logging and lab scheduling to BS 5930, factual reporting</div>
+        <div class="lbl" style="width: 130px; flex-shrink: 0; font-size: 12px">5 &ndash; 60 m</div>
+        <div class="lbl" style="width: 120px; flex-shrink: 0; font-size: 12px; text-align: right">All plant</div>
+      </a>
+      <a class="idx" href="#contact" style="display: flex; align-items: center; gap: 24px; padding: 26px 48px; border-bottom: 2px solid #14181B">
+        <div class="cd idx-n" style="width: 48px; flex-shrink: 0; font-size: 20px; font-weight: 700; color: #1B4B7A">05</div>
+        <div class="cd" style="width: 300px; flex-shrink: 0; font-size: 24px; font-weight: 600">Geothermal installations</div>
+        <div class="idx-d" style="flex-grow: 1; font-size: 15px; line-height: 1.5; color: #4E565D; padding-right: 24px">Closed loop ground arrays, grouted, pressure tested and signed off</div>
+        <div class="lbl" style="width: 130px; flex-shrink: 0; font-size: 12px">80 &ndash; 200 m</div>
+        <div class="lbl" style="width: 120px; flex-shrink: 0; font-size: 12px; text-align: right">Tracked / lorry</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ============ TAGLINE PANEL ============ -->
+  <div style="display: flex; align-items: stretch; border-bottom: 2px solid #14181B">
+    <div style="width: 200px; flex-shrink: 0; background: #1B4B7A"></div>
+    <div style="flex-grow: 1; padding: 96px 48px 96px 64px; background: #E4E6E2">
+      <div class="cd" style="font-size: 52px; line-height: 1.1; font-weight: 700; max-width: 900px; text-wrap: balance">
+        <span class="rv" style="animation-delay: 0ms">A</span>
+        <span class="rv" style="animation-delay: 80ms">BOREHOLE</span>
+        <span class="rv" style="animation-delay: 160ms">COSTS</span>
+        <span class="rv" style="animation-delay: 240ms">HUNDREDS.</span>
+        <span class="rv" style="animation-delay: 360ms">REDESIGNING</span>
+        <span class="rv" style="animation-delay: 440ms">A</span>
+        <span class="rv" style="animation-delay: 520ms">FOUNDATION</span>
+        <span class="rv" style="animation-delay: 600ms">MID</span>
+        <span class="rv" style="animation-delay: 680ms">BUILD</span>
+        <span class="rv" style="animation-delay: 760ms; color: #1B4B7A">COSTS</span>
+        <span class="rv" style="animation-delay: 840ms; color: #1B4B7A">A</span>
+        <span class="rv" style="animation-delay: 920ms; color: #1B4B7A">GREAT</span>
+        <span class="rv" style="animation-delay: 1000ms; color: #1B4B7A">DEAL</span>
+        <span class="rv" style="animation-delay: 1080ms; color: #1B4B7A">MORE.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ HIGHLIGHTED PAIR: TWO BIG FLAT PANELS ============ -->
+  <div style="display: flex; align-items: stretch; border-bottom: 2px solid #14181B">
+    <div style="width: 720px; flex-shrink: 0; border-right: 2px solid #14181B; display: flex; flex-direction: column">
+      <div style="height: 260px; background: #1B4B7A; position: relative; overflow: hidden">
+        <svg width="720" height="260" viewBox="0 0 720 260" fill="none" aria-hidden="true">
+          <rect width="720" height="260" fill="#1B4B7A"/>
+          <rect y="70" width="720" height="46" fill="#17416A"/>
+          <rect y="116" width="720" height="66" fill="#143A5E"/>
+          <rect y="182" width="720" height="78" fill="#103252"/>
+          <rect x="330" y="30" width="34" height="230" fill="#14181B"/>
+          <rect x="337" y="70" width="20" height="46" fill="#5F86AC"/>
+          <rect x="337" y="116" width="20" height="66" fill="#8AA9C8"/>
+          <rect x="337" y="182" width="20" height="78" fill="#E8A317"/>
+          <path d="M380 93 H470 M380 149 H500 M380 221 H450" stroke="#7FA0C0"/>
+          <text x="480" y="97" fill="#A9C3DA" font-family="Barlow Semi Condensed, sans-serif" font-size="13" letter-spacing="1.4">MADE GROUND</text>
+          <text x="510" y="153" fill="#A9C3DA" font-family="Barlow Semi Condensed, sans-serif" font-size="13" letter-spacing="1.4">GLACIAL TILL</text>
+          <text x="460" y="225" fill="#E8A317" font-family="Barlow Semi Condensed, sans-serif" font-size="13" letter-spacing="1.4">ROCKHEAD 18.4 M</text>
+        </svg>
+      </div>
+      <div style="padding: 48px; flex-grow: 1; background: #EDEEEB">
+        <div class="lbl" style="font-size: 11px; color: #1B4B7A">Highlighted &nbsp;/&nbsp; 01</div>
+        <h3 class="cd" style="font-size: 36px; font-weight: 700; line-height: 1.05; margin: 16px 0 0; max-width: 480px; text-wrap: balance">GEOTECHNICAL APPRAISALS</h3>
+        <p style="font-size: 16px; line-height: 1.65; color: #4E565D; margin: 16px 0 0; max-width: 520px; text-wrap: pretty">
+          We drill, log, sample and schedule the lab work, then hand over a factual report your structural engineer can design from. No second mobilisation because a test was missed.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 0; margin-top: 28px; border-top: 1px solid #C9CCC6">
+          <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #C9CCC6"><span style="font-size: 15px">SPT, U100 and rotary core</span><span class="lbl" style="font-size: 11px; color: #5A646E">One visit</span></div>
+          <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #C9CCC6"><span style="font-size: 15px">UKAS accredited lab scheduling</span><span class="lbl" style="font-size: 11px; color: #5A646E">Included</span></div>
+          <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #C9CCC6"><span style="font-size: 15px">Preliminary borehole logs</span><span class="lbl" style="font-size: 11px; color: #5A646E">[X] days</span></div>
+        </div>
+        <a class="btn btn-o lbl" href="#contact" style="display: inline-block; margin-top: 28px; border: 2px solid #14181B; padding: 13px 24px; font-size: 12px">Request a quote</a>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1; display: flex; flex-direction: column">
+      <div style="height: 260px; background: #14181B">
+        <svg width="718" height="260" viewBox="0 0 718 260" fill="none" aria-hidden="true">
+          <rect width="718" height="260" fill="#14181B"/>
+          <rect y="54" width="718" height="206" fill="#1B2126"/>
+          <g stroke="#E8A317" stroke-width="3" fill="none">
+            <path d="M180 54 V196 a20 20 0 0 0 40 0 V54"/>
+            <path d="M330 54 V216 a20 20 0 0 0 40 0 V54"/>
+            <path d="M480 54 V176 a20 20 0 0 0 40 0 V54"/>
+          </g>
+          <rect y="50" width="718" height="4" fill="#5A646E"/>
+          <text x="176" y="38" fill="#8B949B" font-family="Barlow Semi Condensed, sans-serif" font-size="13" letter-spacing="1.4">150 M</text>
+          <text x="326" y="38" fill="#8B949B" font-family="Barlow Semi Condensed, sans-serif" font-size="13" letter-spacing="1.4">170 M</text>
+          <text x="476" y="38" fill="#8B949B" font-family="Barlow Semi Condensed, sans-serif" font-size="13" letter-spacing="1.4">130 M</text>
+        </svg>
+      </div>
+      <div style="padding: 48px; flex-grow: 1; background: #E4E6E2">
+        <div class="lbl" style="font-size: 11px; color: #1B4B7A">Highlighted &nbsp;/&nbsp; 02</div>
+        <h3 class="cd" style="font-size: 36px; font-weight: 700; line-height: 1.05; margin: 16px 0 0; max-width: 480px; text-wrap: balance">GEOTHERMAL INSTALLATIONS</h3>
+        <p style="font-size: 16px; line-height: 1.65; color: #4E565D; margin: 16px 0 0; max-width: 520px; text-wrap: pretty">
+          Closed loop ground arrays for schools, care homes and housing. We size the loop with your heat pump designer, drill it, grout it, pressure test it and sign it off.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 0; margin-top: 28px; border-top: 1px solid #C9CCC6">
+          <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #C9CCC6"><span style="font-size: 15px">Thermal response testing</span><span class="lbl" style="font-size: 11px; color: #5A646E">Before you commit</span></div>
+          <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #C9CCC6"><span style="font-size: 15px">MCS compatible records</span><span class="lbl" style="font-size: 11px; color: #5A646E">Standard</span></div>
+          <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #C9CCC6"><span style="font-size: 15px">Restricted access rigs</span><span class="lbl" style="font-size: 11px; color: #5A646E">Occupied sites</span></div>
+        </div>
+        <a class="btn btn-o lbl" href="#contact" style="display: inline-block; margin-top: 28px; border: 2px solid #14181B; padding: 13px 24px; font-size: 12px">Request a quote</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ABOUT: LABEL COLUMN LEFT ============ -->
+  <div id="about" style="display: flex; border-bottom: 2px solid #14181B">
+    <div style="width: 340px; flex-shrink: 0; background: #14181B; color: #EDEEEB; padding: 72px 40px">
+      <div class="lbl" style="font-size: 12px; color: #E8A317">03 &nbsp;&mdash;&nbsp; About us</div>
+      <div class="cd" style="font-size: 70px; font-weight: 700; line-height: 0.92; margin-top: 28px; color: #2C3238">WEST<br>LOTH&shy;IAN<br>BASED</div>
+      <div style="margin-top: 40px; border-top: 1px solid #2C3238; padding-top: 20px">
+        <div class="lbl" style="font-size: 10px; color: #6E7880">Operating area</div>
+        <div style="font-size: 15px; color: #C4CBD1; margin-top: 8px; line-height: 1.7">Edinburgh<br>Glasgow<br>Fife<br>Forth Valley</div>
+      </div>
+    </div>
+    <div style="flex-grow: 1; padding: 72px 48px 72px 64px">
+      <h2 class="cd" style="font-size: 42px; font-weight: 700; line-height: 1.05; margin: 0; max-width: 640px; text-wrap: balance">A FAMILY RUN CONTRACTOR, NOT A CALL CENTRE WITH SUBCONTRACTORS</h2>
+      <div style="display: flex; gap: 48px; margin-top: 32px">
+        <p style="font-size: 16px; line-height: 1.75; color: #4E565D; margin: 0; flex-grow: 1; max-width: 420px; text-wrap: pretty">
+          Phoenix Drilling works out of [TOWN], West Lothian. We own our rigs and we employ our drillers, so the person who quotes your job is the person who answers the phone when the ground does something unexpected at 40 metres.
+        </p>
+        <p style="font-size: 16px; line-height: 1.75; color: #4E565D; margin: 0; flex-grow: 1; max-width: 420px; text-wrap: pretty">
+          Most of our work sits within an hour of the yard. That is deliberate. Short travel means we can mobilise at short notice, work around your other trades and stay until the job is finished properly.
+        </p>
+      </div>
+      <div style="display: flex; margin-top: 48px; border: 2px solid #14181B">
+        <div style="flex-grow: 1; padding: 24px; border-right: 1px solid #C9CCC6">
+          <div class="lbl" style="font-size: 10px; color: #1B4B7A">Accreditation</div>
+          <div class="cd" style="font-size: 20px; font-weight: 600; margin-top: 8px">[SCHEME NAME]</div>
+        </div>
+        <div style="flex-grow: 1; padding: 24px; border-right: 1px solid #C9CCC6">
+          <div class="lbl" style="font-size: 10px; color: #1B4B7A">Public liability</div>
+          <div class="cd" style="font-size: 20px; font-weight: 600; margin-top: 8px">&pound;[X] million</div>
+        </div>
+        <div style="flex-grow: 1; padding: 24px; border-right: 1px solid #C9CCC6">
+          <div class="lbl" style="font-size: 10px; color: #1B4B7A">Health &amp; safety</div>
+          <div class="cd" style="font-size: 20px; font-weight: 600; margin-top: 8px">[CHAS / SSIP]</div>
+        </div>
+        <div style="flex-grow: 1; padding: 24px">
+          <div class="lbl" style="font-size: 10px; color: #1B4B7A">Registered</div>
+          <div class="cd" style="font-size: 20px; font-weight: 600; margin-top: 8px">Scotland [SC No.]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TEAM: DENSE ROW WITH LABEL COLUMN ============ -->
+  <div id="team" style="display: flex; border-bottom: 2px solid #14181B">
+    <div style="width: 340px; flex-shrink: 0; padding: 72px 40px; border-right: 1px solid #C9CCC6">
+      <div class="lbl" style="font-size: 12px; color: #1B4B7A">04 &nbsp;&mdash;&nbsp; Meet the team</div>
+      <h2 class="cd" style="font-size: 34px; font-weight: 700; line-height: 1.05; margin: 20px 0 0; text-wrap: balance">THE PEOPLE ON YOUR SITE</h2>
+      <p style="font-size: 15px; line-height: 1.7; color: #4E565D; margin: 16px 0 0; text-wrap: pretty">Small crews, long tenure. You get the same faces from quote to final report.</p>
+      <a class="btn btn-o lbl" href="#team" style="display: inline-block; margin-top: 24px; border: 2px solid #14181B; padding: 12px 22px; font-size: 12px">Full team</a>
+    </div>
+    <div style="flex-grow: 1; display: flex">
+      <div class="tile" style="flex-grow: 1; border-right: 1px solid #C9CCC6">
+        <svg width="100%" height="300" viewBox="0 0 275 300" preserveAspectRatio="none" aria-hidden="true"><rect width="275" height="300" fill="#D8DBD5"/><circle cx="137" cy="118" r="48" fill="#B9BEB7"/><path d="M55 300 c0-62 36-96 82-96 s82 34 82 96" fill="#B9BEB7"/></svg>
+        <div style="padding: 20px 24px 28px">
+          <div class="cd" style="font-size: 21px; font-weight: 600">[NAME]</div>
+          <div class="lbl" style="font-size: 10px; color: #1B4B7A; margin-top: 6px">Managing director</div>
+        </div>
+      </div>
+      <div class="tile" style="flex-grow: 1; border-right: 1px solid #C9CCC6">
+        <svg width="100%" height="300" viewBox="0 0 275 300" preserveAspectRatio="none" aria-hidden="true"><rect width="275" height="300" fill="#D8DBD5"/><circle cx="137" cy="118" r="48" fill="#B9BEB7"/><path d="M55 300 c0-62 36-96 82-96 s82 34 82 96" fill="#B9BEB7"/></svg>
+        <div style="padding: 20px 24px 28px">
+          <div class="cd" style="font-size: 21px; font-weight: 600">[NAME]</div>
+          <div class="lbl" style="font-size: 10px; color: #1B4B7A; margin-top: 6px">Senior driller</div>
+        </div>
+      </div>
+      <div class="tile" style="flex-grow: 1; border-right: 1px solid #C9CCC6">
+        <svg width="100%" height="300" viewBox="0 0 275 300" preserveAspectRatio="none" aria-hidden="true"><rect width="275" height="300" fill="#D8DBD5"/><circle cx="137" cy="118" r="48" fill="#B9BEB7"/><path d="M55 300 c0-62 36-96 82-96 s82 34 82 96" fill="#B9BEB7"/></svg>
+        <div style="padding: 20px 24px 28px">
+          <div class="cd" style="font-size: 21px; font-weight: 600">[NAME]</div>
+          <div class="lbl" style="font-size: 10px; color: #1B4B7A; margin-top: 6px">Geo&#45;environmental lead</div>
+        </div>
+      </div>
+      <div class="tile" style="flex-grow: 1">
+        <svg width="100%" height="300" viewBox="0 0 275 300" preserveAspectRatio="none" aria-hidden="true"><rect width="275" height="300" fill="#D8DBD5"/><circle cx="137" cy="118" r="48" fill="#B9BEB7"/><path d="M55 300 c0-62 36-96 82-96 s82 34 82 96" fill="#B9BEB7"/></svg>
+        <div style="padding: 20px 24px 28px">
+          <div class="cd" style="font-size: 21px; font-weight: 600">[NAME]</div>
+          <div class="lbl" style="font-size: 10px; color: #1B4B7A; margin-top: 6px">Contracts manager</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CASE STUDIES: STAGGERED SPLIT ============ -->
+  <div id="cases" style="padding: 72px 48px; background: #E4E6E2; border-bottom: 2px solid #14181B">
+    <div class="lbl" style="font-size: 12px; color: #1B4B7A">05 &nbsp;&mdash;&nbsp; Case studies</div>
+    <h2 class="cd" style="font-size: 48px; font-weight: 700; line-height: 1; margin: 16px 0 40px">SELECTED PROJECTS</h2>
+    <div style="display: flex; gap: 2px; align-items: flex-start">
+      <a class="tile" href="#cases" style="width: 560px; flex-shrink: 0; background: #EDEEEB; border: 2px solid #14181B">
+        <svg width="100%" height="240" viewBox="0 0 556 240" preserveAspectRatio="none" aria-hidden="true"><rect width="556" height="240" fill="#1B4B7A"/><rect y="150" width="556" height="90" fill="#143A5E"/><path d="M278 20 L278 240" stroke="#E8A317" stroke-width="4"/><path d="M200 150 L356 150" stroke="#5F86AC" stroke-width="2"/></svg>
+        <div style="padding: 28px">
+          <div class="lbl" style="font-size: 10px; color: #1B4B7A">Rotary drilling &nbsp;&middot;&nbsp; Livingston</div>
+          <div class="cd" style="font-size: 26px; font-weight: 700; margin-top: 10px">[PROJECT NAME]</div>
+          <p style="font-size: 15px; line-height: 1.6; color: #4E565D; margin: 10px 0 0; text-wrap: pretty">Rotary cored boreholes through former mineworkings on a restricted access town centre plot, with grouting design handed to the engineer.</p>
+        </div>
+      </a>
+      <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; padding-top: 56px">
+        <a class="tile" href="#cases" style="background: #EDEEEB; border: 2px solid #14181B; padding: 24px 28px; display: flex; gap: 24px; align-items: flex-start">
+          <div class="cd" style="font-size: 40px; font-weight: 700; color: #C9CCC6; line-height: 0.9">02</div>
+          <div>
+            <div class="lbl" style="font-size: 10px; color: #1B4B7A">Geothermal &nbsp;&middot;&nbsp; Falkirk</div>
+            <div class="cd" style="font-size: 24px; font-weight: 700; margin-top: 8px">[PROJECT NAME]</div>
+            <p style="font-size: 15px; line-height: 1.6; color: #4E565D; margin: 8px 0 0; text-wrap: pretty">A closed loop array for a new build primary school, drilled and tested inside the summer holidays.</p>
+          </div>
+        </a>
+        <a class="tile" href="#cases" style="background: #EDEEEB; border: 2px solid #14181B; padding: 24px 28px; display: flex; gap: 24px; align-items: flex-start">
+          <div class="cd" style="font-size: 40px; font-weight: 700; color: #C9CCC6; line-height: 0.9">03</div>
+          <div>
+            <div class="lbl" style="font-size: 10px; color: #1B4B7A">Environmental &nbsp;&middot;&nbsp; Bathgate</div>
+            <div class="cd" style="font-size: 24px; font-weight: 700; margin-top: 8px">[PROJECT NAME]</div>
+            <p style="font-size: 15px; line-height: 1.6; color: #4E565D; margin: 8px 0 0; text-wrap: pretty">Phase 2 investigation and gas monitoring on a former industrial site, discharging the planning condition first time.</p>
+          </div>
+        </a>
+        <a class="tile" href="#cases" style="background: #E8A317; border: 2px solid #14181B; padding: 24px 28px; display: flex; justify-content: space-between; align-items: center">
+          <div class="cd" style="font-size: 24px; font-weight: 700">All case studies</div>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#14181B" stroke-width="2"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TESTIMONIALS: BANDED ============ -->
+  <div style="display: flex; border-bottom: 2px solid #14181B">
+    <div style="width: 340px; flex-shrink: 0; background: #1B4B7A; color: #EDEEEB; padding: 64px 40px">
+      <div class="lbl" style="font-size: 12px; color: #E8A317">06 &nbsp;&mdash;&nbsp; Testimonials</div>
+      <h2 class="cd" style="font-size: 34px; font-weight: 700; line-height: 1.05; margin: 20px 0 0">WHAT CLIENTS SAY</h2>
+      <div class="lbl" style="font-size: 10px; color: #A9C3DA; margin-top: 20px; line-height: 1.7">[Draft quotes &mdash; replace with real client wording before launch]</div>
+    </div>
+    <div style="flex-grow: 1; display: flex">
+      <div style="flex-grow: 1; padding: 64px 36px; border-right: 1px solid #C9CCC6">
+        <svg width="28" height="22" viewBox="0 0 28 22" fill="none" aria-hidden="true"><path d="M0 22 L0 11 C0 4 5 0 12 0 L12 6 C8 6 6 8 6 11 L12 11 L12 22 Z M16 22 L16 11 C16 4 21 0 28 0 L28 6 C24 6 22 8 22 11 L28 11 L28 22 Z" fill="#E8A317"/></svg>
+        <p style="font-size: 17px; line-height: 1.65; margin: 20px 0 0; text-wrap: pretty">They turned up when they said they would, drilled through worse ground than the desk study suggested, and still had preliminary logs with us that week.</p>
+        <div class="lbl" style="font-size: 10px; color: #5A646E; margin-top: 24px">[NAME], [ROLE] &nbsp;&mdash;&nbsp; [CLIENT COMPANY]</div>
+      </div>
+      <div style="flex-grow: 1; padding: 64px 36px; border-right: 1px solid #C9CCC6; background: #E4E6E2">
+        <svg width="28" height="22" viewBox="0 0 28 22" fill="none" aria-hidden="true"><path d="M0 22 L0 11 C0 4 5 0 12 0 L12 6 C8 6 6 8 6 11 L12 11 L12 22 Z M16 22 L16 11 C16 4 21 0 28 0 L28 6 C24 6 22 8 22 11 L28 11 L28 22 Z" fill="#E8A317"/></svg>
+        <p style="font-size: 17px; line-height: 1.65; margin: 20px 0 0; text-wrap: pretty">The only ground investigation contractor we use in the central belt. Straight answers, and the report reads like it was written by someone who was actually on site.</p>
+        <div class="lbl" style="font-size: 10px; color: #5A646E; margin-top: 24px">[NAME], [ROLE] &nbsp;&mdash;&nbsp; [CLIENT COMPANY]</div>
+      </div>
+      <div style="flex-grow: 1; padding: 64px 36px">
+        <svg width="28" height="22" viewBox="0 0 28 22" fill="none" aria-hidden="true"><path d="M0 22 L0 11 C0 4 5 0 12 0 L12 6 C8 6 6 8 6 11 L12 11 L12 22 Z M16 22 L16 11 C16 4 21 0 28 0 L28 6 C24 6 22 8 22 11 L28 11 L28 22 Z" fill="#E8A317"/></svg>
+        <p style="font-size: 17px; line-height: 1.65; margin: 20px 0 0; text-wrap: pretty">We had a live school site and a six week window. Phoenix worked around the trades, kept it clean and finished the array ahead of programme.</p>
+        <div class="lbl" style="font-size: 10px; color: #5A646E; margin-top: 24px">[NAME], [ROLE] &nbsp;&mdash;&nbsp; [CLIENT COMPANY]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ NEWS ============ -->
+  <div id="news" style="display: flex; border-bottom: 2px solid #14181B">
+    <div style="width: 340px; flex-shrink: 0; padding: 64px 40px; border-right: 1px solid #C9CCC6">
+      <div class="lbl" style="font-size: 12px; color: #1B4B7A">07 &nbsp;&mdash;&nbsp; News</div>
+      <h2 class="cd" style="font-size: 34px; font-weight: 700; line-height: 1.05; margin: 20px 0 0">FROM THE YARD</h2>
+    </div>
+    <div style="flex-grow: 1; display: flex">
+      <a class="tile" href="#news" style="flex-grow: 1; padding: 64px 36px; border-right: 1px solid #C9CCC6">
+        <div class="lbl" style="font-size: 10px; color: #5A646E">[DD MONTH YYYY]</div>
+        <div class="cd" style="font-size: 23px; font-weight: 600; line-height: 1.2; margin-top: 12px; text-wrap: balance">New tracked rotary rig added to the fleet for restricted access work</div>
+      </a>
+      <a class="tile" href="#news" style="flex-grow: 1; padding: 64px 36px; border-right: 1px solid #C9CCC6">
+        <div class="lbl" style="font-size: 10px; color: #5A646E">[DD MONTH YYYY]</div>
+        <div class="cd" style="font-size: 23px; font-weight: 600; line-height: 1.2; margin-top: 12px; text-wrap: balance">What the new Scottish heat standards mean for ground source arrays</div>
+      </a>
+      <a class="tile" href="#news" style="flex-grow: 1; padding: 64px 36px">
+        <div class="lbl" style="font-size: 10px; color: #5A646E">[DD MONTH YYYY]</div>
+        <div class="cd" style="font-size: 23px; font-weight: 600; line-height: 1.2; margin-top: 12px; text-wrap: balance">Five things that slow a ground investigation down, and how to avoid them</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ============ FINAL CTA ============ -->
+  <div id="contact" style="display: flex; align-items: stretch; background: #E8A317; border-bottom: 2px solid #14181B">
+    <div style="flex-grow: 1; padding: 80px 48px">
+      <div class="lbl" style="font-size: 12px; color: #5A4207">08 &nbsp;&mdash;&nbsp; Contact us</div>
+      <h2 class="cd" style="font-size: 60px; font-weight: 700; line-height: 0.98; margin: 20px 0 0; max-width: 640px; text-wrap: balance">TELL US THE SITE. WE WILL TELL YOU WHAT IT NEEDS.</h2>
+      <p style="font-size: 18px; line-height: 1.6; color: #493607; margin: 20px 0 0; max-width: 520px; text-wrap: pretty">Send a postcode and a rough programme. Fixed price and a mobilisation date back, usually the same working day.</p>
+      <div style="display: flex; gap: 10px; margin-top: 36px; max-width: 640px">
+        <input type="text" placeholder="Site postcode" style="width: 180px; padding: 16px; border: 2px solid #14181B; background: #EDEEEB; font-family: 'Barlow', sans-serif; font-size: 16px; color: #14181B">
+        <input type="email" placeholder="Your email address" style="flex-grow: 1; padding: 16px; border: 2px solid #14181B; background: #EDEEEB; font-family: 'Barlow', sans-serif; font-size: 16px; color: #14181B">
+        <button class="btn btn-p lbl" style="padding: 16px 32px; border: 2px solid #14181B; background: #14181B; color: #E8A317; font-size: 13px; cursor: pointer">Request a quote</button>
+      </div>
+    </div>
+    <div style="width: 400px; flex-shrink: 0; background: #14181B; color: #EDEEEB; padding: 80px 48px">
+      <div class="lbl" style="font-size: 11px; color: #E8A317">Or call the yard direct</div>
+      <a class="cd" href="tel:" style="font-size: 34px; font-weight: 700; display: block; margin-top: 10px">[PHONE NUMBER]</a>
+      <a href="mailto:" style="font-size: 16px; color: #A9B2B9; display: block; margin-top: 10px">[EMAIL ADDRESS]</a>
+      <div style="margin-top: 36px; border-top: 1px solid #2C3238; padding-top: 24px">
+        <div class="lbl" style="font-size: 10px; color: #6E7880">Opening hours</div>
+        <div style="font-size: 15px; line-height: 1.9; color: #C4CBD1; margin-top: 10px">Mon to Fri &nbsp;[07:00 &ndash; 17:30]<br>Saturday &nbsp;[08:00 &ndash; 12:00]<br>Sunday &nbsp;Closed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <div style="background: #14181B; color: #A9B2B9; padding: 64px 48px 32px">
+    <div style="display: flex; gap: 64px">
+      <div style="width: 300px; flex-shrink: 0">
+        <div style="display: flex; align-items: center; gap: 12px">
+          <svg width="26" height="26" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+            <rect x="1" y="1" width="28" height="28" fill="#E8A317"/>
+            <path d="M15 6 L15 24 M8 11 L15 6 L22 11 M8 24 L22 24" stroke="#14181B" stroke-width="2"/>
+          </svg>
+          <div class="cd" style="font-size: 19px; font-weight: 700; color: #EDEEEB; line-height: 1">PHOENIX<br><span style="font-weight: 500; color: #6E7880">DRILLING</span></div>
+        </div>
+        <p style="font-size: 14px; line-height: 1.75; color: #6E7880; margin: 20px 0 0; text-wrap: pretty">Ground investigation, rotary drilling and geothermal installation from West Lothian, across central Scotland.</p>
+      </div>
+      <div style="flex-grow: 1; display: flex; gap: 56px">
+        <div>
+          <div class="lbl" style="font-size: 10px; color: #E8A317; margin-bottom: 16px">Address</div>
+          <div style="font-size: 14px; line-height: 1.85">[UNIT / YARD NAME]<br>[STREET]<br>[TOWN], West Lothian<br>[EH POSTCODE]</div>
+        </div>
+        <div>
+          <div class="lbl" style="font-size: 10px; color: #E8A317; margin-bottom: 16px">Opening hours</div>
+          <div style="font-size: 14px; line-height: 1.85">Monday to Friday &nbsp;[07:00 &ndash; 17:30]<br>Saturday &nbsp;[08:00 &ndash; 12:00]<br>Sunday &nbsp;Closed<br>Out of hours &nbsp;[BY ARRANGEMENT]</div>
+        </div>
+        <div>
+          <div class="lbl" style="font-size: 10px; color: #E8A317; margin-bottom: 16px">Contact</div>
+          <div style="font-size: 14px; line-height: 1.85"><a href="tel:" style="color: #A9B2B9">[PHONE NUMBER]</a><br><a href="mailto:" style="color: #A9B2B9">[EMAIL ADDRESS]</a></div>
+        </div>
+        <div>
+          <div class="lbl" style="font-size: 10px; color: #E8A317; margin-bottom: 16px">Site</div>
+          <div style="display: flex; flex-direction: column; gap: 7px; font-size: 14px">
+            <a href="#about" style="color: #A9B2B9">About us</a><a href="#services" style="color: #A9B2B9">Services</a><a href="#team" style="color: #A9B2B9">Meet the team</a><a href="#cases" style="color: #A9B2B9">Case studies</a><a href="#news" style="color: #A9B2B9">News</a><a href="#contact" style="color: #A9B2B9">Contact us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 56px; border-top: 1px solid #2C3238; padding-top: 20px">
+      <div class="lbl" style="font-size: 10px; color: #4E565D">&copy; [YEAR] Phoenix Drilling Ltd &nbsp;&middot;&nbsp; Registered in Scotland [SC NUMBER]</div>
+      <div style="display: flex; gap: 24px; font-size: 12px">
+        <a href="#privacy" style="color: #6E7880">Privacy policy</a><a href="#terms" style="color: #6E7880">Terms</a><a href="#cookies" style="color: #6E7880">Cookies</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

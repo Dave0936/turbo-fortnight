@@ -1,0 +1,14 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "title": "Direction A — Depth", "x": 0, "y": 0, "w": 1440, "h": 7600 },
+    { "file": "DirectionB.dc.html", "title": "Direction B — Yard", "x": 1560, "y": 0, "w": 1440, "h": 6000 },
+    { "file": "DirectionC.dc.html", "title": "Direction C — Ground", "x": 3120, "y": 0, "w": 1440, "h": 8200 }
+  ],
+  "annotations": [
+    { "id": "note-a", "x": 0, "y": -230, "w": 460, "text": "DIRECTION A — DEPTH\nDark, technical, cinematic. The signature move is the depth rail down the left: services are ledger rows keyed to the metres they work at, so the page reads like a borehole log.\n\nTradeoff: the strongest personality of the three, but dark sites need real photography to carry them. Weakest option if the team photos never materialise." },
+    { "id": "note-b", "x": 1560, "y": -230, "w": 460, "text": "DIRECTION B — YARD\nIndustrial and dense. Hard 2px rules, no rounded corners, a quote form sitting in the hero itself. Services are a spec index table with depths and plant, not prose.\n\nTradeoff: fastest path to a quote and the most credible to a contractor, but it is the least warm and the most work to keep tidy as content grows." },
+    { "id": "note-c", "x": 3120, "y": -230, "w": 460, "text": "DIRECTION C — GROUND\nBright and editorial. A fixed 300px label column on the left, content indented well right of it, so nothing sits on the centre line. Services are an indenting entry list.\n\nTradeoff: the most generous and modern, and the easiest to add pages to later, but the softest sell — the CTA works harder to be noticed." },
+    { "id": "note-shared", "x": 0, "y": -370, "w": 1440, "text": "Phoenix Drilling — three landing page directions. All three carry the same content set (About us, Services, Meet the team, Case studies, News, Contact us) with geotechnical appraisals and geothermal installations pulled out as highlighted services, and hours, phone and address in the footer. Anything in [SQUARE BRACKETS] is a real fact I did not have — phone, address, hours, team names, client names, project names, years and figures. Testimonial wording is draft copy, not real quotes." }
+  ],
+  "launch": { "view": "canvas" }
+}
