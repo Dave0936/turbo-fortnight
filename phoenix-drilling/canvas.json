@@ -1,8 +1,8 @@
 {
   "artboards": [
-    { "file": "Main.dc.html", "title": "Direction A — Depth", "x": 0, "y": 0, "w": 1440, "h": 7600 },
-    { "file": "DirectionB.dc.html", "title": "Direction B — Yard", "x": 1560, "y": 0, "w": 1440, "h": 6000 },
-    { "file": "DirectionC.dc.html", "title": "Direction C — Ground", "x": 3120, "y": 0, "w": 1440, "h": 8200 }
+    { "file": "Main.dc.html", "title": "Direction A — Depth", "x": 0, "y": 0, "w": 1440, "h": 8900 },
+    { "file": "DirectionB.dc.html", "title": "Direction B — Yard", "x": 1560, "y": 0, "w": 1440, "h": 6600 },
+    { "file": "DirectionC.dc.html", "title": "Direction C — Ground", "x": 3120, "y": 0, "w": 1440, "h": 8450 }
   ],
   "annotations": [
     { "id": "note-a", "x": 0, "y": -230, "w": 460, "text": "DIRECTION A — DEPTH\nDark, technical, cinematic. The signature move is the depth rail down the left: services are ledger rows keyed to the metres they work at, so the page reads like a borehole log.\n\nTradeoff: the strongest personality of the three, but dark sites need real photography to carry them. Weakest option if the team photos never materialise." },
