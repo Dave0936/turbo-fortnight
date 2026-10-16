@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --charcoal: #121212;
+    --charcoal-2: #1a1a1a;
+    --charcoal-3: #242424;
+    --bone: #f4f4f0;
+    --electric: #4c63f5;
+    --electric-hover: #3b4ce0;
+}
+
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+body {
+    margin: 0;
+    background-color: var(--charcoal);
+    color: var(--bone);
+    font-family: 'Manrope', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+::selection {
+    background: var(--electric);
+    color: var(--bone);
+}
+
+.font-display {
+    font-family: 'Oswald', sans-serif;
+}
+
+.font-mono-accent {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.text-outline {
+    -webkit-text-stroke: 1.5px rgba(244, 244, 240, 0.22);
+    color: transparent;
+}
+
+.text-outline-blue {
+    -webkit-text-stroke: 1.5px rgba(76, 99, 245, 0.7);
+    color: transparent;
+}
+
+.text-outline-dark {
+    -webkit-text-stroke: 1.5px rgba(18, 18, 18, 0.25);
+    color: transparent;
+}
+
+@keyframes marquee-scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-marquee {
+    animation: marquee-scroll 55s linear infinite;
+}
+
+.grain-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    pointer-events: none;
+    opacity: 0.16;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.blueprint-lines {
+    background-image: linear-gradient(rgba(244, 244, 240, 0.04) 1px, transparent 1px);
+    background-size: 100% 33.333%;
+}
+
+.has-custom-cursor,
+.has-custom-cursor * {
+    cursor: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-marquee {
+        animation: none;
+    }
+}

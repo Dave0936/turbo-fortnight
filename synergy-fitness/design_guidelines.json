@@ -1,0 +1,154 @@
+{
+  "theme": "dark",
+  "typography": {
+    "fonts": {
+      "headings": "Oswald, sans-serif",
+      "body": "Manrope, sans-serif",
+      "accent": "JetBrains Mono, monospace"
+    },
+    "scale": {
+      "h1": "text-5xl md:text-7xl lg:text-8xl lg:leading-[0.9] tracking-tighter uppercase font-bold",
+      "h2": "text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase font-bold",
+      "h3": "text-2xl md:text-3xl tracking-tight uppercase font-semibold",
+      "h4": "text-xl md:text-2xl uppercase font-medium",
+      "body": "text-base md:text-lg leading-relaxed text-[#F4F4F0]/80",
+      "small": "text-xs md:text-sm tracking-[0.2em] uppercase font-accent"
+    },
+    "rules": [
+      "Headings must use Oswald, ultra-tight tracking, and uppercase for that high-end athletic/editorial feel.",
+      "Never center headings globally. Left-align for editorial asymmetry or align to grid lines.",
+      "Use massive numbering (e.g., '01', '02') in JetBrains Mono or Oswald to structure the narrative (manifesto chapters).",
+      "Body copy must use Manrope for clean legibility against dark backgrounds."
+    ]
+  },
+  "colors": {
+    "background": {
+      "primary": "#121212",
+      "secondary": "#1A1A1A",
+      "tertiary": "#242424"
+    },
+    "text": {
+      "primary": "#F4F4F0",
+      "secondary": "rgba(244, 244, 240, 0.7)",
+      "inverse": "#121212"
+    },
+    "accent": {
+      "primary": "#4C63F5",
+      "hover": "#3b4ce0"
+    },
+    "rules": [
+      "Dark theme ONLY. Charcoal (#1A1A1A / #121212) serves as the base.",
+      "Bone (#F4F4F0) is used for text and borders.",
+      "Electric Blue (#4C63F5) is strictly reserved for kinetic interactions, hover states, and primary CTAs.",
+      "Do NOT use generic gradients. Solid dark colors with grain overlay."
+    ]
+  },
+  "visual_enhancers": {
+    "texture": "Add a subtle global noise/grain overlay (pointer-events-none, mix-blend-overlay, opacity-20) to kill digital flatness and enhance the cinematic feel.",
+    "borders": "Use ultra-thin bone borders (border-[#F4F4F0]/10) to create structural grids (editorial layout).",
+    "images": "Spotlights on subjects. Images should feel high-contrast, moody, and intense.",
+    "glassmorphism": "Only for the sticky navigation: bg-[#121212]/70, backdrop-blur-xl, border-b border-[#F4F4F0]/10."
+  },
+  "grids_layouts": {
+    "strategy": "The Swiss Brutalist / Bento Hybrid",
+    "spacing": "Extreme spacing. Use py-24, py-32, or py-40 between sections to create dramatic breathing room.",
+    "patterns": [
+      "Asymmetric Hero: Giant typography overlapping images, heavy left-alignment.",
+      "Grid Borders: Use CSS grid with visible 1px borders for the Membership Pricing and Programs section to give a structured, raw, athletic feel.",
+      "Editorial Rhythms: Alternate between full-bleed imagery and dense, multi-column typographic data."
+    ]
+  },
+  "motion": {
+    "libraries": [
+      "framer-motion",
+      "@studio-freight/react-lenis"
+    ],
+    "patterns": [
+      "Smooth Scrolling: Initialize Lenis for premium momentum scrolling across the entire page.",
+      "Hero Reveal: Masked line-by-line text reveal on load using Framer Motion (staggered overflow-hidden containers).",
+      "Parallax: Subtle y-axis parallax on large background images or floating elements.",
+      "Editorial Marquee: Ultra-slow, continuously scrolling text ribbon reading 'SYNERGY GROUP FITNESS // NO EXCUSES // TRANSFORM YOUR POTENTIAL // ' in large outline typography.",
+      "Hover States: Images should have subtle scale up (1.05) and desaturation-to-color reveals."
+    ]
+  },
+  "accessibility": {
+    "contrast": "Ensure Bone text against Charcoal background meets WCAG AAA standards.",
+    "focus": "Focus rings must use Electric Blue (#4C63F5) with 2px offset.",
+    "motion": "Respect prefers-reduced-motion for all Framer Motion and Lenis integrations.",
+    "aria": "Use aria-hidden for purely decorative oversized numbers."
+  },
+  "components": {
+    "strategy": "HTML/Tailwind Focus",
+    "instructions": [
+      "Since this is a high-end marketing page, rely primarily on raw HTML + Tailwind + Framer Motion for layouts to ensure complete control over asymmetry.",
+      "Do NOT use Shadcn Card components—build custom sections with border-collapse grids.",
+      "Buttons: Pill-shaped or sharp rectangular. Solid Electric Blue background, Bone text. Hover: slightly darker blue or outlined.",
+      "Accordions (if used for FAQs/Programs): Customize to remove default borders and use massive 1px bone/10 dividers."
+    ]
+  },
+  "media": {
+    "image_urls": [
+      {
+        "url": "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHwyfHxjaW5lbWF0aWMlMjBneW0lMjB3b3Jrb3V0JTIwZGFyayUyMGxpZ2h0aW5nfGVufDB8fHx8MTc4NjUxODQ0OXww&ixlib=rb-4.1.0&q=85",
+        "category": "Hero Background",
+        "description": "Cinematic shirtless man lifting barbell. Use with a heavy dark gradient overlay (bg-gradient-to-t from-[#121212] via-[#121212]/80 to-transparent)."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1676655079738-af54dfd6318e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHw0fHxjaW5lbWF0aWMlMjBneW0lMjB3b3Jrb3V0JTIwZGFyayUyMGxpZ2h0aW5nfGVufDB8fHx8MTc4NjUxODQ0OXww&ixlib=rb-4.1.0&q=85",
+        "category": "Parallax / Manifesto Moment",
+        "description": "Man hanging upside down in the dark. Perfect for a full-screen parallax transition section representing discipline."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1548690312-e3b507d8c110?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwdHJhaW5lciUyMHBvcnRyYWl0JTIwZGFya3xlbnwwfHx8fDE3ODY1MTg0NDh8MA&ixlib=rb-4.1.0&q=85",
+        "category": "Coaches Section",
+        "description": "Intense woman holding black rope."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1434847868581-86e8a2b8e7a3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHw0fHxmaXRuZXNzJTIwdHJhaW5lciUyMHBvcnRyYWl0JTIwZGFya3xlbnwwfHx8fDE3ODY1MTg0NDh8MA&ixlib=rb-4.1.0&q=85",
+        "category": "Coaches Section",
+        "description": "Body builder woman cross armed."
+      },
+      {
+        "url": "https://images.pexels.com/photos/3912944/pexels-photo-3912944.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "category": "Coaches Section",
+        "description": "Male trainer under vibrant blue neon lights. Matches Electric Blue theme perfectly."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1637430308606-86576d8fef3c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTJ8MHwxfHNlYXJjaHwxfHxwcmVtaXVtJTIwbHV4dXJ5JTIwZ3ltJTIwaW50ZXJpb3IlMjBkYXJrfGVufDB8fHx8MTc4NjUxODQ0OHww&ixlib=rb-4.1.0&q=85",
+        "category": "Facilities Gallery",
+        "description": "Row of exercise machines in dark cinematic lighting."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1648235692910-947cb90ddd97?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTJ8MHwxfHNlYXJjaHwyfHxwcmVtaXVtJTIwbHV4dXJ5JTIwZ3ltJTIwaW50ZXJpb3IlMjBkYXJrfGVufDB8fHx8MTc4NjUxODQ0OHww&ixlib=rb-4.1.0&q=85",
+        "category": "Facilities Gallery",
+        "description": "Dark hallway with neon sign. Creates spatial depth."
+      }
+    ],
+    "rules": [
+      "Never use full-screen flat blanket overlays. Use directional gradients or vignette effects.",
+      "Clip images inside geometric frames (e.g., extremely tall/narrow aspect ratios) for an editorial feel."
+    ]
+  },
+  "universal_guidelines_for_main_agent": [
+    "Do NOT build a generic SaaS landing page. This is an Awwwards-level, high-end editorial fitness site. Prioritize art direction.",
+    "Inject Lenis into the root layout for smooth scrolling (MANDATORY). Use `@studio-freight/react-lenis`.",
+    "Use Framer Motion to create a large kinetic hero section with a line-by-line text reveal.",
+    "Include a slow editorial marquee section using raw CSS animations or Framer Motion.",
+    "Implement dramatically asymmetrical grids and oversized numbers (e.g., 01, 02) to label sections.",
+    "Do not use emojis anywhere in the design or code.",
+    "Never center align the main app container. Emphasize strong left-alignment or grid-based structures.",
+    "All interactive elements MUST include a `data-testid` attribute (kebab-case, role-based).",
+    "Add a subtle grain/noise overlay across the entire site to enhance the cinematic aesthetic.",
+    "Use Phosphor icons or Lucide icons for minimalist, sharp iconography.",
+    "Ensure the hero overlay max opacity is bg-black/50 so the image remains visible."
+  ],
+  "sections": [
+    "Hero (Kinetic text reveal, background image)",
+    "Programs (Bento grid or asymmetrical list)",
+    "Coaches (Editorial portraits clipped in tall frames)",
+    "Facilities (Gallery with parallax effect)",
+    "Membership Pricing (Visible grid lines, stark structure)",
+    "Testimonials (Typography focus)",
+    "Contact/Join CTA (Electric Blue dominant)"
+  ]
+}

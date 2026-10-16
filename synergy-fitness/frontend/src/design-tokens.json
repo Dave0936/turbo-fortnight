@@ -1,0 +1,75 @@
+{
+  "name": "Synergy Group Fitness — Design Tokens",
+  "version": "1.0.0",
+  "color": {
+    "charcoal": { "value": "#121212", "comment": "Primary background" },
+    "charcoal-2": { "value": "#1A1A1A", "comment": "Secondary background / alt dark sections" },
+    "charcoal-3": { "value": "#242424", "comment": "Raised surfaces on dark" },
+    "bone": { "value": "#F4F4F0", "comment": "Primary text on dark / light elements" },
+    "bone-section": { "value": "#EDE8DF", "comment": "Light section backgrounds (warmer than bone text)" },
+    "electric": { "value": "#4C63F5", "comment": "Accent — CTAs, active states, highlights ONLY" },
+    "electric-hover": { "value": "#3B4CE0", "comment": "Accent hover" },
+    "electric-hi": { "value": "#6E82FA", "comment": "Logo/icon highlight tone" },
+    "ink": { "value": "#121212", "comment": "Text on bone sections" }
+  },
+  "colorRules": [
+    "Dark theme is the default; bone (#EDE8DF) sections are used to break rhythm — never more than 1-2 per page",
+    "Electric blue is reserved for interactive elements, key accents, and one typographic highlight per view — never large fills except the final CTA band",
+    "No gradients as backgrounds except directional dark scrims over imagery"
+  ],
+  "font": {
+    "display": { "value": "'Oswald', sans-serif", "usage": "Headlines, numerals, buttons — always uppercase, bold" },
+    "body": { "value": "'Manrope', sans-serif", "usage": "Body copy, descriptions" },
+    "mono": { "value": "'JetBrains Mono', monospace", "usage": "Kickers, labels, meta, stats — uppercase with wide tracking" },
+    "import": "@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');"
+  },
+  "typeScale": {
+    "display-hero": "clamp(3rem, 10vw, 9rem) / 0.9 / Oswald 700 / uppercase / tracking -0.05em",
+    "h1": "text-5xl md:text-7xl lg:text-8xl / Oswald 700 / uppercase",
+    "h2": "text-4xl md:text-6xl / Oswald 700 / uppercase / tracking tight",
+    "h3": "text-2xl md:text-3xl / Oswald 600 / uppercase",
+    "body": "text-base md:text-lg / Manrope 400-500 / leading relaxed",
+    "kicker": "text-xs / JetBrains Mono / uppercase / tracking 0.3em / electric blue",
+    "stat": "text-5xl md:text-7xl / Oswald 700 / tabular feel"
+  },
+  "space": {
+    "sectionY": "py-32 md:py-40",
+    "gutterX": "px-6 md:px-12",
+    "cardPad": "p-8 md:p-12",
+    "rule": "Extreme vertical rhythm — more air than feels comfortable"
+  },
+  "border": {
+    "hairline-dark": "1px solid rgba(244,244,240,0.10)",
+    "hairline-light": "1px solid rgba(18,18,18,0.15)",
+    "radius": "0 — sharp corners everywhere; no rounded cards or pills"
+  },
+  "effect": {
+    "grain": "Fixed full-viewport SVG fractal-noise overlay, opacity 0.16, mix-blend overlay, pointer-events none",
+    "photoTreatment": "Electric blue tint overlay (#4C63F5 at 20%, mix-blend color) that fades to 0 on hover + image scale 1.05, 700ms ease-out",
+    "cornerBracket": "10x10 top-left corner mark, 2px top+left border in electric blue, on framed imagery",
+    "glassNav": "bg #121212 at 70% + backdrop-blur-xl + bottom hairline, only when scrolled"
+  },
+  "motion": {
+    "smoothScroll": "Lenis, lerp 0.09, smoothWheel",
+    "ease": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "duration": { "fast": "300ms (color/hover)", "base": "700-900ms (reveals)", "hero": "1100ms (masked lines)" },
+    "patterns": [
+      "Masked line-by-line headline reveal (overflow hidden, y 115% → 0, staggered 140ms)",
+      "Scroll-triggered fade-up: opacity 0 + y 40-60 → visible, viewport margin -10%",
+      "Marquee: 55s linear infinite, alternating solid/outline type",
+      "Parallax: y ±10-22% tied to section scroll progress",
+      "Custom cursor: 8px dot (mix-blend difference) + spring ring (stiffness 250, damping 25) growing to 56px on interactive hover"
+    ],
+    "reducedMotion": "Disable Lenis, marquee, and reveals when prefers-reduced-motion"
+  },
+  "component": {
+    "buttonPrimary": "Sharp rectangle, electric bg, bone text, Oswald uppercase, hover bg #3B4CE0, ArrowUpRight icon that translates on hover",
+    "buttonGhost": "1px hairline border, transparent bg, hover border+text electric",
+    "cardGrid": "Border-collapse grids with visible 1px hairlines; hover flips to inverse (dark↔bone)",
+    "indexLabel": "JetBrains Mono '/01' style numerals in electric blue on cards and frames"
+  },
+  "assets": {
+    "logoLockup": "/synergy-logo.png",
+    "iconMark": "/synergy-mark.png"
+  }
+}

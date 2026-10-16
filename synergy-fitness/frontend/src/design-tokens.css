@@ -1,0 +1,29 @@
+/* Synergy Group Fitness — design tokens (copy into any web app) */
+:root {
+  /* Color */
+  --syn-charcoal: #121212;
+  --syn-charcoal-2: #1a1a1a;
+  --syn-charcoal-3: #242424;
+  --syn-bone: #f4f4f0;          /* text on dark */
+  --syn-bone-section: #ede8df;  /* light section backgrounds */
+  --syn-electric: #4c63f5;      /* accent — interactions only */
+  --syn-electric-hover: #3b4ce0;
+  --syn-ink: #121212;           /* text on bone */
+
+  /* Type */
+  --syn-font-display: 'Oswald', sans-serif;
+  --syn-font-body: 'Manrope', sans-serif;
+  --syn-font-mono: 'JetBrains Mono', monospace;
+
+  /* Motion */
+  --syn-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --syn-dur-fast: 300ms;
+  --syn-dur-base: 800ms;
+
+  /* Structure */
+  --syn-gutter: clamp(1.5rem, 5vw, 3rem);
+  --syn-section-y: clamp(8rem, 15vw, 10rem);
+  --syn-hairline-dark: 1px solid rgba(244, 244, 240, 0.1);
+  --syn-hairline-light: 1px solid rgba(18, 18, 18, 0.15);
+  --syn-radius: 0;
+}
