@@ -1,6 +1,8 @@
 /* ==========================================================================
    Coul House — site behaviour
    Progressive enhancement only: every page works with JavaScript disabled.
+   Booking buttons are plain links to the booking page; menus, filters and
+   pickers simply show everything until this script takes over.
    ========================================================================== */
 
 (function () {
@@ -21,59 +23,121 @@
     rooms:  'rooms'
   };
 
+  var PHONE = '+44 (0)1997 421487';
+  var EMAIL = 'stay@coulhouse.com';
+
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------------------------------------------------------------- Header */
+  /* ------------------------------------------------------- Dialog helpers
+     Shared by the mobile menu and the booking dialog: lock the page, move
+     focus in, keep Tab inside, and hand focus back on close. */
 
-  var header = document.querySelector('[data-header]');
-  if (header) {
-    var setStuck = function () {
-      header.classList.toggle('is-stuck', window.scrollY > 40);
-    };
-    setStuck();
-    window.addEventListener('scroll', setStuck, { passive: true });
+  var FOCUSABLE = 'a[href], button:not([disabled]), input:not([type="hidden"]), select, textarea, [tabindex]:not([tabindex="-1"])';
+  var openDialog = null;
+  var lastFocus = null;
+
+  var showDialog = function (el, focusTarget) {
+    if (openDialog) hideDialog();
+    lastFocus = document.activeElement;
+    el.hidden = false;
+    openDialog = el;
+    document.body.classList.add('is-locked');
+    (focusTarget || el.querySelector(FOCUSABLE)).focus();
+  };
+
+  var hideDialog = function () {
+    if (!openDialog) return;
+    openDialog.hidden = true;
+    openDialog = null;
+    document.body.classList.remove('is-locked');
+    document.querySelectorAll('[data-menu-open]').forEach(function (b) {
+      b.setAttribute('aria-expanded', 'false');
+    });
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  };
+
+  document.addEventListener('keydown', function (e) {
+    if (!openDialog) return;
+    if (e.key === 'Escape') { hideDialog(); return; }
+    if (e.key !== 'Tab') return;
+    var items = Array.prototype.filter.call(openDialog.querySelectorAll(FOCUSABLE), function (n) {
+      return n.offsetParent !== null;
+    });
+    if (!items.length) return;
+    var first = items[0];
+    var last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  document.querySelectorAll('[data-dialog-close]').forEach(function (btn) {
+    btn.addEventListener('click', hideDialog);
+  });
+
+  /* ----------------------------------------------------------------- Toast */
+
+  var toastEl = document.querySelector('[data-toast]');
+  var toastTimer = null;
+  var toast = function (msg, isError) {
+    if (!toastEl) return;
+    window.clearTimeout(toastTimer);
+    toastEl.textContent = msg;
+    toastEl.classList.toggle('is-error', !!isError);
+    toastEl.hidden = false;
+    toastTimer = window.setTimeout(function () { toastEl.hidden = true; }, 6000);
+  };
+
+  /* ------------------------------------------------------------ Mobile menu */
+
+  var menu = document.getElementById('site-menu');
+  document.querySelectorAll('[data-menu-open]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (!menu) return;
+      btn.setAttribute('aria-expanded', 'true');
+      showDialog(menu);
+    });
+  });
+  if (menu) {
+    menu.addEventListener('click', function (e) {
+      if (e.target.closest('a') && openDialog === menu) hideDialog();
+    });
+    // Reset if the viewport grows past the breakpoint with the menu open
+    window.matchMedia('(min-width: 1024px)').addEventListener('change', function (e) {
+      if (e.matches && openDialog === menu) hideDialog();
+    });
   }
 
-  /* ------------------------------------------------------------ Mobile nav */
+  /* --------------------------------------------------------- "More" menu */
 
-  var navToggle = document.querySelector('[data-nav-toggle]');
-  var nav = document.getElementById('site-nav');
-
-  if (navToggle && nav) {
-    var closeNav = function () {
-      navToggle.setAttribute('aria-expanded', 'false');
-      nav.classList.remove('is-open');
-      document.body.classList.remove('is-locked');
+  document.querySelectorAll('[data-more]').forEach(function (wrap) {
+    var btn = wrap.querySelector('button');
+    var panel = wrap.querySelector('.nav__menu');
+    if (!btn || !panel) return;
+    var set = function (open) {
+      btn.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
     };
-
-    navToggle.addEventListener('click', function () {
-      var open = navToggle.getAttribute('aria-expanded') === 'true';
-      navToggle.setAttribute('aria-expanded', String(!open));
-      nav.classList.toggle('is-open', !open);
-      document.body.classList.toggle('is-locked', !open);
+    btn.addEventListener('click', function () {
+      set(btn.getAttribute('aria-expanded') !== 'true');
     });
-
-    nav.addEventListener('click', function (e) {
-      if (e.target.closest('a')) closeNav();
+    document.addEventListener('click', function (e) {
+      if (!wrap.contains(e.target)) set(false);
     });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && nav.classList.contains('is-open')) {
-        closeNav();
-        navToggle.focus();
+    wrap.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') {
+        set(false);
+        btn.focus();
       }
     });
-
-    // Reset the panel if the viewport grows past the mobile breakpoint
-    window.matchMedia('(min-width: 1121px)').addEventListener('change', function (e) {
-      if (e.matches) closeNav();
+    wrap.addEventListener('focusout', function (e) {
+      if (e.relatedTarget && !wrap.contains(e.relatedTarget)) set(false);
     });
-  }
+  });
 
   /* --------------------------------------------------- Current page in nav */
 
   var here = location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav__link').forEach(function (link) {
+  document.querySelectorAll('.nav a, .menu__nav a').forEach(function (link) {
     if (link.getAttribute('href') === here) link.setAttribute('aria-current', 'page');
   });
 
@@ -121,50 +185,6 @@
     }
   }
 
-  /* ---------------------------------------------------------- Sticky CTA */
-
-  var stickyCta = document.querySelector('[data-sticky-cta]');
-  if (stickyCta) {
-    var toggleCta = function () {
-      stickyCta.classList.toggle('is-visible', window.scrollY > 600);
-    };
-    toggleCta();
-    window.addEventListener('scroll', toggleCta, { passive: true });
-  }
-
-  /* ------------------------------------------------------ Guest testimonials */
-
-  var quotesRoot = document.querySelector('[data-quotes]');
-  if (quotesRoot) {
-    var quotes = Array.prototype.slice.call(quotesRoot.querySelectorAll('[data-quote]'));
-    var dots = Array.prototype.slice.call(quotesRoot.querySelectorAll('[data-quote-dot]'));
-    var index = 0;
-    var timer = null;
-
-    var show = function (next) {
-      index = (next + quotes.length) % quotes.length;
-      quotes.forEach(function (q, i) { q.classList.toggle('is-active', i === index); });
-      dots.forEach(function (d, i) { d.setAttribute('aria-selected', String(i === index)); });
-    };
-
-    var start = function () {
-      if (reduceMotion || quotes.length < 2) return;
-      stop();
-      timer = window.setInterval(function () { show(index + 1); }, 8000);
-    };
-    var stop = function () { if (timer) window.clearInterval(timer); timer = null; };
-
-    dots.forEach(function (dot, i) {
-      dot.addEventListener('click', function () { show(i); start(); });
-    });
-    quotesRoot.addEventListener('mouseenter', stop);
-    quotesRoot.addEventListener('mouseleave', start);
-    quotesRoot.addEventListener('focusin', stop);
-    quotesRoot.addEventListener('focusout', start);
-
-    start();
-  }
-
   /* --------------------------------------------------------- Date handling */
 
   var toISO = function (date) { return date.toISOString().slice(0, 10); };
@@ -190,29 +210,34 @@
     arrive.value = params.get('arrive') || toISO(addDays(today, 1));
     depart.value = params.get('depart') || toISO(addDays(today, 3));
 
-    // Carry across every other field the sending page named — room type, guest
-    // and room counts, dogs, dinner — so "Check Dates" links from the rooms
-    // page arrive with the right room already chosen.
-    params.forEach(function (value, key) {
-      if (key === 'arrive' || key === 'depart' || !value) return;
-      var field = form.querySelector('[name="' + key + '"]');
-      if (!field) return;
-      if (field.tagName === 'SELECT') {
-        var match = Array.prototype.some.call(field.options, function (o) { return o.value === value; });
-        if (match) field.value = value;
-      } else {
-        field.value = value;
-      }
-    });
+    // Carry across every other field the sending page named — room type,
+    // guest count, offer — so "Reserve this room" arrives with it chosen.
+    if (!form.hasAttribute('data-booking-modal')) {
+      params.forEach(function (value, key) {
+        if (key === 'arrive' || key === 'depart' || !value) return;
+        var field = form.querySelector('[name="' + key + '"]');
+        if (!field) return;
+        if (field.tagName === 'SELECT') {
+          var has = function (v) {
+            return Array.prototype.some.call(field.options, function (o) { return o.value === v; });
+          };
+          // The dialog's stepper allows larger parties than the select lists
+          if (!has(value) && /^\d+$/.test(value) && Number(value) >= 5 && has('5+')) value = '5+';
+          if (has(value)) field.value = value;
+        } else {
+          field.value = value;
+        }
+      });
 
-    // Offer links carry no matching field, so note the offer for whoever picks
-    // up the enquiry rather than dropping it silently.
-    var offer = params.get('offer');
-    var notes = form.querySelector('textarea[name="notes"]');
-    if (offer && notes && !notes.value) {
-      notes.value = 'I would like to book the "' +
-        offer.replace(/-/g, ' ').replace(/\b\w/g, function (ch) { return ch.toUpperCase(); }) +
-        '" offer.';
+      // Offer links carry no matching field, so note the offer for whoever
+      // picks up the enquiry rather than dropping it silently.
+      var offer = params.get('offer');
+      var notes = form.querySelector('textarea[name="notes"]');
+      if (offer && notes && !notes.value) {
+        notes.value = 'I would like to book the "' +
+          offer.replace(/-/g, ' ').replace(/\b\w/g, function (ch) { return ch.toUpperCase(); }) +
+          '" offer.';
+      }
     }
 
     // Departure must always follow arrival
@@ -246,21 +271,141 @@
           var field = form.querySelector('[name="' + ours + '"]');
           if (field) field.name = BOOKING_PARAM_MAP[ours];
         });
+        // Don't send empty hidden fields along
+        form.querySelectorAll('input[type="hidden"]').forEach(function (h) {
+          h.disabled = !h.value;
+        });
       });
     }
   });
 
-  /* ------------------------------------------------------------- Accordion */
+  /* ------------------------------------------------------- Guest steppers */
 
-  document.querySelectorAll('[data-accordion]').forEach(function (accordion) {
-    accordion.querySelectorAll('.accordion__btn').forEach(function (btn) {
+  document.querySelectorAll('[data-stepper]').forEach(function (stepper) {
+    var input = stepper.querySelector('input');
+    var out = stepper.querySelector('[data-stepper-value]');
+    var min = Number(stepper.getAttribute('data-min') || 1);
+    var max = Number(stepper.getAttribute('data-max') || 12);
+    stepper.querySelectorAll('[data-step]').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var item = btn.closest('.accordion__item');
-        var open = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!open));
-        item.classList.toggle('is-open', !open);
+        var next = Math.min(max, Math.max(min, Number(input.value) + Number(btn.getAttribute('data-step'))));
+        input.value = String(next);
+        out.textContent = String(next);
       });
     });
+  });
+
+  /* ------------------------------------------------------- Booking dialog
+     Every "Check Availability" / "Reserve" link carries data-book (and
+     optionally a label for what was chosen). It is a real link to the booking
+     page, so it still works without JavaScript; with it, the quick dialog
+     opens in place instead. */
+
+  var bookModal = document.getElementById('book-modal');
+  if (bookModal) {
+    var bookForm = bookModal.querySelector('form');
+    var prefillEl = bookModal.querySelector('[data-book-prefill]');
+    var guestsInput = bookModal.querySelector('input[name="guests"]');
+    var guestsOut = bookModal.querySelector('[data-stepper-value]');
+
+    document.querySelectorAll('[data-book]').forEach(function (trigger) {
+      trigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        var label = trigger.getAttribute('data-book') || '';
+        var href = trigger.getAttribute('href') || '';
+        var query = new URLSearchParams(href.split('?')[1] || '');
+
+        prefillEl.textContent = label;
+        prefillEl.hidden = !label;
+        // Carry the link's room / offer / dinner choice through the dialog
+        bookForm.querySelectorAll('input[type="hidden"]').forEach(function (field) {
+          if (field.name === 'guests') return;
+          field.disabled = false;
+          field.value = query.get(field.name) || '';
+        });
+        if (guestsInput) { guestsInput.value = '2'; guestsOut.textContent = '2'; }
+
+        if (openDialog === menu) hideDialog();
+        showDialog(bookModal, bookModal.querySelector('input[name="arrive"]'));
+      });
+    });
+  }
+
+  /* --------------------------------------------- Room showcase (home page)
+     A single-open accordion that also swaps the photograph beside it. */
+
+  document.querySelectorAll('[data-showcase]').forEach(function (root) {
+    var buttons = root.querySelectorAll('[data-showcase-btn]');
+    var slides = root.querySelectorAll('[data-showcase-slide]');
+    var select = function (index) {
+      buttons.forEach(function (btn, i) {
+        var on = i === index;
+        btn.setAttribute('aria-expanded', String(on));
+        document.getElementById(btn.getAttribute('aria-controls')).hidden = !on;
+      });
+      slides.forEach(function (slide, i) { slide.classList.toggle('is-active', i === index); });
+    };
+    buttons.forEach(function (btn, i) {
+      btn.addEventListener('click', function () { select(i); });
+    });
+    select(0);
+  });
+
+  /* ---------------------------------------------------- Gift voucher picker */
+
+  document.querySelectorAll('[data-picker]').forEach(function (root) {
+    var opts = root.querySelectorAll('[data-pick]');
+    var details = root.querySelectorAll('[data-pick-detail]');
+    opts.forEach(function (opt, i) {
+      opt.addEventListener('click', function () {
+        opts.forEach(function (o, j) { o.setAttribute('aria-pressed', String(i === j)); });
+        details.forEach(function (d, j) { d.classList.toggle('is-active', i === j); });
+      });
+    });
+  });
+
+  /* --------------------------------------------- Filter chips (places, gallery) */
+
+  document.querySelectorAll('[data-filter-root]').forEach(function (root) {
+    var chips = root.querySelectorAll('[data-filter]');
+    var items = root.querySelectorAll('[data-tags]');
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var value = chip.getAttribute('data-filter');
+        chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c === chip)); });
+        items.forEach(function (item) {
+          var tags = item.getAttribute('data-tags').split(' ');
+          item.hidden = !(value === 'all' || tags.indexOf(value) !== -1);
+        });
+      });
+    });
+  });
+
+  /* ------------------------------------------------- Room photo thumbnails */
+
+  document.querySelectorAll('[data-thumbs]').forEach(function (root) {
+    var main = root.querySelector('[data-thumbs-main]');
+    var thumbs = root.querySelectorAll('.thumb');
+    thumbs.forEach(function (thumb) {
+      thumb.addEventListener('click', function () {
+        var img = thumb.querySelector('img');
+        main.src = img.currentSrc || img.src;
+        thumbs.forEach(function (t) { t.setAttribute('aria-pressed', String(t === thumb)); });
+      });
+    });
+  });
+
+  /* ------------------------------------------------------ Timeline arrows */
+
+  document.querySelectorAll('[data-scroller-root]').forEach(function (root) {
+    var scroller = root.querySelector('[data-scroller]');
+    var step = function (dir) {
+      scroller.scrollBy({ left: dir * 400, behavior: reduceMotion ? 'auto' : 'smooth' });
+    };
+    var prev = root.querySelector('[data-scroll-prev]');
+    var next = root.querySelector('[data-scroll-next]');
+    if (prev) prev.addEventListener('click', function () { step(-1); });
+    if (next) next.addEventListener('click', function () { step(1); });
   });
 
   /* -------------------------------------------------------------- Lightbox */
@@ -273,20 +418,23 @@
     box.setAttribute('aria-modal', 'true');
     box.setAttribute('aria-label', 'Gallery image');
     box.innerHTML =
-      '<button class="lightbox__close" type="button" aria-label="Close gallery">&times;</button>' +
+      '<button class="close-btn lightbox__close" type="button" aria-label="Close">' +
+      '<svg aria-hidden="true"><use href="#i-x"/></svg></button>' +
       '<figure class="lightbox__figure"><img alt=""><figcaption class="lightbox__caption"></figcaption></figure>';
     document.body.appendChild(box);
 
     var boxImg = box.querySelector('img');
     var boxCap = box.querySelector('figcaption');
     var closeBtn = box.querySelector('.lightbox__close');
-    var lastFocus = null;
+    var boxReturn = null;
 
-    var openBox = function (src, alt, caption) {
-      lastFocus = document.activeElement;
-      boxImg.src = src;
-      boxImg.alt = alt || '';
-      boxCap.textContent = caption || '';
+    var openBox = function (item) {
+      var img = item.querySelector('img');
+      if (!img) return;
+      boxReturn = item;
+      boxImg.src = img.currentSrc || img.src;
+      boxImg.alt = img.alt || '';
+      boxCap.textContent = item.getAttribute('data-caption') || img.alt || '';
       box.classList.add('is-open');
       document.body.classList.add('is-locked');
       closeBtn.focus();
@@ -294,36 +442,20 @@
     var closeBox = function () {
       box.classList.remove('is-open');
       document.body.classList.remove('is-locked');
-      if (lastFocus) lastFocus.focus();
-    };
-
-    var openFrom = function (item) {
-      var img = item.querySelector('img');
-      var cap = item.querySelector('figcaption');
-      if (img) openBox(img.currentSrc || img.src, img.alt, cap ? cap.textContent.trim() : '');
+      if (boxReturn) boxReturn.focus();
     };
 
     galleryItems.forEach(function (item) {
-      item.addEventListener('click', function () { openFrom(item); });
-      // The gallery figures carry role="button", so they must answer to the
-      // keyboard the way a button does.
-      item.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
-          e.preventDefault();
-          openFrom(item);
-        }
-      });
+      item.addEventListener('click', function () { openBox(item); });
     });
 
     closeBtn.addEventListener('click', closeBox);
     box.addEventListener('click', function (e) { if (e.target === box) closeBox(); });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && box.classList.contains('is-open')) closeBox();
-      // Keep focus inside the dialog while it is open
-      if (e.key === 'Tab' && box.classList.contains('is-open')) {
-        e.preventDefault();
-        closeBtn.focus();
-      }
+      if (!box.classList.contains('is-open')) return;
+      if (e.key === 'Escape') closeBox();
+      // Only one control inside, so keep focus on it
+      if (e.key === 'Tab') { e.preventDefault(); closeBtn.focus(); }
     });
   }
 
@@ -337,10 +469,27 @@
       status.hidden = false;
       status.textContent =
         'Thank you — your enquiry has been noted. This site is not yet connected to a live ' +
-        'reservations system, so please call +44 (0)1997 421487 or email stay@coulhousehotel.com ' +
-        'and we will reply the same day.';
+        'reservations system, so please call ' + PHONE + ' or email ' + EMAIL +
+        ' and we will reply the same day.';
       status.setAttribute('role', 'status');
       status.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    });
+  });
+
+  /* ------------------------------------------------------------ Newsletter
+     Not yet connected to a mailing service; say so rather than pretend. */
+
+  document.querySelectorAll('[data-newsletter]').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = form.querySelector('input[type="email"]');
+      if (!email.value.trim() || !email.checkValidity()) {
+        toast('Please enter a valid email address.', true);
+        email.focus();
+        return;
+      }
+      toast('Thank you. Our mailing list is not live yet — email ' + EMAIL + ' and we will add you.');
+      form.reset();
     });
   });
 
