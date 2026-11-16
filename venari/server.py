@@ -8,6 +8,7 @@ import traceback
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlsplit, parse_qs
 
+import static
 import store
 
 HOST = "127.0.0.1"  # local only, never public
@@ -43,6 +44,10 @@ class Handler(BaseHTTPRequestHandler):
 
     def log_message(self, fmt, *args):
         sys.stderr.write("[%s] %s\n" % (time.strftime("%H:%M:%S"), fmt % args))
+
+    def end_headers(self):
+        self.send_header("X-Content-Type-Options", "nosniff")
+        super().end_headers()
 
     # -- responses --
     def send_json(self, obj, status=200):
@@ -112,14 +117,18 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(result)
 
     def handle_static(self, path):
-        # The studio page will be served here once it is added.
-        data = b"Venari is running. The studio page is not installed yet.\n"
-        self.send_response(200 if path == "/" else 404)
-        self.send_header("Content-Type", "text/plain; charset=utf-8")
-        self.send_header("Content-Length", str(len(data)))
+        if self.command not in ("GET", "HEAD"):
+            status, ctype, body, extra = 405, "text/plain; charset=utf-8", b"Method not allowed.\n", {"Allow": "GET, HEAD"}
+        else:
+            status, ctype, body, extra = static.resolve(path)
+        self.send_response(status)
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Length", str(len(body)))
+        for k, v in extra.items():
+            self.send_header(k, v)
         self.end_headers()
         if self.command != "HEAD":
-            self.wfile.write(data)
+            self.wfile.write(body)
 
     do_GET = do_POST = do_PUT = do_PATCH = do_DELETE = do_HEAD = handle_any
 
